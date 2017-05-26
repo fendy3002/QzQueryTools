@@ -53,7 +53,8 @@ namespace QzQueryTools
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "",
+                    defaults: new { controller = "Home", action = "Index" });
             });
         }
     }

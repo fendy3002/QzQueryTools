@@ -17,6 +17,7 @@ namespace QzQueryTools
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
+                .UseUrls("http://localhost:3000/")
                 .Build();
 
             host.Run();

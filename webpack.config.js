@@ -1,6 +1,6 @@
 module.exports = {
     entry: {
-        app: './public/js/app/index.jsx'
+        app: './public/js/app/index.js'
     },
     output: {
         path: './public/js/bin/',
