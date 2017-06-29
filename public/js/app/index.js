@@ -6,28 +6,33 @@ import thunk from 'redux-thunk';
 import QzReactReduxHashState from '@fendy3002/react-redux-hash-state';
 
 import sa from 'superagent';
-import App from './stringTools/components/App.js';
-import reducer from './stringTools/reducers';
+import Routes from './Routes.js';
+import reducer from './reducers';
 
 var renderPage = function(initialState){
     var state = {
-        filter: Object.assign({
-            limit: 20,
-            country: null,
-            name: null,
-            uuid: null,
-            page: 0,
-            openUuid: null
-        }, QzReactReduxHashState.getState('filter'))
+        config: {
+        },
+        filter: {
+        }
     };
+    
     var store = createStore(reducer,
         state,
         applyMiddleware(thunk));
     render(
         <Provider store={store}>
-            <App />
+            <Routes />
         </Provider>,
         document.getElementById('content')
     );
+
+    setTimeout(() => {
+        var adminLteScript = document.createElement('script');
+        adminLteScript.src = "https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js";
+        adminLteScript.origin = "anonymous";
+        document.getElementsByTagName('head')[0].appendChild(adminLteScript);
+
+    }, 500);
 };
 renderPage([]);
