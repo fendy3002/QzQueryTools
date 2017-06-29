@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/.bin/mocha --require babel-core/register",
     "start": "./node_modules/.bin/babel-watch server/app.js",
     "win-start": "./node_modules/.bin/babel-watch.cmd server/app.js"
   },
@@ -31,8 +31,9 @@
     "babel-preset-stage-0": "^6.16.0",
     "babel-watch": "^2.0.6",
     "css-loader": "^0.25.0",
-    "json-loader": "^0.5.4",
     "gulp": "^3.8.8",
+    "json-loader": "^0.5.4",
+    "mocha": "^3.4.2",
     "style-loader": "^0.13.1"
   },
   "dependencies": {
@@ -44,6 +45,7 @@
     "express": "^4.15.3",
     "fixed-data-table": "^0.6.3",
     "jquery": "^3.1.1",
+    "json5": "^0.5.1",
     "laravel-elixir": "^4.0.0",
     "lodash": "^4.16.4",
     "moment": "^2.18.1",
