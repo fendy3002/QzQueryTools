@@ -1,0 +1,16 @@
+/*<head>{
+	name: "test.txt",
+	description: "testing sql query",
+	params: {
+		"name" : "varchar",
+		"id" : "int",
+		"list" : "%"
+	},
+	availableTo: ["mysql"]
+}</head>*/
+
+--<SELECT 1>
+SELECT 1 as `col1`;
+
+--<SELECT 2>
+SELECT 2 as `col2`;

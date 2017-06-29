@@ -72,7 +72,7 @@
 
 	var _Routes2 = _interopRequireDefault(_Routes);
 
-	var _reducers = __webpack_require__(292);
+	var _reducers = __webpack_require__(293);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -42797,11 +42797,11 @@
 
 	var _reactRouterDom = __webpack_require__(225);
 
-	var _App = __webpack_require__(296);
+	var _App = __webpack_require__(261);
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _App3 = __webpack_require__(261);
+	var _App3 = __webpack_require__(265);
 
 	var _App4 = _interopRequireDefault(_App3);
 
@@ -46115,17 +46115,254 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _AppTemplate = __webpack_require__(262);
+
+	var _AppTemplate2 = _interopRequireDefault(_AppTemplate);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var App = function App() {
+	    return _react2.default.createElement(_AppTemplate2.default, null);
+	};
+
+	exports.default = App;
+
+/***/ }),
+/* 262 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _TopNav = __webpack_require__(263);
+
+	var _TopNav2 = _interopRequireDefault(_TopNav);
+
+	var _SideBar = __webpack_require__(264);
+
+	var _SideBar2 = _interopRequireDefault(_SideBar);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var AppTemplate = function AppTemplate(_ref) {
+	    var children = _ref.children;
+
+	    var host = location.protocol + "//" + window.location.host;
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_TopNav2.default, { host: host }),
+	        _react2.default.createElement(_SideBar2.default, { host: host }),
+	        _react2.default.createElement(
+	            'div',
+	            { className: 'content-wrapper' },
+	            children
+	        ),
+	        _react2.default.createElement(
+	            'footer',
+	            { className: 'main-footer' },
+	            _react2.default.createElement(
+	                'strong',
+	                null,
+	                _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    'View my repo at: '
+	                ),
+	                _react2.default.createElement(
+	                    'a',
+	                    { href: 'https://github.com/fendy3002/QzStringTools' },
+	                    'https://github.com/fendy3002/QzStringTools'
+	                )
+	            )
+	        )
+	    );
+	};
+
+	exports.default = AppTemplate;
+
+/***/ }),
+/* 263 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var TopNav = function TopNav(_ref) {
+	    var host = _ref.host;
+	    return _react2.default.createElement(
+	        "header",
+	        { className: "main-header" },
+	        _react2.default.createElement(
+	            "a",
+	            { href: host, className: "logo" },
+	            _react2.default.createElement(
+	                "span",
+	                { className: "logo-mini" },
+	                _react2.default.createElement(
+	                    "b",
+	                    null,
+	                    "Qz"
+	                ),
+	                "Q"
+	            ),
+	            _react2.default.createElement(
+	                "span",
+	                { className: "logo-lg" },
+	                _react2.default.createElement(
+	                    "b",
+	                    null,
+	                    "Qz"
+	                ),
+	                "QueryTools"
+	            )
+	        ),
+	        _react2.default.createElement(
+	            "nav",
+	            { className: "navbar navbar-static-top" },
+	            _react2.default.createElement(
+	                "a",
+	                { href: "#", className: "sidebar-toggle", "data-toggle": "offcanvas", role: "button" },
+	                _react2.default.createElement(
+	                    "span",
+	                    { className: "sr-only" },
+	                    "Toggle navigation"
+	                ),
+	                _react2.default.createElement("span", { className: "icon-bar" }),
+	                _react2.default.createElement("span", { className: "icon-bar" }),
+	                _react2.default.createElement("span", { className: "icon-bar" })
+	            )
+	        )
+	    );
+	};
+
+	exports.default = TopNav;
+
+/***/ }),
+/* 264 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var SideBar = function SideBar(_ref) {
+	    var host = _ref.host;
+	    return _react2.default.createElement(
+	        "aside",
+	        { className: "main-sidebar" },
+	        _react2.default.createElement(
+	            "section",
+	            { className: "sidebar" },
+	            _react2.default.createElement(
+	                "ul",
+	                { className: "sidebar-menu", "data-widget": "tree" },
+	                _react2.default.createElement(
+	                    "li",
+	                    { className: "header" },
+	                    "MAIN NAVIGATION"
+	                ),
+	                _react2.default.createElement(
+	                    "li",
+	                    { className: "active treeview menu-open" },
+	                    _react2.default.createElement(
+	                        "a",
+	                        { href: host },
+	                        _react2.default.createElement("i", { className: "fa fa-font" }),
+	                        " ",
+	                        _react2.default.createElement(
+	                            "span",
+	                            null,
+	                            "Home"
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "li",
+	                    { className: "active treeview menu-open" },
+	                    _react2.default.createElement(
+	                        "a",
+	                        { href: host + "/config" },
+	                        _react2.default.createElement("i", { className: "fa fa-gear" }),
+	                        " ",
+	                        _react2.default.createElement(
+	                            "span",
+	                            null,
+	                            "Config"
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "li",
+	                    { className: "active treeview menu-open" },
+	                    _react2.default.createElement(
+	                        "a",
+	                        { href: host + "/about" },
+	                        _react2.default.createElement("i", { className: "fa fa-info-circle" }),
+	                        " ",
+	                        _react2.default.createElement(
+	                            "span",
+	                            null,
+	                            "About"
+	                        )
+	                    )
+	                )
+	            )
+	        )
+	    );
+	};
+
+	exports.default = SideBar;
+
+/***/ }),
+/* 265 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
 	var _reactRedux = __webpack_require__(203);
 
 	var _redux = __webpack_require__(182);
 
-	var _reactMarkdown = __webpack_require__(262);
+	var _reactMarkdown = __webpack_require__(266);
 
 	var _reactMarkdown2 = _interopRequireDefault(_reactMarkdown);
 
-	var _index = __webpack_require__(288);
+	var _index = __webpack_require__(292);
 
-	var _AppTemplate = __webpack_require__(289);
+	var _AppTemplate = __webpack_require__(262);
 
 	var _AppTemplate2 = _interopRequireDefault(_AppTemplate);
 
@@ -46173,14 +46410,14 @@
 	exports.default = StateApp;
 
 /***/ }),
-/* 262 */
+/* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var Parser = __webpack_require__(263).Parser;
-	var ReactRenderer = __webpack_require__(283);
+	var Parser = __webpack_require__(267).Parser;
+	var ReactRenderer = __webpack_require__(287);
 	var propTypes = __webpack_require__(205);
 
 	function ReactMarkdown(props) {
@@ -46252,7 +46489,7 @@
 
 
 /***/ }),
-/* 263 */
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -46269,14 +46506,14 @@
 	// console.log(renderer.render(parser.parse('Hello *world*')));
 
 	module.exports.version = '0.24.0'
-	module.exports.Node = __webpack_require__(264);
-	module.exports.Parser = __webpack_require__(265);
-	module.exports.HtmlRenderer = __webpack_require__(281);
-	module.exports.XmlRenderer = __webpack_require__(282);
+	module.exports.Node = __webpack_require__(268);
+	module.exports.Parser = __webpack_require__(269);
+	module.exports.HtmlRenderer = __webpack_require__(285);
+	module.exports.XmlRenderer = __webpack_require__(286);
 
 
 /***/ }),
-/* 264 */
+/* 268 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -46553,15 +46790,15 @@
 
 
 /***/ }),
-/* 265 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var Node = __webpack_require__(264);
-	var unescapeString = __webpack_require__(266).unescapeString;
-	var OPENTAG = __webpack_require__(266).OPENTAG;
-	var CLOSETAG = __webpack_require__(266).CLOSETAG;
+	var Node = __webpack_require__(268);
+	var unescapeString = __webpack_require__(270).unescapeString;
+	var OPENTAG = __webpack_require__(270).OPENTAG;
+	var CLOSETAG = __webpack_require__(270).CLOSETAG;
 
 	var CODE_INDENT = 4;
 
@@ -46572,7 +46809,7 @@
 	var C_SPACE = 32;
 	var C_OPEN_BRACKET = 91;
 
-	var InlineParser = __webpack_require__(277);
+	var InlineParser = __webpack_require__(281);
 
 	var reHtmlBlockOpen = [
 	   /./, // dummy for 0
@@ -47429,17 +47666,17 @@
 
 
 /***/ }),
-/* 266 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var encode = __webpack_require__(267);
-	var decode = __webpack_require__(268);
+	var encode = __webpack_require__(271);
+	var decode = __webpack_require__(272);
 
 	var C_BACKSLASH = 92;
 
-	var decodeHTML = __webpack_require__(269).decodeHTML;
+	var decodeHTML = __webpack_require__(273).decodeHTML;
 
 	var ENTITY = "&(?:#x[a-f0-9]{1,8}|#[0-9]{1,8}|[a-z][a-z0-9]{1,31});";
 
@@ -47538,7 +47775,7 @@
 
 
 /***/ }),
-/* 267 */
+/* 271 */
 /***/ (function(module, exports) {
 
 	
@@ -47642,7 +47879,7 @@
 
 
 /***/ }),
-/* 268 */
+/* 272 */
 /***/ (function(module, exports) {
 
 	
@@ -47770,11 +48007,11 @@
 
 
 /***/ }),
-/* 269 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var encode = __webpack_require__(270),
-	    decode = __webpack_require__(273);
+	var encode = __webpack_require__(274),
+	    decode = __webpack_require__(277);
 
 	exports.decode = function(data, level){
 		return (!level || level <= 0 ? decode.XML : decode.HTML)(data);
@@ -47809,15 +48046,15 @@
 
 
 /***/ }),
-/* 270 */
+/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var inverseXML = getInverseObj(__webpack_require__(271)),
+	var inverseXML = getInverseObj(__webpack_require__(275)),
 	    xmlReplacer = getInverseReplacer(inverseXML);
 
 	exports.XML = getInverse(inverseXML, xmlReplacer);
 
-	var inverseHTML = getInverseObj(__webpack_require__(272)),
+	var inverseHTML = getInverseObj(__webpack_require__(276)),
 	    htmlReplacer = getInverseReplacer(inverseHTML);
 
 	exports.HTML = getInverse(inverseHTML, htmlReplacer);
@@ -47888,7 +48125,7 @@
 
 
 /***/ }),
-/* 271 */
+/* 275 */
 /***/ (function(module, exports) {
 
 	module.exports = {
@@ -47900,7 +48137,7 @@
 	};
 
 /***/ }),
-/* 272 */
+/* 276 */
 /***/ (function(module, exports) {
 
 	module.exports = {
@@ -50032,13 +50269,13 @@
 	};
 
 /***/ }),
-/* 273 */
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var entityMap = __webpack_require__(272),
-	    legacyMap = __webpack_require__(274),
-	    xmlMap    = __webpack_require__(271),
-	    decodeCodePoint = __webpack_require__(275);
+	var entityMap = __webpack_require__(276),
+	    legacyMap = __webpack_require__(278),
+	    xmlMap    = __webpack_require__(275),
+	    decodeCodePoint = __webpack_require__(279);
 
 	var decodeXMLStrict  = getStrictDecoder(xmlMap),
 	    decodeHTMLStrict = getStrictDecoder(entityMap);
@@ -50109,7 +50346,7 @@
 	};
 
 /***/ }),
-/* 274 */
+/* 278 */
 /***/ (function(module, exports) {
 
 	module.exports = {
@@ -50222,10 +50459,10 @@
 	};
 
 /***/ }),
-/* 275 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var decodeMap = __webpack_require__(276);
+	var decodeMap = __webpack_require__(280);
 
 	module.exports = decodeCodePoint;
 
@@ -50254,7 +50491,7 @@
 
 
 /***/ }),
-/* 276 */
+/* 280 */
 /***/ (function(module, exports) {
 
 	module.exports = {
@@ -50289,20 +50526,20 @@
 	};
 
 /***/ }),
-/* 277 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var Node = __webpack_require__(264);
-	var common = __webpack_require__(266);
-	var normalizeReference = __webpack_require__(278);
+	var Node = __webpack_require__(268);
+	var common = __webpack_require__(270);
+	var normalizeReference = __webpack_require__(282);
 
 	var normalizeURI = common.normalizeURI;
 	var unescapeString = common.unescapeString;
-	var fromCodePoint = __webpack_require__(279);
-	var decodeHTML = __webpack_require__(269).decodeHTML;
-	__webpack_require__(280); // Polyfill for String.prototype.repeat
+	var fromCodePoint = __webpack_require__(283);
+	var decodeHTML = __webpack_require__(273).decodeHTML;
+	__webpack_require__(284); // Polyfill for String.prototype.repeat
 
 	// Constants for character codes:
 
@@ -51226,7 +51463,7 @@
 
 
 /***/ }),
-/* 278 */
+/* 282 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -51274,7 +51511,7 @@
 
 
 /***/ }),
-/* 279 */
+/* 283 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -51339,7 +51576,7 @@
 
 
 /***/ }),
-/* 280 */
+/* 284 */
 /***/ (function(module, exports) {
 
 	/*! http://mths.be/repeat v0.2.0 by @mathias */
@@ -51395,12 +51632,12 @@
 
 
 /***/ }),
-/* 281 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var escapeXml = __webpack_require__(266).escapeXml;
+	var escapeXml = __webpack_require__(270).escapeXml;
 
 	// Helper function to produce an HTML tag.
 	var tag = function(name, attrs, selfclosing) {
@@ -51687,12 +51924,12 @@
 
 
 /***/ }),
-/* 282 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var escapeXml = __webpack_require__(266).escapeXml;
+	var escapeXml = __webpack_require__(270).escapeXml;
 
 	// Helper function to produce an XML tag.
 	var tag = function(name, attrs, selfclosing) {
@@ -51870,16 +52107,16 @@
 
 
 /***/ }),
-/* 283 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var assign = __webpack_require__(284);
-	var isPlainObject = __webpack_require__(285);
-	var xssFilters = __webpack_require__(286);
-	var pascalCase = __webpack_require__(287);
+	var assign = __webpack_require__(288);
+	var isPlainObject = __webpack_require__(289);
+	var xssFilters = __webpack_require__(290);
+	var pascalCase = __webpack_require__(291);
 
 	var typeAliases = {
 	    blockquote: 'block_quote',
@@ -52284,7 +52521,7 @@
 
 
 /***/ }),
-/* 284 */
+/* 288 */
 /***/ (function(module, exports) {
 
 	/**
@@ -52927,7 +53164,7 @@
 
 
 /***/ }),
-/* 285 */
+/* 289 */
 /***/ (function(module, exports) {
 
 	/**
@@ -53072,7 +53309,7 @@
 
 
 /***/ }),
-/* 286 */
+/* 290 */
 /***/ (function(module, exports) {
 
 	/*
@@ -54177,7 +54414,7 @@
 
 
 /***/ }),
-/* 287 */
+/* 291 */
 /***/ (function(module, exports) {
 
 	/*!
@@ -54204,7 +54441,7 @@
 
 
 /***/ }),
-/* 288 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54229,218 +54466,7 @@
 	};
 
 /***/ }),
-/* 289 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _TopNav = __webpack_require__(290);
-
-	var _TopNav2 = _interopRequireDefault(_TopNav);
-
-	var _SideBar = __webpack_require__(291);
-
-	var _SideBar2 = _interopRequireDefault(_SideBar);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var AppTemplate = function AppTemplate(_ref) {
-	    var children = _ref.children;
-
-	    var host = location.protocol + "//" + window.location.host;
-	    return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(_TopNav2.default, { host: host }),
-	        _react2.default.createElement(_SideBar2.default, { host: host }),
-	        _react2.default.createElement(
-	            'div',
-	            { className: 'content-wrapper' },
-	            children
-	        ),
-	        _react2.default.createElement(
-	            'footer',
-	            { className: 'main-footer' },
-	            _react2.default.createElement(
-	                'strong',
-	                null,
-	                _react2.default.createElement(
-	                    'span',
-	                    null,
-	                    'View my repo at: '
-	                ),
-	                _react2.default.createElement(
-	                    'a',
-	                    { href: 'https://github.com/fendy3002/QzStringTools' },
-	                    'https://github.com/fendy3002/QzStringTools'
-	                )
-	            )
-	        )
-	    );
-	};
-
-	exports.default = AppTemplate;
-
-/***/ }),
-/* 290 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var TopNav = function TopNav(_ref) {
-	    var host = _ref.host;
-	    return _react2.default.createElement(
-	        "header",
-	        { className: "main-header" },
-	        _react2.default.createElement(
-	            "a",
-	            { href: host, className: "logo" },
-	            _react2.default.createElement(
-	                "span",
-	                { className: "logo-mini" },
-	                _react2.default.createElement(
-	                    "b",
-	                    null,
-	                    "Qz"
-	                ),
-	                "Q"
-	            ),
-	            _react2.default.createElement(
-	                "span",
-	                { className: "logo-lg" },
-	                _react2.default.createElement(
-	                    "b",
-	                    null,
-	                    "Qz"
-	                ),
-	                "QueryTools"
-	            )
-	        ),
-	        _react2.default.createElement(
-	            "nav",
-	            { className: "navbar navbar-static-top" },
-	            _react2.default.createElement(
-	                "a",
-	                { href: "#", className: "sidebar-toggle", "data-toggle": "offcanvas", role: "button" },
-	                _react2.default.createElement(
-	                    "span",
-	                    { className: "sr-only" },
-	                    "Toggle navigation"
-	                ),
-	                _react2.default.createElement("span", { className: "icon-bar" }),
-	                _react2.default.createElement("span", { className: "icon-bar" }),
-	                _react2.default.createElement("span", { className: "icon-bar" })
-	            )
-	        )
-	    );
-	};
-
-	exports.default = TopNav;
-
-/***/ }),
-/* 291 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var SideBar = function SideBar(_ref) {
-	    var host = _ref.host;
-	    return _react2.default.createElement(
-	        "aside",
-	        { className: "main-sidebar" },
-	        _react2.default.createElement(
-	            "section",
-	            { className: "sidebar" },
-	            _react2.default.createElement(
-	                "ul",
-	                { className: "sidebar-menu", "data-widget": "tree" },
-	                _react2.default.createElement(
-	                    "li",
-	                    { className: "header" },
-	                    "MAIN NAVIGATION"
-	                ),
-	                _react2.default.createElement(
-	                    "li",
-	                    { className: "active treeview menu-open" },
-	                    _react2.default.createElement(
-	                        "a",
-	                        { href: host },
-	                        _react2.default.createElement("i", { className: "fa fa-font" }),
-	                        " ",
-	                        _react2.default.createElement(
-	                            "span",
-	                            null,
-	                            "Home"
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    "li",
-	                    { className: "active treeview menu-open" },
-	                    _react2.default.createElement(
-	                        "a",
-	                        { href: host + "/config" },
-	                        _react2.default.createElement("i", { className: "fa fa-gear" }),
-	                        " ",
-	                        _react2.default.createElement(
-	                            "span",
-	                            null,
-	                            "Config"
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    "li",
-	                    { className: "active treeview menu-open" },
-	                    _react2.default.createElement(
-	                        "a",
-	                        { href: host + "/about" },
-	                        _react2.default.createElement("i", { className: "fa fa-info-circle" }),
-	                        " ",
-	                        _react2.default.createElement(
-	                            "span",
-	                            null,
-	                            "About"
-	                        )
-	                    )
-	                )
-	            )
-	        )
-	    );
-	};
-
-	exports.default = SideBar;
-
-/***/ }),
-/* 292 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54448,9 +54474,9 @@
 	var _require = __webpack_require__(182),
 	    combineReducers = _require.combineReducers;
 
-	var config = __webpack_require__(293);
-	var filter = __webpack_require__(294);
-	var request = __webpack_require__(295);
+	var config = __webpack_require__(294);
+	var filter = __webpack_require__(295);
+	var request = __webpack_require__(296);
 
 	var app = combineReducers({
 	    config: config,
@@ -54461,7 +54487,7 @@
 	module.exports = app;
 
 /***/ }),
-/* 293 */
+/* 294 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -54485,7 +54511,7 @@
 	module.exports = config;
 
 /***/ }),
-/* 294 */
+/* 295 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -54513,7 +54539,7 @@
 	module.exports = obj;
 
 /***/ }),
-/* 295 */
+/* 296 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -54535,32 +54561,6 @@
 	};
 
 	module.exports = obj;
-
-/***/ }),
-/* 296 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _AppTemplate = __webpack_require__(289);
-
-	var _AppTemplate2 = _interopRequireDefault(_AppTemplate);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var App = function App() {
-	    return _react2.default.createElement(_AppTemplate2.default, null);
-	};
-
-	exports.default = App;
 
 /***/ })
 /******/ ]);
