@@ -2,7 +2,7 @@ var JSON5 = require('json5');
 
 var reader = function(query){
 	var headPattern = /\/\*\s*<head>([^]*)<\/head>\s*\*\//;
-	var labelPattern = /--<(.*?)>/g;
+	var labelPattern = /--\s*<(.*?)>/g;
 
 	var headRaw = query.match(headPattern)[1];
 	var head = JSON5.parse(headRaw);

@@ -9,11 +9,12 @@
 	availableTo: ["mysql"]
 }</head>*/
 
---<1:SELECT 1>
-SELECT 1 as `col1`;
+-- <1:SELECT 1>
+SELECT 1 as `col1` UNION ALL
+SELECT 2 as `col1`;
 
---<2:SELECT 2>
+-- <2:SELECT 2>
 SELECT @id as `col2`;
 
---<SELECT 3>
+-- <SELECT 3>
 SELECT @name as `col3`;
