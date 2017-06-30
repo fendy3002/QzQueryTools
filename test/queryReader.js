@@ -33,14 +33,21 @@ describe('QueryReader', function() {
 	describe('Read query folders', function() {
 		it('should output queries from folder', function(done) {
 			var folder = path.join(__dirname, "../server/storage/config/queries");
-			var oldFile = fs.createReadStream(path.join(folder, '.script.example'));
-			var newFile = fs.createWriteStream(path.join(folder, 'script.example'));
-			oldFile.pipe(newFile);
-			oldFile.on("end", () => {
-				var result = queryFolderReader(folder, folder);
-				assert.equal(1, result.length);
-				fs.unlink(path.join(folder, 'script.example'));
-				done();
+			var oldFile1 = fs.createReadStream(path.join(folder, '.script.example'));
+			var newFile1 = fs.createWriteStream(path.join(folder, 'script.example'));
+
+			var oldFile2 = fs.createReadStream(path.join(folder, 'auth', '.script.example'));
+			var newFile2 = fs.createWriteStream(path.join(folder, 'auth','script.example'));
+			oldFile1.pipe(newFile1);
+			oldFile1.on("end", () => {
+				oldFile2.pipe(newFile2);
+				oldFile2.on("end", () => {
+					var result = queryFolderReader(folder, folder);
+					assert.equal(2, result.length);
+					fs.unlink(path.join(folder, 'script.example'));
+					fs.unlink(path.join(folder, 'auth', 'script.example'));
+					done();
+				});
 			});
 		});
 	});

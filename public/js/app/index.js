@@ -12,8 +12,12 @@ import reducer from './reducers';
 var renderPage = function(initialState){
     var state = {
         config: {
+            connection: [],
+            query: []
         },
         filter: {
+            selectedConnection: "",
+            selectedQuery: ""
         }
     };
     
@@ -34,5 +38,19 @@ var renderPage = function(initialState){
         document.getElementsByTagName('head')[0].appendChild(adminLteScript);
 
     }, 500);
+
+    sa.get('./api/config/connection')
+    .end((err, res) => {
+        sa.get('./api/config/query')
+        .end((err2, res2) => {
+            store.dispatch({
+                type: 'SET_CONFIG',
+                config: {
+                    connection: res.body,
+                    query: res2.body
+                }
+            });
+        });
+    });
 };
 renderPage([]);

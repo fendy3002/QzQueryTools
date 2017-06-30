@@ -16,7 +16,7 @@ var controller = {
 	        	host: k.host,
 	        	driver: k.driver
 	        }));
-	        var toSendStr = JSON5.stringify(toSend);
+	        var toSendStr = JSON.stringify(toSend);
 	        res.writeHead(200, {'Content-Type': 'application/json','Content-Length':toSendStr.length});
 	        res.write(toSendStr);
 	        res.end();
@@ -26,7 +26,7 @@ var controller = {
 		var folder = path.join(__dirname, "../../storage/config/queries");
 
 		var data = queryFolderReader(folder, folder);
-		var toSendStr = JSON5.stringify(data);
+		var toSendStr = JSON.stringify(data);
 		res.writeHead(200, {'Content-Type': 'application/json','Content-Length':toSendStr.length});
         res.write(toSendStr);
         res.end();
