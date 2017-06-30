@@ -2,34 +2,6 @@ import React from 'react';
 import lo from 'lodash';
 import sa from 'superagent';
 import {Treebeard} from 'react-treebeard';
-/*const data = {
-    name: 'root',
-    toggled: true,
-    children: [
-        {
-            name: 'parent',
-            children: [
-                { name: 'child1' },
-                { name: 'child2' }
-            ]
-        },
-        {
-            name: 'loading parent'
-        },
-        {
-            name: 'parent',
-            children: [
-                {
-                    name: 'nested parent',
-                    children: [
-                        { name: 'nested child 1' },
-                        { name: 'nested child 2' }
-                    ]
-                }
-            ]
-        }
-    ]
-};*/
 
 class Elem extends React.Component {
 	constructor() {

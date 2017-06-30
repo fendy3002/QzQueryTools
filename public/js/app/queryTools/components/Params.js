@@ -4,12 +4,17 @@ var timeoutHandler = null;
 var Elem = function({config, filter, request,
 	appendParams}){
     var paramDom = [];
+    var tempParam = {};
     if(request.selectedQuery){
         var onChange = key => event => {
             var input = event.target;
+            tempParam[key] = input.value;
             if(timeoutHandler){ clearTimeout(timeoutHandler); }
             timeoutHandler = setTimeout(() => {
-                appendParams(key, input.value);
+                lo.forOwn(tempParam, (value, key) => {
+                    appendParams(key, value);
+                });
+                tempParam = {};
             }, 150);
         };
         lo.forOwn(request.selectedQuery.head.params,

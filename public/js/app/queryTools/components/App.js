@@ -4,6 +4,7 @@ import AppTemplate from '../../sharedComponents/AppTemplate.js';
 import StateConnections from '../containers/StateConnections.js';
 import StateQueries from '../containers/StateQueries.js';
 import StateParams from '../containers/StateParams.js';
+import StateSubmit from '../containers/StateSubmit.js';
 
 import 'react-select/dist/react-select.css';
 
@@ -39,6 +40,9 @@ var App = function(){
 	        						<StateParams />
 	        					</div>
 	        				</div>
+	        			</div>
+	        			<div className="row">
+	        				<StateSubmit/>
 	        			</div>
 	        		</form>
 	        	</div>
