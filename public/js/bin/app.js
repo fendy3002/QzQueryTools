@@ -84,13 +84,13 @@
 	            connection: [],
 	            query: []
 	        },
-	        filter: {
+	        filter: Object.assign({
 	            selectedConnection: "",
 	            selectedQuery: ""
-	        }
+	        }, _reactReduxHashState2.default.getState("filter"))
 	    };
 
-	    var store = (0, _redux.createStore)(_reducers2.default, state, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+	    var store = (0, _redux.createStore)(_reducers2.default, state, _redux.applyMiddleware.apply(undefined, [_reduxThunk2.default, _reactReduxHashState2.default.middleware({ filter: "filter" })]));
 	    (0, _reactDom.render)(_react2.default.createElement(
 	        _reactRedux.Provider,
 	        { store: store },
@@ -74682,9 +74682,9 @@
 	            return _extends({}, state, {
 	                selectedConnection: action.connection
 	            });
-	        case 'SET_SELECTED_COMMAND':
+	        case 'SET_SELECTED_QUERY':
 	            return _extends({}, state, {
-	                selectedCommand: action.command
+	                selectedQuery: action.query
 	            });
 	        default:
 	            return state;

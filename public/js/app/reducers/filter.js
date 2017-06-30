@@ -5,10 +5,10 @@ var obj = function(state = [], action){
                 ...state,
                 selectedConnection: action.connection
             };
-        case 'SET_SELECTED_COMMAND':
+        case 'SET_SELECTED_QUERY':
             return {
                 ...state,
-                selectedCommand: action.command
+                selectedQuery: action.query
             };
         default:
             return state;

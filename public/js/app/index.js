@@ -15,15 +15,18 @@ var renderPage = function(initialState){
             connection: [],
             query: []
         },
-        filter: {
+        filter: Object.assign({
             selectedConnection: "",
             selectedQuery: ""
-        }
+        }, QzReactReduxHashState.getState("filter"))
     };
     
     var store = createStore(reducer,
         state,
-        applyMiddleware(thunk));
+        applyMiddleware(...[
+            thunk,
+            QzReactReduxHashState.middleware({filter: "filter"})
+        ]));
     render(
         <Provider store={store}>
             <Routes />
