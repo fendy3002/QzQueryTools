@@ -43,7 +43,7 @@ class Elem extends React.Component {
             });
         });
 
-        this.state = {cursor: null, data: []};
+        this.state = {cursor: null, data: [], showData: []};
         this.onToggle = this.onToggle.bind(this);
     }
     onToggle(node, toggled) {
@@ -59,16 +59,22 @@ class Elem extends React.Component {
             var {setSelectedQuery} = this.props;
 
 	        node.active = true;
-            setSelectedQuery(node.bound.filePath);
+            setSelectedQuery(node.bound);
         	this.setState({cursor: node, fakeCursor: node});
         }
     }
   	render() {
-	  	var {config, filter,
+	  	var {config, filter, request,
 			setSelectedQuery} = this.props;
 
+        var showData = [];
+        if(request.selectedConnection){
+            var selectedConnection = request.selectedConnection;
+            showData = lo.filter(this.state.data,
+                    k => !k.bound || k.bound.head.availableTo.indexOf(selectedConnection.driver) >= 0);
+        }
 	    return (
-	      	<Treebeard data={this.state.data}
+	      	<Treebeard data={showData}
 	      		onToggle={this.onToggle}/>
 	    );
   	}

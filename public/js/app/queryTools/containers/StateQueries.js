@@ -7,7 +7,8 @@ import Component from '../components/Queries.js';
 var mapStateToProps = function(state){
     return {
         config: state.config,
-        filter: state.filter
+        filter: state.filter,
+        request: state.request
     };
 };
 

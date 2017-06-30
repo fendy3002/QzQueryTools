@@ -2,7 +2,7 @@ import React from 'react'
 import RSelect from 'react-select';
 import Highlighter from 'react-highlight-words';
 
-var Elem = function({config, filter,
+var Elem = function({config, filter, request,
 	setSelectedConnection}){
 	var searchKeyword = {value: ""};
     var renderOption = option => {
@@ -27,7 +27,7 @@ var Elem = function({config, filter,
         onInputChange={k=> searchKeyword.value = k}
         valueRenderer={renderValue}
         optionRenderer={renderOption}
-        value={filter.selectedConnection}
+        value={request.selectedConnection}
         clearable={false}
         filterOption={filterOption}></RSelect>
 };

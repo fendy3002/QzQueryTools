@@ -13,3 +13,11 @@ var setSelectedQuery = exports.setSelectedQuery = function(query){
         query: query
     };
 };
+var appendParams = exports.appendParams = function(key, value){
+	var param = {};
+	param[key] = value;
+    return {
+        type: 'APPEND_PARAMS',
+        param: param
+    };
+};

@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import React, { PropTypes } from 'react';
-import {setSelectedConnection} from '../actions/index.js';
-import Component from '../components/Connections.js';
+import {appendParams} from '../actions/index.js';
+import Component from '../components/Params.js';
 
 var mapStateToProps = function(state){
     return {
@@ -14,7 +14,7 @@ var mapStateToProps = function(state){
 
 var mapDispatchToProps = function(dispatch, getState){
     return {
-        setSelectedConnection: bindActionCreators(setSelectedConnection, dispatch)
+        appendParams: bindActionCreators(appendParams, dispatch)
     };
 };
 var StateComponent = connect(

@@ -3,6 +3,7 @@ import React from 'react'
 import AppTemplate from '../../sharedComponents/AppTemplate.js';
 import StateConnections from '../containers/StateConnections.js';
 import StateQueries from '../containers/StateQueries.js';
+import StateParams from '../containers/StateParams.js';
 
 import 'react-select/dist/react-select.css';
 
@@ -31,6 +32,12 @@ var App = function(){
 	        					<div className="form-group">
 			        				<label className="control-label">Query</label>
 	        						<StateQueries />
+	        					</div>
+	        				</div>
+	        				<div className="col-sm-6">
+	        					<div className="form-group">
+			        				<label className="control-label">Params</label>
+	        						<StateParams />
 	        					</div>
 	        				</div>
 	        			</div>

@@ -3,12 +3,12 @@ var obj = function(state = [], action){
         case "SET_SELECTED_CONNECTION":
             return {
                 ...state,
-                selectedConnection: action.connection
+                selectedConnection: action.connection.name
             };
         case 'SET_SELECTED_QUERY':
             return {
                 ...state,
-                selectedQuery: action.query
+                selectedQuery: action.query.filePath
             };
         default:
             return state;

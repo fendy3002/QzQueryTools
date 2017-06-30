@@ -46537,6 +46537,10 @@
 
 	var _StateQueries2 = _interopRequireDefault(_StateQueries);
 
+	var _StateParams = __webpack_require__(525);
+
+	var _StateParams2 = _interopRequireDefault(_StateParams);
+
 	__webpack_require__(489);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -46603,6 +46607,20 @@
 																																									'Query'
 																																					),
 																																					_react2.default.createElement(_StateQueries2.default, null)
+																																	)
+																													),
+																													_react2.default.createElement(
+																																	'div',
+																																	{ className: 'col-sm-6' },
+																																	_react2.default.createElement(
+																																					'div',
+																																					{ className: 'form-group' },
+																																					_react2.default.createElement(
+																																									'label',
+																																									{ className: 'control-label' },
+																																									'Params'
+																																					),
+																																					_react2.default.createElement(_StateParams2.default, null)
 																																	)
 																													)
 																									)
@@ -46855,7 +46873,8 @@
 	var mapStateToProps = function mapStateToProps(state) {
 	    return {
 	        config: state.config,
-	        filter: state.filter
+	        filter: state.filter,
+	        request: state.request
 	    };
 	};
 
@@ -46896,6 +46915,14 @@
 	        query: query
 	    };
 	};
+	var appendParams = exports.appendParams = function (key, value) {
+	    var param = {};
+	    param[key] = value;
+	    return {
+	        type: 'APPEND_PARAMS',
+	        param: param
+	    };
+	};
 
 /***/ }),
 /* 269 */
@@ -46924,6 +46951,7 @@
 	var Elem = function Elem(_ref) {
 	    var config = _ref.config,
 	        filter = _ref.filter,
+	        request = _ref.request,
 	        setSelectedConnection = _ref.setSelectedConnection;
 
 	    var searchKeyword = { value: "" };
@@ -46959,7 +46987,7 @@
 	        },
 	        valueRenderer: renderValue,
 	        optionRenderer: renderOption,
-	        value: filter.selectedConnection,
+	        value: request.selectedConnection,
 	        clearable: false,
 	        filterOption: filterOption });
 	};
@@ -51070,7 +51098,8 @@
 	var mapStateToProps = function mapStateToProps(state) {
 	    return {
 	        config: state.config,
-	        filter: state.filter
+	        filter: state.filter,
+	        request: state.request
 	    };
 	};
 
@@ -51162,7 +51191,7 @@
 	            });
 	        });
 
-	        _this.state = { cursor: null, data: [] };
+	        _this.state = { cursor: null, data: [], showData: [] };
 	        _this.onToggle = _this.onToggle.bind(_this);
 	        return _this;
 	    }
@@ -51183,7 +51212,7 @@
 
 
 	                node.active = true;
-	                setSelectedQuery(node.bound.filePath);
+	                setSelectedQuery(node.bound);
 	                this.setState({ cursor: node, fakeCursor: node });
 	            }
 	        }
@@ -51193,10 +51222,18 @@
 	            var _props = this.props,
 	                config = _props.config,
 	                filter = _props.filter,
+	                request = _props.request,
 	                setSelectedQuery = _props.setSelectedQuery;
 
 
-	            return _react2.default.createElement(_reactTreebeard.Treebeard, { data: this.state.data,
+	            var showData = [];
+	            if (request.selectedConnection) {
+	                var selectedConnection = request.selectedConnection;
+	                showData = _lodash2.default.filter(this.state.data, function (k) {
+	                    return !k.bound || k.bound.head.availableTo.indexOf(selectedConnection.driver) >= 0;
+	                });
+	            }
+	            return _react2.default.createElement(_reactTreebeard.Treebeard, { data: showData,
 	                onToggle: this.onToggle });
 	        }
 	    }]);
@@ -74680,11 +74717,11 @@
 	    switch (action.type) {
 	        case "SET_SELECTED_CONNECTION":
 	            return _extends({}, state, {
-	                selectedConnection: action.connection
+	                selectedConnection: action.connection.name
 	            });
 	        case 'SET_SELECTED_QUERY':
 	            return _extends({}, state, {
-	                selectedQuery: action.query
+	                selectedQuery: action.query.filePath
 	            });
 	        default:
 	            return state;
@@ -74706,6 +74743,21 @@
 	    var action = arguments[1];
 
 	    switch (action.type) {
+	        case "SET_SELECTED_CONNECTION":
+	            return _extends({}, state, {
+	                selectedConnection: action.connection,
+	                selectedQuery: null,
+	                params: null
+	            });
+	        case "SET_SELECTED_QUERY":
+	            return _extends({}, state, {
+	                selectedQuery: action.query,
+	                params: null
+	            });
+	        case "APPEND_PARAMS":
+	            return _extends({}, state, {
+	                params: _extends({}, state.params, action.param)
+	            });
 	        case "SET_README":
 	            return _extends({}, state, {
 	                readme: action.readme
@@ -74716,6 +74768,111 @@
 	};
 
 	module.exports = obj;
+
+/***/ }),
+/* 525 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _reactRedux = __webpack_require__(205);
+
+	var _redux = __webpack_require__(184);
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _index = __webpack_require__(268);
+
+	var _Params = __webpack_require__(526);
+
+	var _Params2 = _interopRequireDefault(_Params);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var mapStateToProps = function mapStateToProps(state) {
+	    return {
+	        config: state.config,
+	        filter: state.filter,
+	        request: state.request
+	    };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch, getState) {
+	    return {
+	        appendParams: (0, _redux.bindActionCreators)(_index.appendParams, dispatch)
+	    };
+	};
+	var StateComponent = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Params2.default);
+
+	exports.default = StateComponent;
+
+/***/ }),
+/* 526 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _lodash = __webpack_require__(220);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var timeoutHandler = null;
+	var Elem = function Elem(_ref) {
+	    var config = _ref.config,
+	        filter = _ref.filter,
+	        request = _ref.request,
+	        appendParams = _ref.appendParams;
+
+	    var paramDom = [];
+	    if (request.selectedQuery) {
+	        var onChange = function onChange(key) {
+	            return function (event) {
+	                var input = event.target;
+	                if (timeoutHandler) {
+	                    clearTimeout(timeoutHandler);
+	                }
+	                timeoutHandler = setTimeout(function () {
+	                    appendParams(key, input.value);
+	                }, 150);
+	            };
+	        };
+	        _lodash2.default.forOwn(request.selectedQuery.head.params, function (value, key) {
+	            paramDom.push(_react2.default.createElement(
+	                'div',
+	                { className: 'form-group' },
+	                _react2.default.createElement(
+	                    'label',
+	                    { className: 'control-label' },
+	                    key
+	                ),
+	                _react2.default.createElement('input', { className: 'form-control', onChange: onChange(key) })
+	            ));
+	        });
+	    };
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        paramDom
+	    );
+	};
+
+	exports.default = Elem;
 
 /***/ })
 /******/ ]);
