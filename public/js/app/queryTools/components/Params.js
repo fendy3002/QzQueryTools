@@ -16,7 +16,8 @@ var Elem = function({config, filter, request,
             (value, key) => {
                 paramDom.push(<div className="form-group">
                     <label className="control-label">{key}</label>
-                    <input className="form-control" onChange={onChange(key)}/>
+                    <input className="form-control" onChange={onChange(key)}
+                        key={request.selectedQuery.filePath + key}/>
                 </div>);
             });
     };

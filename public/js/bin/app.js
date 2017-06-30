@@ -46597,7 +46597,7 @@
 																													{ className: 'row' },
 																													_react2.default.createElement(
 																																	'div',
-																																	{ className: 'col-sm-6' },
+																																	{ className: 'col-sm-4' },
 																																	_react2.default.createElement(
 																																					'div',
 																																					{ className: 'form-group' },
@@ -46611,7 +46611,7 @@
 																													),
 																													_react2.default.createElement(
 																																	'div',
-																																	{ className: 'col-sm-6' },
+																																	{ className: 'col-sm-8' },
 																																	_react2.default.createElement(
 																																					'div',
 																																					{ className: 'form-group' },
@@ -74861,7 +74861,8 @@
 	                    { className: 'control-label' },
 	                    key
 	                ),
-	                _react2.default.createElement('input', { className: 'form-control', onChange: onChange(key) })
+	                _react2.default.createElement('input', { className: 'form-control', onChange: onChange(key),
+	                    key: request.selectedQuery.filePath + key })
 	            ));
 	        });
 	    };

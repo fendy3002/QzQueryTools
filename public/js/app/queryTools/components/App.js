@@ -18,7 +18,6 @@ var App = function(){
 	        <div className="box box-primary">
 	        	<div className="box-body">
 	        		<form className="form">
-
 	        			<div className="row">
 	        				<div className="col-sm-12">
 		        				<div className="form-group">
@@ -28,13 +27,13 @@ var App = function(){
 	        				</div>
 	        			</div>
 	        			<div className="row">
-	        				<div className="col-sm-6">
+	        				<div className="col-sm-4">
 	        					<div className="form-group">
 			        				<label className="control-label">Query</label>
 	        						<StateQueries />
 	        					</div>
 	        				</div>
-	        				<div className="col-sm-6">
+	        				<div className="col-sm-8">
 	        					<div className="form-group">
 			        				<label className="control-label">Params</label>
 	        						<StateParams />
