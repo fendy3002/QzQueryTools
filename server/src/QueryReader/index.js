@@ -1,26 +1,22 @@
-var JSON5 = require('json5');
+import fileReader from './fileReader.js';
+import fs from 'fs';
+import path from 'path';
 
-var reader = function(query){
-	var headPattern = /\/\*\s*<head>([^]*)<\/head>\s*\*\//;
-	var labelPattern = /--<(.*?):(.*?)>/g;
-
-	var headRaw = query.match(headPattern)[1];
-	var head = JSON5.parse(headRaw);
-	var labelsRegex = labelPattern.exec(query);
-	var labels = [];
-	while (labelsRegex != null) {
-		labels.push({
-			label: labelsRegex[2],
-			index: labelsRegex[1]
+var reader = function(folder){
+	var files = fs.readdirSync(folder);
+	var result = [];
+	for(var i = 0; i < files.length; i++){
+		var file = files[i];
+		if(file.startsWith('.')){ continue; }
+		var fullpath = path.join(folder, file);
+		result.push({
+			fileName: file,
+			filePath: file,
+			fullPath: path.join(folder, file),
+			...fileReader(fs.readFileSync(fullpath, "utf8"))
 		});
-		labelsRegex = labelPattern.exec(query);
 	}
-	
-	return {
-		head: head,
-		script: query,
-		labels: labels
-	};
+	return result;
 };
 
 export default reader;
