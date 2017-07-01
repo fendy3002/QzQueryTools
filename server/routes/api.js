@@ -11,6 +11,9 @@ var apiRoute = function(app, prefix){
 		if(selected.get){
 			app.get(prefix + '/' + k, selected.get);
 		}
+		if(selected.post){
+			app.post(prefix + '/' + k, selected.post);
+		}
 	});
 };
 export default apiRoute;

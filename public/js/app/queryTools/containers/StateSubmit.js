@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import React, { PropTypes } from 'react';
-import {setSelectedQuery} from '../actions/index.js';
+import {execQuery} from '../actions/index.js';
 import Component from '../components/Submit.js';
 
 var mapStateToProps = function(state){
@@ -14,7 +14,7 @@ var mapStateToProps = function(state){
 
 var mapDispatchToProps = function(dispatch, getState){
     return {
-        setSelectedQuery: bindActionCreators(setSelectedQuery, dispatch)
+        execQuery: bindActionCreators(execQuery, dispatch)
     };
 };
 var StateComponent = connect(

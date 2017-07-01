@@ -25,7 +25,7 @@ var controller = {
 	getQuery : function(req, res){
 		var folder = path.join(__dirname, "../../storage/config/queries");
 
-		var data = queryFolderReader(folder, folder);
+		var data = queryFolderReader(folder);
 		var toSendStr = JSON.stringify(data);
 		res.writeHead(200, {'Content-Type': 'application/json','Content-Length':toSendStr.length});
         res.write(toSendStr);

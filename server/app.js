@@ -1,8 +1,13 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const bodyParser = require("body-parser");
 const webRoute = require('./routes/web.js').default;
 const apiRoute = require('./routes/api.js').default;
+
+//Here we are configuring express to use body-parser as middle-ware.
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use('/public', express.static(path.join(__dirname, '../public')))
 

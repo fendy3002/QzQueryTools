@@ -10,6 +10,9 @@ var webRoute = function(app){
 		if(selected.get){
 			app.get('/' + k, selected.get);
 		}
+		if(selected.post){
+			app.post('/' + k, selected.post);
+		}
 	});
 };
 export default webRoute;

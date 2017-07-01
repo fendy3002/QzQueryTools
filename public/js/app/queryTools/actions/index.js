@@ -21,3 +21,13 @@ var appendParams = exports.appendParams = function(key, value){
         param: param
     };
 };
+
+var execQuery = exports.execQuery = function(params){
+    return (dispatch, getState) => {
+        sa.post('/api/exec')
+            .send(params)
+            .end(function(err, res){
+            
+        });
+    };
+};
