@@ -5,7 +5,7 @@ import StateConnections from '../containers/StateConnections.js';
 import StateQueries from '../containers/StateQueries.js';
 import StateParams from '../containers/StateParams.js';
 import StateSubmit from '../containers/StateSubmit.js';
-
+import StateResult from '../containers/StateResult.js';
 import 'react-select/dist/react-select.css';
 
 var App = function(){
@@ -47,6 +47,7 @@ var App = function(){
 	        		</form>
 	        	</div>
 	        </div>
+	        <StateResult />
         </section>
     </AppTemplate>;
 };

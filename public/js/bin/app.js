@@ -46545,6 +46545,10 @@
 
 	var _StateSubmit2 = _interopRequireDefault(_StateSubmit);
 
+	var _StateResult = __webpack_require__(530);
+
+	var _StateResult2 = _interopRequireDefault(_StateResult);
+
 	__webpack_require__(494);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -46635,7 +46639,8 @@
 																									)
 																					)
 																	)
-													)
+													),
+													_react2.default.createElement(_StateResult2.default, null)
 									)
 					);
 	};
@@ -46935,7 +46940,12 @@
 
 	var execQuery = exports.execQuery = function (params) {
 	    return function (dispatch, getState) {
-	        _superagent2.default.post('/api/exec').send(params).end(function (err, res) {});
+	        _superagent2.default.post('/api/exec').send(params).end(function (err, res) {
+	            dispatch({
+	                type: "SET_EXEC_RESULT",
+	                result: res.body
+	            });
+	        });
 	    };
 	};
 
@@ -75670,6 +75680,10 @@
 	                selectedQuery: action.query,
 	                params: null
 	            });
+	        case "SET_EXEC_RESULT":
+	            return _extends({}, state, {
+	                execResult: action.result
+	            });
 	        case "APPEND_PARAMS":
 	            return _extends({}, state, {
 	                params: _extends({}, state.params, action.param)
@@ -75684,6 +75698,154 @@
 	};
 
 	module.exports = obj;
+
+/***/ }),
+/* 530 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _reactRedux = __webpack_require__(205);
+
+	var _redux = __webpack_require__(184);
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	__webpack_require__(268);
+
+	var _Result = __webpack_require__(531);
+
+	var _Result2 = _interopRequireDefault(_Result);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var mapStateToProps = function mapStateToProps(state) {
+	    return {
+	        request: state.request
+	    };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch, getState) {
+	    return {};
+	};
+	var StateComponent = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Result2.default);
+
+	exports.default = StateComponent;
+
+/***/ }),
+/* 531 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _lodash = __webpack_require__(220);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _superagent = __webpack_require__(221);
+
+	var _superagent2 = _interopRequireDefault(_superagent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Elem = function Elem(_ref) {
+	    var request = _ref.request;
+
+	    var renderTable = function renderTable(table) {
+	        return _react2.default.createElement(
+	            'div',
+	            { className: 'box' },
+	            _react2.default.createElement(
+	                'div',
+	                { className: 'box-header' },
+	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    table.label
+	                )
+	            ),
+	            _react2.default.createElement(
+	                'div',
+	                { className: 'box-body' },
+	                _react2.default.createElement(
+	                    'table',
+	                    { className: 'table table-responsive table-condensed table-striped table-bordered' },
+	                    renderHead(table.fields),
+	                    renderData(table.data, table.fields)
+	                )
+	            )
+	        );
+	    };
+	    var renderHead = function renderHead(fields) {
+	        var fieldDoms = _lodash2.default.map(fields, function (k) {
+	            return _react2.default.createElement(
+	                'th',
+	                null,
+	                k
+	            );
+	        });
+	        return _react2.default.createElement(
+	            'thead',
+	            null,
+	            _react2.default.createElement(
+	                'tr',
+	                null,
+	                fieldDoms
+	            )
+	        );
+	    };
+	    var renderTd = function renderTd(row, fields) {
+	        return _lodash2.default.map(fields, function (k) {
+	            return _react2.default.createElement(
+	                'td',
+	                null,
+	                row[k]
+	            );
+	        });
+	    };
+	    var renderData = function renderData(data, fields) {
+	        var trList = _lodash2.default.map(data, function (row) {
+	            return _react2.default.createElement(
+	                'tr',
+	                null,
+	                renderTd(row, fields)
+	            );
+	        });
+
+	        return _react2.default.createElement(
+	            'tbody',
+	            null,
+	            trList
+	        );
+	    };
+	    if (!request.execResult) {
+	        return _react2.default.createElement('div', null);
+	    }
+	    var tableDoms = _lodash2.default.map(request.execResult, function (k) {
+	        return renderTable(k);
+	    });
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        tableDoms
+	    );
+	};
+
+	exports.default = Elem;
 
 /***/ })
 /******/ ]);

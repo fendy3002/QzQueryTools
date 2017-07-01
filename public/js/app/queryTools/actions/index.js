@@ -27,7 +27,10 @@ var execQuery = exports.execQuery = function(params){
         sa.post('/api/exec')
             .send(params)
             .end(function(err, res){
-            
+            dispatch({
+                type: "SET_EXEC_RESULT",
+                result: res.body
+            })
         });
     };
 };

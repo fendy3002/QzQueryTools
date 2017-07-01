@@ -13,6 +13,11 @@ var obj = function(state = [], action){
                 selectedQuery: action.query,
                 params: null
             };
+        case "SET_EXEC_RESULT":
+            return {
+                ...state,
+                execResult: action.result
+            };
         case "APPEND_PARAMS":
             return {
                 ...state,
