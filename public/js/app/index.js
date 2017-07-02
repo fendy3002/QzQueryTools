@@ -60,17 +60,17 @@ var renderPage = function(){
                 connection: res.body,
                 query: res2.body
             };
-            var preloadFilter = QzReactReduxHashState.getState("filter");
-            var preloadRequest = getPreloadedRequest(config, preloadFilter);
+            var filter = Object.assign({
+                    selectedConnection: "",
+                    selectedQuery: ""
+                }, QzReactReduxHashState.getState("filter"));
+            var preloadRequest = getPreloadedRequest(config, filter);
             var state = {
                 config: Object.assign({
                     connection: [],
                     query: []
                 }, config),
-                filter: Object.assign({
-                    selectedConnection: "",
-                    selectedQuery: ""
-                }, preloadFilter),
+                filter: filter,
                 request: Object.assign({
                     selectedConnection: null,
                     selectedQuery: null

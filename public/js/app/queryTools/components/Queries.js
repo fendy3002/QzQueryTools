@@ -6,22 +6,13 @@ import {Treebeard} from 'react-treebeard';
 class Elem extends React.Component {
 	constructor(props) {
         super(props);
-        /*sa.get('./api/config/query')
-        .end((err, res) => {
-            this.setState((state, props) => {
-                return {
-                    data: queryToNode(res.body)
-                };
-            });
-        });*/
         var {config, request} = this.props;
         var cursorRef = null;
         var queryToNode = queryToNodeHandler(request.selectedQuery, 
             k=> { cursorRef = k; });
         this.state = {
             data: queryToNode(config.query),
-            cursor: cursorRef,
-            showData: []
+            cursor: cursorRef
         };
         
         this.onToggle = this.onToggle.bind(this);
@@ -41,6 +32,20 @@ class Elem extends React.Component {
 	        node.active = true;
             setSelectedQuery(node.bound);
         	this.setState({cursor: node, fakeCursor: node});
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        var oldRequest = this.props.request;
+        var {request, config} = nextProps;
+
+        if(oldRequest.selectedConnection != request.selectedConnection){
+            var cursorRef = null;
+            var queryToNode = queryToNodeHandler(request.selectedQuery, 
+                k=> { cursorRef = k; });
+            this.setState({
+                data: queryToNode(config.query),
+                cursor: cursorRef
+            });
         }
     }
   	render() {
@@ -67,7 +72,8 @@ var queryToNodeHandler = (selectedQuery, onFindNode) => {
                 var node = {
                     name: k.fileName,
                     bound: k,
-                    active: selectedQuery.filePath == k.filePath
+                    active: (selectedQuery) 
+                        && (selectedQuery.filePath == k.filePath)
                 };
                 if(node.active){
                     onFindNode(node);
@@ -79,7 +85,8 @@ var queryToNodeHandler = (selectedQuery, onFindNode) => {
                     name: k.fileName,
                     toggled: false,
                     children: queryToNode(k.children),
-                    toggled: selectedQuery.filePath.startsWith(k.filePath)
+                    toggled: (selectedQuery) &&
+                        (selectedQuery.filePath.startsWith(k.filePath))
                 };
             }
         });

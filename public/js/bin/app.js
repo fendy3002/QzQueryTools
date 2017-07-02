@@ -132,17 +132,17 @@
 	                connection: res.body,
 	                query: res2.body
 	            };
-	            var preloadFilter = _reactReduxHashState2.default.getState("filter");
-	            var preloadRequest = getPreloadedRequest(config, preloadFilter);
+	            var filter = Object.assign({
+	                selectedConnection: "",
+	                selectedQuery: ""
+	            }, _reactReduxHashState2.default.getState("filter"));
+	            var preloadRequest = getPreloadedRequest(config, filter);
 	            var state = {
 	                config: Object.assign({
 	                    connection: [],
 	                    query: []
 	                }, config),
-	                filter: Object.assign({
-	                    selectedConnection: "",
-	                    selectedQuery: ""
-	                }, preloadFilter),
+	                filter: filter,
 	                request: Object.assign({
 	                    selectedConnection: null,
 	                    selectedQuery: null
@@ -51222,14 +51222,6 @@
 	    function Elem(props) {
 	        _classCallCheck(this, Elem);
 
-	        /*sa.get('./api/config/query')
-	        .end((err, res) => {
-	            this.setState((state, props) => {
-	                return {
-	                    data: queryToNode(res.body)
-	                };
-	            });
-	        });*/
 	        var _this = _possibleConstructorReturn(this, (Elem.__proto__ || Object.getPrototypeOf(Elem)).call(this, props));
 
 	        var _this$props = _this.props,
@@ -51242,8 +51234,7 @@
 	        });
 	        _this.state = {
 	            data: queryToNode(config.query),
-	            cursor: cursorRef,
-	            showData: []
+	            cursor: cursorRef
 	        };
 
 	        _this.onToggle = _this.onToggle.bind(_this);
@@ -51268,6 +51259,25 @@
 	                node.active = true;
 	                setSelectedQuery(node.bound);
 	                this.setState({ cursor: node, fakeCursor: node });
+	            }
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            var oldRequest = this.props.request;
+	            var request = nextProps.request,
+	                config = nextProps.config;
+
+
+	            if (oldRequest.selectedConnection != request.selectedConnection) {
+	                var cursorRef = null;
+	                var queryToNode = queryToNodeHandler(request.selectedQuery, function (k) {
+	                    cursorRef = k;
+	                });
+	                this.setState({
+	                    data: queryToNode(config.query),
+	                    cursor: cursorRef
+	                });
 	            }
 	        }
 	    }, {
@@ -51304,7 +51314,7 @@
 	                var node = {
 	                    name: k.fileName,
 	                    bound: k,
-	                    active: selectedQuery.filePath == k.filePath
+	                    active: selectedQuery && selectedQuery.filePath == k.filePath
 	                };
 	                if (node.active) {
 	                    onFindNode(node);
@@ -51315,7 +51325,7 @@
 	                    name: k.fileName,
 	                    toggled: false,
 	                    children: queryToNode(k.children)
-	                }, 'toggled', selectedQuery.filePath.startsWith(k.filePath));
+	                }, 'toggled', selectedQuery && selectedQuery.filePath.startsWith(k.filePath));
 	            }
 	        });
 	    };
@@ -75133,7 +75143,8 @@
 	    switch (action.type) {
 	        case "SET_SELECTED_CONNECTION":
 	            return _extends({}, state, {
-	                selectedConnection: (action.connection || {}).name
+	                selectedConnection: (action.connection || {}).name,
+	                selectedQuery: null
 	            });
 	        case 'SET_SELECTED_QUERY':
 	            return _extends({}, state, {

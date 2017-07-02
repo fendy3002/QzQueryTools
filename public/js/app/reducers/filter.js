@@ -3,7 +3,8 @@ var obj = function(state = [], action){
         case "SET_SELECTED_CONNECTION":
             return {
                 ...state,
-                selectedConnection: (action.connection || {}).name
+                selectedConnection: (action.connection || {}).name,
+                selectedQuery: null
             };
         case 'SET_SELECTED_QUERY':
             return {
