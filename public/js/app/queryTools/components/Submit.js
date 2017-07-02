@@ -12,11 +12,13 @@ var Elem = function({config, filter, request,
         });
     };
     return <div className="col-sm-12 text-right">
-        <button type="button"
-            className="btn btn-flat btn-primary"
-            onClick={onClick}>
-            Query
-        </button>          
+        {filter.selectedQuery &&
+            <button type="button"
+                className="btn btn-flat btn-primary"
+                onClick={onClick}>
+                Query
+            </button>
+        }
     </div>;
 };
 

@@ -4,18 +4,26 @@ import sa from 'superagent';
 import {Treebeard} from 'react-treebeard';
 
 class Elem extends React.Component {
-	constructor() {
-        super();
-        sa.get('./api/config/query')
+	constructor(props) {
+        super(props);
+        /*sa.get('./api/config/query')
         .end((err, res) => {
             this.setState((state, props) => {
                 return {
                     data: queryToNode(res.body)
                 };
             });
-        });
-
-        this.state = {cursor: null, data: [], showData: []};
+        });*/
+        var {config, request} = this.props;
+        var cursorRef = null;
+        var queryToNode = queryToNodeHandler(request.selectedQuery, 
+            k=> { cursorRef = k; });
+        this.state = {
+            data: queryToNode(config.query),
+            cursor: cursorRef,
+            showData: []
+        };
+        
         this.onToggle = this.onToggle.bind(this);
     }
     onToggle(node, toggled) {
@@ -52,22 +60,31 @@ class Elem extends React.Component {
   	}
 };
 
-var queryToNode = queries => {
-    return lo.map(queries, k=> {
-        if(!k.children){
-            return {
-                name: k.fileName,
-                bound: k
-            };
-        }
-        else{
-            return {
-                name: k.fileName,
-                toggled: false,
-                children: queryToNode(k.children)
-            };
-        }
-    });
+var queryToNodeHandler = (selectedQuery, onFindNode) => {
+    var queryToNode = (queries) => {
+        return lo.map(queries, k=> {
+            if(!k.children){
+                var node = {
+                    name: k.fileName,
+                    bound: k,
+                    active: selectedQuery.filePath == k.filePath
+                };
+                if(node.active){
+                    onFindNode(node);
+                }
+                return node;
+            }
+            else{
+                return {
+                    name: k.fileName,
+                    toggled: false,
+                    children: queryToNode(k.children),
+                    toggled: selectedQuery.filePath.startsWith(k.filePath)
+                };
+            }
+        });
+    };
+    return queryToNode;
 };
 
 export default Elem;
