@@ -52,6 +52,7 @@
     "moment": "^2.18.1",
     "mysql": "^2.13.0",
     "normalizr": "^2.2.1",
+    "promise": "^8.0.0",
     "qs": "^6.3.0",
     "query-string": "^4.2.3",
     "rc-pagination": "^1.5.5",
