@@ -10,6 +10,10 @@ var helpLine = "QzQueryTools exec.js\n" +
     "====================\n" +
     "Used by specifying the following commands:\n" +
     "prepare\t To prepare freshly cloned git. Run this command after clone / install\n" +
+    "fprepare\t Prepare without checking, overwrite existing config\n" +
+    "decrypt\t Decrypt all connection password\n" +
+    "encrypt\t Encrypt all connection password\n" +
+    "reencrypt\t Change key and re-encrypt all connection password\n" +
     "help\t To show this page";
 
 var exec = function(args){
@@ -22,7 +26,22 @@ var exec = function(args){
             console.log(helpLine);
         }
         else if(command == "prepare"){
+            if(canPrepare()){
+                prepare();                
+            }
+        }
+        else if(command == "fprepare"){
             prepare();
+        }
+        else if(command == "decrypt"){
+            decrypt();
+        }
+        else if(command == "encrypt"){
+            decrypt();
+            encrypt();
+        }
+        else if(command == "reencrypt"){
+            reencrypt();
         }
         else{
             console.log(helpLine);
@@ -30,9 +49,15 @@ var exec = function(args){
     }
 };
 
-var readFile = Promise.denodeify(fs.readFile);
-var writeFile = Promise.denodeify(fs.writeFile);
-var log = Promise.denodeify(console.log);
+var canPrepare = function(){
+    console.log("Checking if can prepare...");
+    var folder = path.join(__dirname, "server/storage/config");
+    if(fs.existsSync(path.join(folder, "config.js"))){
+        console.log("Config already exists, use fprepare command instead");
+        return false;
+    }
+    return true;
+};
 var prepare = function(){
     console.log("Copying query files...");
     var folder = path.join(__dirname, "server/storage/config");
@@ -107,5 +132,59 @@ var prepare = function(){
         });
 };
 
+var encrypt = function(){
+    console.log("Trying to encrypt connection...");
+    var folder = path.join(__dirname, "server/storage/config");
+    var connectionPath = path.join(folder, 'connections.js');
+    var connectionObjs = JSON5.parse(fs.readFileSync(connectionPath, 'utf8'));
+    var configObj = JSON5.parse(fs.readFileSync(path.join(folder, 'config.js'), 'utf8'));
+    var encrypt = PasswordHandler(configObj.key).encrypt;
+    for(var i = 0; i < connectionObjs.length; i++){
+        connectionObjs[i].password = encrypt(connectionObjs[i].password);
+    }
+    fs.writeFileSync(path.join(folder, "connections.js"), 
+        JSON.stringify(connectionObjs, null, 4), 
+        "utf8");
+    console.log("Encrypt connection done");
+};
+var decrypt = function(){
+    console.log("Trying to decrypt connection...");
+    var folder = path.join(__dirname, "server/storage/config");
+    var connectionPath = path.join(folder, 'connections.js');
+    var connectionObjs = JSON5.parse(fs.readFileSync(connectionPath, 'utf8'));
+    var configObj = JSON5.parse(fs.readFileSync(path.join(folder, 'config.js'), 'utf8'));
+    var decrypt = PasswordHandler(configObj.key).decrypt;
+    for(var i = 0; i < connectionObjs.length; i++){
+        var decrypted = decrypt(connectionObjs[i].password);
+        if(decrypted){
+            connectionObjs[i].password = decrypted;
+        }
+    }
+    fs.writeFileSync(path.join(folder, "connections.js"), 
+        JSON.stringify(connectionObjs, null, 4), 
+        "utf8");
+
+    console.log("Decrypt connection done");
+};
+var reencrypt = function(){
+    var folder = path.join(__dirname, "server/storage/config");
+    decrypt();
+    console.log("Changing config key done");
+    var configPath = path.join(folder, "config.js");
+    fs.readFile(configPath, "utf8", (err, data) => {
+        var configObj = JSON5.parse(data);
+        configObj.key = uuid().replace(/-/g, "");
+        fs.writeFile(path.join(folder, "config.js"), 
+            JSON.stringify(configObj, null, 4), 
+            "utf8",
+            (err) => {
+                if(err){ reject(err); }
+                else{
+                    console.log("Copying config files done");
+                    encrypt();
+                }
+            });
+    });
+};
 
 exec(args);
