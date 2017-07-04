@@ -1,5 +1,5 @@
 var assert = require('assert');
-var PasswordHandler = require('../server/src/PasswordHandler/index.js').default;
+var PasswordHandler = require('../server/src/PasswordHandler/index.js');
 
 describe('PasswordHandler', function() {
 	describe('Test encrypt decrypt', function() {

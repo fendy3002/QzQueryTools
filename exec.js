@@ -3,6 +3,7 @@ const path = require('path');
 const uuid = require('uuid/v1');
 const JSON5 = require('JSON5');
 var Promise = require('promise');
+var PasswordHandler = require('./server/src/PasswordHandler/index.js');
 
 var args = process.argv.slice(2);
 var helpLine = "QzQueryTools exec.js\n" +
@@ -60,10 +61,11 @@ var prepare = function(){
     };
     var saveConnection = (configObj, connectionObj) => {
         return new Promise((resolve, reject) => {
+            var encrypt = PasswordHandler(configObj.key).encrypt;
             for(var i = 0; i < connectionObj.length; i++){
-
+                connectionObj[i].password = encrypt(connectionObj[i].password);
             }
-            return fs.writeFile(path.join(folder, "connection.js"), 
+            return fs.writeFile(path.join(folder, "connections.js"), 
                 JSON.stringify(connectionObj, null, 4), 
                 "utf8", (err) => {
                     if(err){ reject(err); }
