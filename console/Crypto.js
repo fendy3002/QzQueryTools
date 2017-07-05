@@ -7,8 +7,9 @@ var PasswordHandler = require('../server/src/PasswordHandler/index.js');
 
 var Service = function(root){
     var folder = path.join(root, "server/storage/config");
-    var configObj = JSON5.parse(fs.readFileSync(path.join(folder, 'config.js'), 'utf8'));
-
+    var configObj = () => {
+    	return JSON5.parse(fs.readFileSync(path.join(folder, 'config.js'), 'utf8'));
+    };
     var template = function(handler){
 	    var connectionPath = path.join(folder, 'connections.js');
 	    var connectionObjs = JSON5.parse(fs.readFileSync(connectionPath, 'utf8'));
@@ -21,17 +22,17 @@ var Service = function(root){
 	};
 	var encrypt = function(){
 	    console.log("Trying to encrypt connection...");
-	    var encrypt = PasswordHandler(configObj.key).encrypt;
+	    var handler = PasswordHandler(configObj().key).encrypt;
 	    template(function(password){
-	    	return encrypt(password);
+	    	return handler(password);
 	    });
 	    console.log("Encrypt connection done");
 	};
 	var decrypt = function(){
 	    console.log("Trying to decrypt connection...");
-	    var decrypt = PasswordHandler(configObj.key).decrypt;
+	    var handler = PasswordHandler(configObj().key).decrypt;
 	    template(function(password){
-	    	var decrypted = decrypt(password);
+	    	var decrypted = handler(password);
 	        if(decrypted){
 	        	return decrypted;
 	        }
@@ -42,24 +43,15 @@ var Service = function(root){
 	    console.log("Decrypt connection done");
 	};
 	var reencrypt = function(){
-	    var folder = path.join(root, "server/storage/config");
 	    decrypt();
 	    console.log("Changing config key...");
-	    var configPath = path.join(folder, "config.js");
-	    fs.readFile(configPath, "utf8", (err, data) => {
-	        var configObj = JSON5.parse(data);
-	        configObj.key = uuid().replace(/-/g, "");
-	        fs.writeFile(path.join(folder, "config.js"), 
-	            JSON.stringify(configObj, null, 4), 
-	            "utf8",
-	            (err) => {
-	                if(err){ reject(err); }
-	                else{
-	                    console.log("Changing config key done");
-	                    encrypt();
-	                }
-	            });
-	    });
+	    var config = configObj();
+        config.key = uuid().replace(/-/g, "");
+        fs.writeFileSync(path.join(folder, "config.js"), 
+            JSON.stringify(config, null, 4), 
+            "utf8");
+        console.log("Changing config key done");
+        encrypt();
 	};
 	return {
 		encrypt,
