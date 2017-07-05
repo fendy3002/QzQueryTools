@@ -38,27 +38,36 @@ var parseResult = function(sqlData, query){
 	var result = [];
 	var index = 0;
 	for(index = 0; index < sqlData.length; index++){
-		var currentTable = sqlData[index];
 		var labels = lo.filter(query.labels, 
 			k=> k.index == index + 1 // +1 because 1 based, as opposed to 0 based
 		);
 		var label = '';
 		if(labels.length > 0){ label = labels[0].label; }
-		else{ label = index; }
-
-		var fields = [];
-		if(currentTable.length > 0){
-			var firstData = currentTable[0];
-			fields = Object.keys(firstData);
+		else{ label = index + 1; }
+		var currentTable = sqlData[index];
+		if(Array.isArray(currentTable)){
+			result.push(parseTable(currentTable, label));
 		}
-		var data = lo.map(currentTable, k=> { return { ...k }; });
-		result.push({
-			label: label,
-			data: data,
-			fields: fields
-		});
+		else{
+			result.push(parseTable(sqlData, label));
+			return result;
+		}
 	}
 	return result;
+};
+
+var parseTable = function(table, label){
+	var fields = [];
+	if(table.length > 0){
+		var firstData = table[0];
+		fields = Object.keys(firstData);
+	}
+	var data = lo.map(table, k=> { return { ...k }; });
+	return {
+		label: label,
+		data: data,
+		fields: fields
+	};
 };
 
 export default service;

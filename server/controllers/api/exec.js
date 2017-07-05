@@ -14,7 +14,7 @@ var controller = {
 
 		var config = getConfig(connectionName, queryPath);
 		if(!config.connection || !config.query){
-			send400("connection or query is required", res);
+			send400("connection and query is required", res);
 		}
 		var connection = {...config.connection};
 		connection.password = PasswordHandler(config.app.key).decrypt(connection.password);
@@ -44,11 +44,25 @@ var getConfig = (connectionName, queryPath) => {
 	var queryFolder = path.join(__dirname, "../../storage/config/queries");
 	var queries = QueryFolderReader(queryFolder);
 	var connection = lo.filter(connections, k => k.name == connectionName)[0] || null;
-	var query = lo.filter(queries, k=> k.filePath == queryPath)[0] || null;
+	var query = getQuery(queries, queryPath) || null;
 	return {
 		connection: connection,
 		query: query,
 		app: appConfig
+	}
+};
+
+var getQuery = function(queries, queryPath){
+	for(var i = 0; i < queries.length; i++){
+		var query = queries[i];
+		if(query.children){
+			var tempResult = getQuery(query.children, queryPath);
+			if(tempResult){ return tempResult; }
+		}
+		else{
+			var tempResult = query.filePath == queryPath ? query : null;
+			if(tempResult){ return tempResult; }
+		}
 	}
 };
 

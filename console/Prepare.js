@@ -21,8 +21,11 @@ var Service = function(root){
 		    var folder = path.join(root, "server/storage/config");
 		    var exampleQuery = fs.createReadStream(path.join(folder, 'queries', '.script.example'));
 		    var actualQuery = fs.createWriteStream(path.join(folder, 'queries', 'script.example'));
+		    var exampleQuery2 = fs.createReadStream(path.join(folder, 'queries', 'auth', '.script.example'));
+		    var actualQuery2 = fs.createWriteStream(path.join(folder, 'queries', 'auth', 'script.example'));
 
 		    exampleQuery.pipe(actualQuery);
+		    exampleQuery2.pipe(actualQuery2);
 		    exampleQuery.on('end', () => {
 		        console.log("Copying query files done");
 		    });
