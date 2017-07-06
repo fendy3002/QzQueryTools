@@ -68239,7 +68239,7 @@
 	        _lodash2.default.forOwn(request.selectedQuery.head.params, function (value, key) {
 	            paramDom.push(_react2.default.createElement(
 	                'div',
-	                { className: 'form-group' },
+	                { className: 'col-md-6 form-group' },
 	                _react2.default.createElement(
 	                    'label',
 	                    { className: 'control-label' },
@@ -68426,16 +68426,25 @@
 	            { className: 'box' },
 	            _react2.default.createElement(
 	                'div',
-	                { className: 'box-header' },
+	                { className: 'box-header with-border' },
 	                _react2.default.createElement(
 	                    'h3',
-	                    null,
+	                    { className: 'box-title' },
 	                    table.label
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'box-tools pull-right' },
+	                    _react2.default.createElement(
+	                        'button',
+	                        { type: 'button', className: 'btn btn-box-tool', 'data-widget': 'collapse' },
+	                        _react2.default.createElement('i', { className: 'fa fa-minus' })
+	                    )
 	                )
 	            ),
 	            _react2.default.createElement(
 	                'div',
-	                { className: 'box-body' },
+	                { className: 'box-body no-padding' },
 	                _react2.default.createElement(
 	                    'table',
 	                    { className: 'table table-responsive table-condensed table-striped table-bordered' },

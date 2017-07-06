@@ -19,7 +19,7 @@ var Elem = function({config, filter, request,
         };
         lo.forOwn(request.selectedQuery.head.params,
             (value, key) => {
-                paramDom.push(<div className="form-group">
+                paramDom.push(<div className="col-md-6 form-group">
                     <label className="control-label">{key}</label>
                     <input className="form-control" onChange={onChange(key)}
                         key={request.selectedQuery.filePath + key}/>
