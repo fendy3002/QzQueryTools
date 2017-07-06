@@ -5,7 +5,7 @@ import {
         Link
     } from 'react-router-dom';
 
-import HomeApp from './queryTools/components/App.js';
+import HomeApp from './queryTools/containers/StateApp.js';
 //import ConfigApp from './configList/components/App.js';
 import AboutApp from './about/components/App.js';
 

@@ -8,7 +8,7 @@ import StateSubmit from '../containers/StateSubmit.js';
 import StateResult from '../containers/StateResult.js';
 import 'react-select/dist/react-select.css';
 
-var App = function(){
+var App = function({request}){
     return <AppTemplate>
         <section className="content-header">
             <h1>
@@ -35,6 +35,13 @@ var App = function(){
 	        					</div>
 	        				</div>
 	        				<div className="col-sm-8">
+	        					{request.selectedQuery &&
+							        <div className="form-group">
+							            <label className="control-label">
+							            	{request.selectedQuery.head.description}
+							            </label>
+							        </div>
+	        					}
 	        					<div className="form-group">
 			        				<label className="control-label">Params</label>
 	        						<StateParams />

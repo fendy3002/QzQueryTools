@@ -12,9 +12,8 @@ describe('QueryReader', function() {
 				var config = queryReader(data);
 
 				var expected = {
-					head: { 
-						name: 'test.txt',
-     					description: 'testing sql query',
+					head: {
+     					description: 'Testing sql query',
      					params: { name: 'varchar', id: 'int', list: '%' },
      					availableTo: [ 'mysql' ] },
 					script: data,
@@ -36,8 +35,8 @@ describe('QueryReader', function() {
 			var oldFile1 = fs.createReadStream(path.join(folder, '.script.example'));
 			var newFile1 = fs.createWriteStream(path.join(folder, 'script.example'));
 
-			var oldFile2 = fs.createReadStream(path.join(folder, 'auth', '.script.example'));
-			var newFile2 = fs.createWriteStream(path.join(folder, 'auth','script.example'));
+			var oldFile2 = fs.createReadStream(path.join(folder, 'employees', '.script.example'));
+			var newFile2 = fs.createWriteStream(path.join(folder, 'employees','script.example'));
 			oldFile1.pipe(newFile1);
 			oldFile1.on("end", () => {
 				oldFile2.pipe(newFile2);
@@ -45,7 +44,7 @@ describe('QueryReader', function() {
 					var result = queryFolderReader(folder, folder);
 					assert.equal(2, result.length);
 					fs.unlink(path.join(folder, 'script.example'));
-					fs.unlink(path.join(folder, 'auth', 'script.example'));
+					fs.unlink(path.join(folder, 'employees', 'script.example'));
 					done();
 				});
 			});

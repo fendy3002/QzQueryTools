@@ -1,6 +1,5 @@
 /*<head>{
-	name: "test.txt",
-	description: "testing sql query",
+	description: "Testing sql query",
 	params: {
 		"name" : "varchar",
 		"id" : "int",

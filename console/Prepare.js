@@ -6,6 +6,15 @@ var Promise = require('promise');
 var PasswordHandler = require('../server/src/PasswordHandler/index.js');
 
 var Service = function(root){
+	var copyFile = function(fromPath, toPath){
+		var fromFile = fs.createReadStream(fromPath);
+    	var toFile = fs.createWriteStream(toPath);
+    	
+	    fromFile.pipe(toFile);
+	    fromFile.on('end', () => {
+	        console.log("Copying " + fromPath + " files done");
+	    });
+	}
 	return {
 		canPrepare: function(){
 		    console.log("Checking if can prepare...");
@@ -19,16 +28,13 @@ var Service = function(root){
 		prepare: function(){
 		    console.log("Copying query files...");
 		    var folder = path.join(root, "server/storage/config");
-		    var exampleQuery = fs.createReadStream(path.join(folder, 'queries', '.script.example'));
-		    var actualQuery = fs.createWriteStream(path.join(folder, 'queries', 'script.example'));
-		    var exampleQuery2 = fs.createReadStream(path.join(folder, 'queries', 'auth', '.script.example'));
-		    var actualQuery2 = fs.createWriteStream(path.join(folder, 'queries', 'auth', 'script.example'));
 
-		    exampleQuery.pipe(actualQuery);
-		    exampleQuery2.pipe(actualQuery2);
-		    exampleQuery.on('end', () => {
-		        console.log("Copying query files done");
-		    });
+		    copyFile(path.join(folder, 'queries', '.script.example'),
+	    		path.join(folder, 'queries', 'script.sql'));
+		    copyFile(path.join(folder, 'queries', 'employees', '.script.example'),
+	    		path.join(folder, 'queries', 'employees', 'get_employees_by_name.sql'));
+		    copyFile(path.join(folder, 'queries', 'employees', '.script2.example'),
+	    		path.join(folder, 'queries', 'employees', 'get_employees_in_department.sql'));
 
 		    var saveConfig = (configObj) => {
 		        return new Promise((resolve, reject) => {
