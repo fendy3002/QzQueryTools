@@ -18,12 +18,21 @@ var controller = {
 		}
 		var connection = {...config.connection};
 		connection.password = PasswordHandler(config.app.key).decrypt(connection.password);
-		var queryResult = MySqlQuery(connection, config.query, params, (data) => {
-			var toSendStr = JSON.stringify(data);
-		    res.set({'Content-Type': 'application/json','Content-Length':toSendStr.length});
-		    res.status(200);
-		    res.send(toSendStr);
-		    res.end();
+		MySqlQuery(connection, config.query, params, (data) => {
+			if(data.success === false){
+				toSendStr = JSON.stringify(data);
+				res.set({'Content-Type': 'application/json','Content-Length':toSendStr.length});
+				res.status(400);
+				res.send(toSendStr);
+				res.end();
+			}
+			else{
+				var toSendStr = JSON.stringify(data);
+				res.set({'Content-Type': 'application/json','Content-Length':toSendStr.length});
+				res.status(200);
+				res.send(toSendStr);
+				res.end();
+			}
 		});
 	}
 };

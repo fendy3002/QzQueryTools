@@ -18,12 +18,28 @@ var service = function(connection, query, params, next){
 			return txt;
 		}.bind(this));
 	};
-	db.connect();
+	db.connect(function(err){
+		if (err) handleSqlErr(err, next);		
+	});
+
 	db.query(getScript(query, params), getParam(query, params), function(err, results) {
-		if (err) throw err;
-		next(parseResult(results, query));
+		if (err) handleSqlErr(err, next);
+		else{
+			next(parseResult(results, query));
+		}
 	});
 	db.end();
+};
+
+var handleSqlErr = function(err, next){
+	var message = err.code == "ER_BAD_DB_ERROR" ? "Database " + connection.db + " not found." :
+		err.code == "ER_ACCESS_DENIED_ERROR" ? "Username or password error" : 
+		err.code == "ENOTFOUND" ? "Database host is either incorrect or cannot be accessed" : err.code;
+
+	next({
+		"message": message,
+		"success": false
+	});
 };
 
 var getScript = function(query, params){

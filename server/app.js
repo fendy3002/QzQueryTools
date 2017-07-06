@@ -14,6 +14,9 @@ app.use('/public', express.static(path.join(__dirname, '../public')))
 webRoute(app);
 apiRoute(app, '/api');
 
+process.on('uncaughtException', function (err) {
+    console.log(err);
+});
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 });
