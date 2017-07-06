@@ -1,3 +1,4 @@
+var path = require('path');
 module.exports = {
     entry: {
         app: './public/js/app/index.js'
@@ -17,6 +18,19 @@ module.exports = {
                 }
             },
             { test: /\.css$/, loader: "style-loader!css-loader" },
+            {
+                test: /\.(sass|scss)$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            includePaths: [path.resolve(__dirname, 'node_modules')],
+                        },
+                    },
+                ],
+            },
             {
                 test: /\.json$/,
                 loader: 'json-loader'

@@ -1,5 +1,6 @@
 import sa from 'superagent';
 import lo from 'lodash';
+import {toastr} from 'react-redux-toastr'
 
 var setSelectedConnection = exports.setSelectedConnection = function(connection){
     return {
@@ -27,6 +28,10 @@ var execQuery = exports.execQuery = function(params){
         sa.post('/api/exec')
             .send(params)
             .end(function(err, res){
+                if(err){
+                    console.log(res.body);
+                    toastr.error(res.body.message);
+                }
             dispatch({
                 type: "SET_EXEC_RESULT",
                 result: res.body

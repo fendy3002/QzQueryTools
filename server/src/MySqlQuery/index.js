@@ -9,6 +9,7 @@ var service = function(connection, query, params, next){
 		multipleStatements: true
 	});
 
+	var result = {data: {}};
 	db.config.queryFormat = function (query, values) {
 		if (!values) return query;
 		return query.replace(/\@(\w+)/g, function (txt, key) {
@@ -19,16 +20,21 @@ var service = function(connection, query, params, next){
 		}.bind(this));
 	};
 	db.connect(function(err){
-		if (err) handleSqlErr(err, next);		
-	});
-
-	db.query(getScript(query, params), getParam(query, params), function(err, results) {
-		if (err) handleSqlErr(err, next);
+		if (err){ 
+			handleSqlErr(err, next);
+		}
 		else{
-			next(parseResult(results, query));
+			db.query(getScript(query, params), getParam(query, params), function(err, results) {
+				if (err) {
+					handleSqlErr(err, next);
+				}
+				else{
+					next(parseResult(results, query));
+				}
+				db.end();
+			});
 		}
 	});
-	db.end();
 };
 
 var handleSqlErr = function(err, next){

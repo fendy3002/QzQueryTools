@@ -15,6 +15,7 @@ var controller = {
 		var config = getConfig(connectionName, queryPath);
 		if(!config.connection || !config.query){
 			send400("connection and query is required", res);
+			return;
 		}
 		var connection = {...config.connection};
 		connection.password = PasswordHandler(config.app.key).decrypt(connection.password);
@@ -25,6 +26,7 @@ var controller = {
 				res.status(400);
 				res.send(toSendStr);
 				res.end();
+				return;
 			}
 			else{
 				var toSendStr = JSON.stringify(data);
@@ -32,6 +34,7 @@ var controller = {
 				res.status(200);
 				res.send(toSendStr);
 				res.end();
+				return;
 			}
 		});
 	}
