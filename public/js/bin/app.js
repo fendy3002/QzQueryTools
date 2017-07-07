@@ -69218,7 +69218,7 @@
 	            ),
 	            _react2.default.createElement(
 	                'div',
-	                { className: 'box-body no-padding' },
+	                { className: 'box-body table-responsive no-padding' },
 	                _react2.default.createElement(
 	                    'table',
 	                    { className: 'table table-responsive table-condensed table-striped table-bordered' },

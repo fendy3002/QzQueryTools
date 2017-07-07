@@ -40,9 +40,9 @@ var service = function(connection, query, params, next){
 var handleSqlErr = function(err, next){
 	var message = err.code == "ER_BAD_DB_ERROR" ? "Database not found." :
 		err.code == "ER_ACCESS_DENIED_ERROR" ? "Username or password error" : 
-		err.code == "ER_PARSE_ERROR" ? err.toString() : 
-		err.code == "ER_SP_DOES_NOT_EXIST" ? err.toString() : 
-		err.code == "ENOTFOUND" ? "Database host is either incorrect or cannot be accessed" : err.code;
+		err.code == "ER_PARSE_ERROR" ? err.toString() : // sql syntax is incorrect
+		err.code == "ER_SP_DOES_NOT_EXIST" ? err.toString() : // function is incorrect
+		err.code == "ENOTFOUND" ? "Database host is either incorrect or cannot be accessed" : err.toString();
 
 	next({
 		"message": message,

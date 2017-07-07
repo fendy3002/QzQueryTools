@@ -13,7 +13,7 @@ var Elem = function({request}){
                     </button>
                 </div>
             </div>
-            <div className="box-body no-padding">
+            <div className="box-body table-responsive no-padding">
                 <table className="table table-responsive table-condensed table-striped table-bordered">
                     {renderHead(table.fields)}
                     {renderData(table.data, table.fields)}
