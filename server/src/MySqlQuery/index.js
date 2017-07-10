@@ -60,21 +60,29 @@ var getParam = function(query, params){
 
 var parseResult = function(sqlData, query){
 	var result = [];
+	var tableNo = 0;
 	var index = 0;
 	for(index = 0; index < sqlData.length; index++){
 		var labels = lo.filter(query.labels, 
-			k=> k.index == index + 1 // +1 because 1 based, as opposed to 0 based
+			k=> k.index == tableNo + 1 // +1 because 1 based, as opposed to 0 based
 		);
 		var label = '';
 		if(labels.length > 0){ label = labels[0].label; }
 		else{ label = index + 1; }
 		var currentTable = sqlData[index];
-		if(Array.isArray(currentTable)){
-			result.push(parseTable(currentTable, label));
+		if(currentTable.constructor && currentTable.constructor.name == "OkPacket"){
+			continue;
 		}
 		else{
-			result.push(parseTable(sqlData, label));
-			return result;
+			if(Array.isArray(currentTable)){
+				result.push(parseTable(currentTable, label));
+				tableNo++;
+			}
+			else{
+				result.push(parseTable(sqlData, label));
+				tableNo++;
+				return result;
+			}
 		}
 	}
 	return result;
