@@ -31,6 +31,11 @@ var obj = function(state = [], action){
                 ...state,
                 readme: action.readme
             };
+        case "SET_LOADING":
+            return {
+                ...state,
+                isLoading: action.isLoading
+            };
         default:
             return state;
     };

@@ -25,17 +25,33 @@ var appendParams = exports.appendParams = function(key, value){
 
 var execQuery = exports.execQuery = function(params){
     return (dispatch, getState) => {
-        sa.post('/api/exec')
-            .send(params)
-            .end(function(err, res){
-                if(err){
-                    console.log(res.body);
-                    toastr.error(res.body.message);
-                }
-            dispatch({
-                type: "SET_EXEC_RESULT",
-                result: res.body
-            })
+        loading(dispatch, done => {
+            sa.post('/api/exec')
+                .send(params)
+                .end(function(err, res){
+                    if(err){
+                        console.log(res.body);
+                        toastr.error(res.body.message);
+                    }
+                    dispatch({
+                        type: "SET_EXEC_RESULT",
+                        result: res.body
+                    });
+                    done();
+                });
         });
     };
 };
+
+var loading = exports.loading = function(dispatch, callback){
+    dispatch({
+        type: "SET_LOADING",
+        isLoading: true
+    });
+    callback(() => {
+        dispatch({
+            type: "SET_LOADING",
+            isLoading: false
+        });
+    });
+}
