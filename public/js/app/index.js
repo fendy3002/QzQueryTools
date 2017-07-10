@@ -27,7 +27,9 @@ var findQuery = (queries, selected) => {
             if(tempResult){ return tempResult; }
         }
         else{
-            return (query.filePath == selected) ? query : null;
+            if(query.filePath == selected){
+                return query; 
+            }
         }
     }
     return null;

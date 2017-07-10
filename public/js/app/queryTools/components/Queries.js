@@ -37,7 +37,7 @@ class Elem extends React.Component {
     componentWillReceiveProps(nextProps) {
         var oldRequest = this.props.request;
         var {request, config} = nextProps;
-
+        
         if(oldRequest.selectedConnection != request.selectedConnection){
             var cursorRef = null;
             var queryToNode = queryToNodeHandler(request.selectedQuery, 

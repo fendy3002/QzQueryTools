@@ -30,12 +30,12 @@ var execQuery = exports.execQuery = function(params){
                 .send(params)
                 .end(function(err, res){
                     if(err){
-                        console.log(res.body);
                         toastr.error(res.body.message);
                     }
                     dispatch({
                         type: "SET_EXEC_RESULT",
-                        result: res.body
+                        result: res.body.data,
+                        query: res.body.query
                     });
                     done();
                 });

@@ -9,7 +9,7 @@ var service = function(connection, query, params, next){
 		multipleStatements: true
 	});
 
-	var result = {data: {}};
+	var result = {data: {}, query: query};
 	db.config.queryFormat = function (query, values) {
 		if (!values) return query;
 		return query.replace(/\@(\w+)/g, function (txt, key) {
@@ -29,7 +29,10 @@ var service = function(connection, query, params, next){
 					handleSqlErr(err, next);
 				}
 				else{
-					next(parseResult(results, query));
+					next({
+						...result,
+						data: {...parseResult(results, query)}
+					});
 				}
 				db.end();
 			});
