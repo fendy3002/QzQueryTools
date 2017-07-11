@@ -50,7 +50,7 @@ var getNumericData = function(labels, data){
     return result;
 };
 
-var Elem = function({data, x, y}){
+var Elem = function({data, x, y, layout}){
     var order = 0;
     var labels = getLabels(data);
     var numericData = getNumericData(labels, data);
@@ -118,7 +118,8 @@ var Elem = function({data, x, y}){
         };
     }
 
-    return <Line data={lineData} options={options}/>;
+    return <Line data={lineData} options={options}
+        height={layout.height} width={layout.width}/>;
 };
 
 export default Elem;

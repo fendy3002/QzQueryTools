@@ -9,7 +9,6 @@ var Elem = function({layout, data}){
     var value = layout[key];
     
     var render = null;
-    console.log(layout);
     if(lo.includes(['line', 'bar', 'column'], key)){
         var selectedData = null;
         if(Array.isArray(value.script)){
@@ -19,13 +18,13 @@ var Elem = function({layout, data}){
             selectedData = [data[value.script - 1]];
         }
         if(key == 'line'){
-            render = <Line data={selectedData} x={value.x} y={value.y}/>;
+            render = <Line data={selectedData} x={value.x} y={value.y} layout={value}/>;
         }
         else if(key == 'bar'){
-            render = <Bar data={selectedData} x={value.x} y={value.y}/>;
+            render = <Bar data={selectedData} x={value.x} y={value.y} layout={value}/>;
         }
         else if(key == "column"){
-            render = <Column data={selectedData} x={value.x} y={value.y}/>;            
+            render = <Column data={selectedData} x={value.x} y={value.y} layout={value}/>;
         }
     }
 

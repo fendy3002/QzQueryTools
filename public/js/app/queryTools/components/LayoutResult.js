@@ -14,6 +14,13 @@ var Elem = function({layout, data}){
                 {renderLayout(value)}
             </div>;
         }
+        else if(key == "rowc"){
+            return <section className="col-xs-12">
+                <div className="row">
+                    {renderLayout(value)}
+                </div>
+            </section>;
+        }
         else if(key.startsWith("col-")){
             var width = key.split("-")[1];
             return <section className={"col-sm-" + width}>

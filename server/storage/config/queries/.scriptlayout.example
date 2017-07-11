@@ -1,0 +1,61 @@
+/*<head>{
+	description: "Testing sql query layout",
+	params: {
+	},
+	layout: [{
+		"row": [
+			{"col-8": [
+				{"rowc":
+					{"line": 
+						{
+							"label": "Jedi status",
+							"x": "Jedi",
+							"y": "Number",
+							"script": [1, 2]
+						}
+					}
+				},
+				{"rowc": 
+					{"bar": 
+						{
+							"label": "Jedi status",
+							"x": "Jedi",
+							"y": "Number",
+							"script": [1, 2]
+						}
+					}
+				}
+			]},
+			{"col-4": [
+				{"rowc": 
+					{"column": 
+						{
+							"label": "Jedi status",
+							"x": "Jedi",
+							"y": "Number",
+							"script": [1, 2],
+							"height": 400
+						}
+					}
+				}
+			]}
+		]
+	}],
+	availableTo: ["mysql"]
+}</head>*/
+
+-- <1:Jedi Kill Count>
+SELECT 'Luke' as `label`, 50 as `value` UNION ALL
+SELECT 'Anakin' as `label`, 250 as `value` UNION ALL
+SELECT 'Obi Wan' as `label`, 300 as `value` UNION ALL
+SELECT 'Mace Windu' as `label`, 270 as `value` UNION ALL
+SELECT 'Yoyoda' as `label`, 400 as `value` UNION ALL
+SELECT 'Rey' as `label`, 30 as `value`;
+
+-- <2:Jedi Value>
+SELECT 'Luke' as `label`, 100 as `value` UNION ALL
+SELECT 'Anakin' as `label`, 200 as `value` UNION ALL
+SELECT 'Obi Wan' as `label`, 330 as `value` UNION ALL
+SELECT 'Mace Windu' as `label`, 280 as `value` UNION ALL
+SELECT 'Yoyoda' as `label`, 400 as `value` UNION ALL
+SELECT 'Rey' as `label`, 70 as `value`;

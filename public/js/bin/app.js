@@ -68577,6 +68577,16 @@
 	                { className: 'row' },
 	                renderLayout(value)
 	            );
+	        } else if (key == "rowc") {
+	            return _react2.default.createElement(
+	                'section',
+	                { className: 'col-xs-12' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    renderLayout(value)
+	                )
+	            );
 	        } else if (key.startsWith("col-")) {
 	            var width = key.split("-")[1];
 	            return _react2.default.createElement(
@@ -68763,7 +68773,6 @@
 	    var value = layout[key];
 
 	    var render = null;
-	    console.log(layout);
 	    if (_lodash2.default.includes(['line', 'bar', 'column'], key)) {
 	        var selectedData = null;
 	        if (Array.isArray(value.script)) {
@@ -68775,11 +68784,11 @@
 	            selectedData = [data[value.script - 1]];
 	        }
 	        if (key == 'line') {
-	            render = _react2.default.createElement(_Line2.default, { data: selectedData, x: value.x, y: value.y });
+	            render = _react2.default.createElement(_Line2.default, { data: selectedData, x: value.x, y: value.y, layout: value });
 	        } else if (key == 'bar') {
-	            render = _react2.default.createElement(_Bar2.default, { data: selectedData, x: value.x, y: value.y });
+	            render = _react2.default.createElement(_Bar2.default, { data: selectedData, x: value.x, y: value.y, layout: value });
 	        } else if (key == "column") {
-	            render = _react2.default.createElement(_Column2.default, { data: selectedData, x: value.x, y: value.y });
+	            render = _react2.default.createElement(_Column2.default, { data: selectedData, x: value.x, y: value.y, layout: value });
 	        }
 	    }
 
@@ -68880,7 +68889,8 @@
 	var Elem = function Elem(_ref) {
 	    var data = _ref.data,
 	        x = _ref.x,
-	        y = _ref.y;
+	        y = _ref.y,
+	        layout = _ref.layout;
 
 	    var order = 0;
 	    var labels = getLabels(data);
@@ -68947,7 +68957,8 @@
 	        });
 	    }
 
-	    return _react2.default.createElement(_reactChartjs.Line, { data: lineData, options: options });
+	    return _react2.default.createElement(_reactChartjs.Line, { data: lineData, options: options,
+	        height: layout.height, width: layout.width });
 	};
 
 	exports.default = Elem;
@@ -100162,7 +100173,8 @@
 	var Elem = function Elem(_ref) {
 	    var data = _ref.data,
 	        x = _ref.x,
-	        y = _ref.y;
+	        y = _ref.y,
+	        layout = _ref.layout;
 
 	    var order = 0;
 	    var labels = getLabels(data);
@@ -100217,7 +100229,8 @@
 	        });
 	    }
 
-	    return _react2.default.createElement(_reactChartjs.Bar, { data: lineData, options: options });
+	    return _react2.default.createElement(_reactChartjs.Bar, { data: lineData, options: options,
+	        height: layout.height, width: layout.width });
 	};
 
 	exports.default = Elem;
@@ -100297,7 +100310,8 @@
 	var Elem = function Elem(_ref) {
 	    var data = _ref.data,
 	        x = _ref.x,
-	        y = _ref.y;
+	        y = _ref.y,
+	        layout = _ref.layout;
 
 	    var order = 0;
 	    var labels = getLabels(data);
@@ -100333,7 +100347,8 @@
 	                    minRotation: 0
 	                }
 	            }]
-	        }
+	        },
+	        maintainAspectRatio: true
 	    };
 	    if (x) {
 	        options.scales.xAxes[0] = _extends({}, options.scales.xAxes[0], {
@@ -100352,7 +100367,8 @@
 	        });
 	    }
 
-	    return _react2.default.createElement(_reactChartjs.HorizontalBar, { data: lineData, options: options });
+	    return _react2.default.createElement(_reactChartjs.HorizontalBar, { data: lineData, options: options,
+	        height: layout.height, width: layout.width });
 	};
 
 	exports.default = Elem;
