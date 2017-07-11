@@ -1,6 +1,7 @@
 import React from 'react';
 import lo from 'lodash';
 import TableResult from './TableResult.js';
+import ReportResult from './ReportResult.js';
 
 var Elem = function({layout, data}){
     var renderNum = (num) => {
@@ -13,27 +14,40 @@ var Elem = function({layout, data}){
                 {renderLayout(value)}
             </div>;
         }
-        else if(key.startsWith("col")){
+        else if(key.startsWith("col-")){
             var width = key.split("-")[1];
             return <section className={"col-sm-" + width}>
                 {renderLayout(value)}
             </section>;
+        }
+        else{
+            return <ReportResult layout={{
+                [key]: value
+            }} data={data} />;
         }
     };
     var renderLayout = (toRender) => {
         if(!isNaN(toRender)){
             return renderNum(toRender);
         }
-        else{
+        else if(Array.isArray(toRender)){
             return lo.map(toRender, k=> {
                 var key = Object.keys(k)[0];
                 var value = k[key];
                 return renderElem(key, value);
             });
         }
+        else{ // object
+            var key = Object.keys(toRender)[0];
+            var value = toRender[key];
+            return renderElem(key, value);
+        }
     };
+
 	return <div className="row">
-        {renderLayout(layout)}
+        <div className="col-xs-12">
+            {renderLayout(layout)}
+        </div>
     </div>;
 };
 
