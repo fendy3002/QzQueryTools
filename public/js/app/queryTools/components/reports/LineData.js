@@ -49,7 +49,6 @@ var getNumericData = function(labels, data){
                 dataset.push(0);
             }
         }
-        console.log("dataset", dataset);
         result.push(dataset);
     }
     return result;
