@@ -10,7 +10,7 @@ var service = function(connection, query, params, next){
 		multipleStatements: true
 	});
 
-	var result = {data: {}, query: query};
+	var result = {data: {}, query: query, params: params};
 	db.config.queryFormat = function (query, values) {
 		if (!values) return query;
 		return query.replace(/\@(\w+)/g, function (txt, key) {
