@@ -100120,55 +100120,15 @@
 
 	var _reactChartjs = __webpack_require__(516);
 
+	var _LineData = __webpack_require__(787);
+
+	var _LineData2 = _interopRequireDefault(_LineData);
+
 	var _Colors = __webpack_require__(683);
 
 	var _Colors2 = _interopRequireDefault(_Colors);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var getLabels = function getLabels(data) {
-	    var label = [];
-	    for (var i = 0; i < data.length; i++) {
-	        var currentData = data[i].data;
-	        var currentLabel = [];
-	        for (var j = 0; j < currentData.length; j++) {
-	            if (currentData[j].label) {
-	                currentLabel.push(currentData[j].label);
-	            } else if (currentData[j].text) {
-	                currentLabel.push(currentData[j].text);
-	            } else if (currentData[j].name) {
-	                currentLabel.push(currentData[j].name);
-	            } else {
-	                currentLabel.push(j.toString());
-	            }
-	        }
-	        label = label.concat(currentLabel);
-	    }
-	    return _lodash2.default.uniqBy(label, function (k) {
-	        return k;
-	    });
-	};
-	var getNumericData = function getNumericData(labels, data) {
-	    var result = [];
-	    for (var i = 0; i < data.length; i++) {
-	        var currentData = data[i].data;
-	        var dataset = [];
-	        for (var j = 0; j < labels.length; j++) {
-	            for (var k = 0; k < currentData.length; k++) {
-	                var currentRow = currentData[k];
-	                if (currentRow.name && currentRow.name == labels[j]) {
-	                    dataset.push(currentRow.value);
-	                } else if (currentRow.text && currentRow.text == labels[j]) {
-	                    dataset.push(currentRow.value);
-	                } else if (currentRow.label && currentRow.label == labels[j]) {
-	                    dataset.push(currentRow.value);
-	                }
-	            }
-	        }
-	        result.push(dataset);
-	    }
-	    return result;
-	};
 
 	var Elem = function Elem(_ref) {
 	    var data = _ref.data,
@@ -100177,8 +100137,8 @@
 	        layout = _ref.layout;
 
 	    var order = 0;
-	    var labels = getLabels(data);
-	    var numericData = getNumericData(labels, data);
+	    var labels = _LineData2.default.getLabels(data);
+	    var numericData = _LineData2.default.getNumericData(labels, data);
 	    var lineData = {
 	        labels: labels,
 	        datasets: data.map(function (k) {
@@ -118987,6 +118947,79 @@
 	};
 
 	module.exports = obj;
+
+/***/ }),
+/* 787 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(220);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var getLabels = function getLabels(data) {
+	    var label = [];
+	    for (var i = 0; i < data.length; i++) {
+	        var currentData = data[i].data;
+	        var currentLabel = [];
+	        for (var j = 0; j < currentData.length; j++) {
+	            if (currentData[j].label) {
+	                currentLabel.push(currentData[j].label);
+	            } else if (currentData[j].text) {
+	                currentLabel.push(currentData[j].text);
+	            } else if (currentData[j].name) {
+	                currentLabel.push(currentData[j].name);
+	            } else {
+	                currentLabel.push(j.toString());
+	            }
+	        }
+	        label = label.concat(currentLabel);
+	    }
+	    return _lodash2.default.uniqBy(label, function (k) {
+	        return k;
+	    });
+	};
+	var getNumericData = function getNumericData(labels, data) {
+	    var result = [];
+	    for (var i = 0; i < data.length; i++) {
+	        var currentData = data[i].data;
+	        var dataset = [];
+	        for (var j = 0; j < labels.length; j++) {
+	            var exists = false;
+	            for (var k = 0; k < currentData.length; k++) {
+	                var currentRow = currentData[k];
+	                if (currentRow.name && currentRow.name == labels[j]) {
+	                    dataset.push(currentRow.value);
+	                    exists = true;
+	                } else if (currentRow.text && currentRow.text == labels[j]) {
+	                    dataset.push(currentRow.value);
+	                    exists = true;
+	                } else if (currentRow.label && currentRow.label == labels[j]) {
+	                    dataset.push(currentRow.value);
+	                    exists = true;
+	                }
+	            }
+	            if (!exists) {
+	                dataset.push(0);
+	            }
+	        }
+	        console.log("dataset", dataset);
+	        result.push(dataset);
+	    }
+	    return result;
+	};
+
+	exports.default = {
+	    getLabels: getLabels,
+	    getNumericData: getNumericData
+	};
 
 /***/ })
 /******/ ]);
