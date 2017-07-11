@@ -35,7 +35,8 @@ var execQuery = exports.execQuery = function(params){
                     dispatch({
                         type: "SET_EXEC_RESULT",
                         result: res.body.data,
-                        query: res.body.query
+                        query: res.body.query,
+                        params: res.body.params
                     });
                     done();
                 });

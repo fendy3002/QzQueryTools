@@ -17,7 +17,8 @@ var obj = function(state = [], action){
             return {
                 ...state,
                 execResult: action.result,
-                execQuery: action.query
+                execQuery: action.query,
+                execParams: action.params
             };
         case "APPEND_PARAMS":
             return {
