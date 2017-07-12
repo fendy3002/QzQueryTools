@@ -68531,7 +68531,7 @@
 	            tableDoms,
 	            _react2.default.createElement(
 	                'form',
-	                { action: url, method: 'post', target: '_blank' },
+	                { action: url, method: 'post', target: '_blank', className: 'form form-inline' },
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'row' },
@@ -68544,6 +68544,25 @@
 	                            _react2.default.createElement(
 	                                'div',
 	                                { className: 'text-right' },
+	                                _react2.default.createElement(
+	                                    'select',
+	                                    { className: 'form-control', name: 'interval', style: { "marginRight": "8px" } },
+	                                    _react2.default.createElement(
+	                                        'option',
+	                                        { value: '1000', selected: true },
+	                                        '1 sec'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'option',
+	                                        { value: '5000' },
+	                                        '5 sec'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'option',
+	                                        { value: '10000' },
+	                                        '10 sec'
+	                                    )
+	                                ),
 	                                _react2.default.createElement(
 	                                    'button',
 	                                    { className: 'btn btn-flat btn-primary',
@@ -68972,7 +68991,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Chart = exports.defaults = exports.Scatter = exports.Bubble = exports.Polar = exports.Radar = exports.HorizontalBar = exports.Bar = exports.Line = exports.Pie = exports.Doughnut = undefined;
+	exports.Chart = exports.defaults = exports.Bubble = exports.Polar = exports.Radar = exports.HorizontalBar = exports.Bar = exports.Line = exports.Pie = exports.Doughnut = undefined;
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -69036,8 +69055,6 @@
 	      getElementAtEvent && getElementAtEvent(instance.getElementAtEvent(event), event);
 	      getElementsAtEvent && getElementsAtEvent(instance.getElementsAtEvent(event), event);
 	      onElementsClick && onElementsClick(instance.getElementsAtEvent(event), event); // Backward compatibility
-	    }, _this.ref = function (element) {
-	      _this.element = element;
 	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
 
@@ -69114,7 +69131,7 @@
 	      var data = props.data;
 
 	      if (typeof data == 'function') {
-	        var node = this.element;
+	        var node = _reactDom2.default.findDOMNode(this);
 	        return data(node);
 	      } else {
 	        return data;
@@ -69224,7 +69241,7 @@
 	          redraw = _props2.redraw,
 	          plugins = _props2.plugins;
 
-	      var node = this.element;
+	      var node = _reactDom2.default.findDOMNode(this);
 	      var data = this.memoizeDataProps();
 
 	      this.chart_instance = new _chart2.default(node, {
@@ -69244,7 +69261,6 @@
 
 
 	      return _react2.default.createElement('canvas', {
-	        ref: this.ref,
 	        height: height,
 	        width: width,
 	        onClick: this.handleOnClick
@@ -69270,13 +69286,7 @@
 	  options: _propTypes2.default.object,
 	  plugins: _propTypes2.default.arrayOf(_propTypes2.default.object),
 	  redraw: _propTypes2.default.bool,
-	  type: function type(props, propName, componentName) {
-	    if (!Object.keys(_chart2.default.controllers).find(function (chartType) {
-	      return chartType === props[propName];
-	    })) {
-	      return new Error('Invalid chart type `' + props[propName] + '` supplied to' + ' `' + componentName + '`.');
-	    }
-	  },
+	  type: _propTypes2.default.oneOf(['doughnut', 'pie', 'line', 'bar', 'horizontalBar', 'radar', 'polarArea', 'bubble']),
 	  width: _propTypes2.default.number,
 	  datasetKeyProvider: _propTypes2.default.func
 	};
@@ -69500,32 +69510,6 @@
 	  }]);
 
 	  return Bubble;
-	}(_react2.default.Component);
-
-	var Scatter = exports.Scatter = function (_React$Component10) {
-	  _inherits(Scatter, _React$Component10);
-
-	  function Scatter() {
-	    _classCallCheck(this, Scatter);
-
-	    return _possibleConstructorReturn(this, (Scatter.__proto__ || Object.getPrototypeOf(Scatter)).apply(this, arguments));
-	  }
-
-	  _createClass(Scatter, [{
-	    key: 'render',
-	    value: function render() {
-	      var _this20 = this;
-
-	      return _react2.default.createElement(ChartComponent, _extends({}, this.props, {
-	        ref: function ref(_ref10) {
-	          return _this20.chart_instance = _ref10 && _ref10.chart_instance;
-	        },
-	        type: 'scatter'
-	      }));
-	    }
-	  }]);
-
-	  return Scatter;
 	}(_react2.default.Component);
 
 	var defaults = exports.defaults = _chart2.default.defaults;
@@ -103110,8 +103094,8 @@
 	/*!
 	 * isobject <https://github.com/jonschlinkert/isobject>
 	 *
-	 * Copyright (c) 2014-2015, Jon Schlinkert.
-	 * Licensed under the MIT License.
+	 * Copyright (c) 2014-2017, Jon Schlinkert.
+	 * Released under the MIT License.
 	 */
 
 	'use strict';

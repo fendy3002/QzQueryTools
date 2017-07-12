@@ -1,7 +1,8 @@
 var path = require('path');
 module.exports = {
     entry: {
-        app: './public/js/app/index.js'
+        app: './public/js/app/index.js',
+        appWatch: './public/js/app/index.watch.js'
     },
     output: {
         path: './public/js/bin/',

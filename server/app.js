@@ -10,6 +10,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/public', express.static(path.join(__dirname, '../public')))
+app.set('views', __dirname + '/views');
+app.engine('html', require('ejs').renderFile);
 
 webRoute(app);
 apiRoute(app, '/api');
