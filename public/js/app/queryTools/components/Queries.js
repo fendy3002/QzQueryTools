@@ -56,7 +56,11 @@ class Elem extends React.Component {
         if(request.selectedConnection){
             var selectedConnection = request.selectedConnection;
             showData = lo.filter(this.state.data,
-                    k => !k.bound || k.bound.head.availableTo.indexOf(selectedConnection.driver) >= 0);
+                    k => {
+                        return !k.bound // means folder
+                            || (!k.bound.head.error
+                            && k.bound.head.availableTo.indexOf(selectedConnection.driver) >= 0)
+                    });
         }
 	    return (
 	      	<Treebeard data={showData}
@@ -83,7 +87,6 @@ var queryToNodeHandler = (selectedQuery, onFindNode) => {
             else{
                 return {
                     name: k.fileName,
-                    toggled: false,
                     children: queryToNode(k.children),
                     toggled: (selectedQuery) &&
                         (selectedQuery.filePath.startsWith(k.filePath))

@@ -48641,6 +48641,10 @@
 	var App = function App(_ref) {
 		var request = _ref.request;
 
+		var label = "";
+		if (request.selectedQuery) {
+			label = request.selectedQuery.head.error ? request.selectedQuery.head.error : request.selectedQuery.head.description;
+		}
 		return _react2.default.createElement(
 			_AppTemplate2.default,
 			null,
@@ -48722,7 +48726,7 @@
 											_react2.default.createElement(
 												'label',
 												{ className: 'control-label' },
-												request.selectedQuery.head.description
+												label
 											)
 										),
 										_react2.default.createElement(
@@ -53181,8 +53185,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -53267,7 +53269,8 @@
 	            if (request.selectedConnection) {
 	                var selectedConnection = request.selectedConnection;
 	                showData = _lodash2.default.filter(this.state.data, function (k) {
-	                    return !k.bound || k.bound.head.availableTo.indexOf(selectedConnection.driver) >= 0;
+	                    return !k.bound // means folder
+	                    || !k.bound.head.error && k.bound.head.availableTo.indexOf(selectedConnection.driver) >= 0;
 	                });
 	            }
 	            return _react2.default.createElement(_reactTreebeard.Treebeard, { data: showData,
@@ -53294,11 +53297,11 @@
 	                }
 	                return node;
 	            } else {
-	                return _defineProperty({
+	                return {
 	                    name: k.fileName,
-	                    toggled: false,
-	                    children: queryToNode(k.children)
-	                }, 'toggled', selectedQuery && selectedQuery.filePath.startsWith(k.filePath));
+	                    children: queryToNode(k.children),
+	                    toggled: selectedQuery && selectedQuery.filePath.startsWith(k.filePath)
+	                };
 	            }
 	        });
 	    };

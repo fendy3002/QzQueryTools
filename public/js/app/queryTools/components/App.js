@@ -10,6 +10,12 @@ import Loadable from 'react-loading-overlay';
 import 'react-select/dist/react-select.css';
 
 var App = function({request}){
+	var label = "";
+	if(request.selectedQuery){
+		label = request.selectedQuery.head.error ?
+			request.selectedQuery.head.error :
+			request.selectedQuery.head.description;
+	}
     return <AppTemplate>
         <section className="content-header">
             <h1>
@@ -46,7 +52,7 @@ var App = function({request}){
 									{request.selectedQuery &&
 										<div className="form-group">
 											<label className="control-label">
-												{request.selectedQuery.head.description}
+												{label}
 											</label>
 										</div>
 									}

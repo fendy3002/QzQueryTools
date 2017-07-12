@@ -5,7 +5,15 @@ var reader = function(query){
 	var labelPattern = /--\s*<(.*?)>/g;
 
 	var headRaw = query.match(headPattern)[1];
-	var head = JSON5.parse(headRaw);
+	var head = null;
+	try{
+		head = JSON5.parse(headRaw);
+	}
+	catch(ex){
+		head = {
+			"error": "Unable to parse JSON"
+		};
+	}
 	var labelsRegex = labelPattern.exec(query);
 	var labels = [];
 	var ord = 1;
