@@ -6,7 +6,7 @@ import JSON5 from 'json5';
 
 var controller = {
 	getConnection : function(req, res){
-	    fs.readFile('server/storage/config/connections.js',function (err, data){
+	    fs.readFile('config/connections.js',function (err, data){
 	        if (err) {
 	            throw err;
 	        }
@@ -23,7 +23,7 @@ var controller = {
 	    });
 	},
 	getQuery : function(req, res){
-		var folder = path.join(__dirname, "../../storage/config/queries");
+		var folder = path.join(__dirname, "../../../config/queries");
 
 		var data = queryFolderReader(folder);
 		var toSendStr = JSON.stringify(data);
