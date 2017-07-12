@@ -37,6 +37,16 @@
 							"height": 400
 						}
 					}
+				},
+				{"rowc": 
+					{"summary": 
+						{
+							"script": 3,
+							"fields": {
+								"Active": "bool"
+							}
+						}
+					}
 				}
 			]}
 		]
@@ -59,3 +69,12 @@ SELECT 'Obi Wan' as `label`, 330 as `value` UNION ALL
 SELECT 'Mace Windu' as `label`, 280 as `value` UNION ALL
 SELECT 'Yoyoda' as `label`, 400 as `value` UNION ALL
 SELECT 'Rey' as `label`, 70 as `value`;
+
+-- <3:Rebel status>
+SELECT 'Leader' as `label`, 'Han Solo' as `value` UNION ALL
+SELECT 'Established Date' as `label`, '3307-Dec-13' as `value` UNION ALL
+SELECT 'Troops' as `label`, '33934' as `value` UNION ALL
+SELECT 'Officers' as `label`, '59' as `value` UNION ALL
+SELECT 'Battleship class ships' as `label`, '3000' as `value` UNION ALL
+SELECT 'Fighter class ships' as `label`, '13000' as `value` UNION ALL
+SELECT 'Active' as `label`, '1' as `value`;

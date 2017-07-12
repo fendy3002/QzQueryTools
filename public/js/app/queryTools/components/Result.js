@@ -31,6 +31,7 @@ var Elem = function({request}){
                         <div className="box-body">
                             <div className="text-right">
                                 <select className="form-control" name="interval" style={{"marginRight": "8px"}}>
+                                    <option value="0">Do not refresh</option>
                                     <option value="500">0.5 sec</option>
                                     <option value="1000" selected>1 sec</option>
                                     <option value="3000">3 sec</option>

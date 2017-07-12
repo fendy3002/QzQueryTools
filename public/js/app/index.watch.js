@@ -55,15 +55,17 @@ var renderPage = function(context){
         query: filter.selectedQuery,
         params: JSON.stringify(window.context.params)
     }));
-    setTimeout(() => {
-        setInterval(() => {
-            store.dispatch(execQuery({
-                connection: filter.selectedConnection,
-                query: filter.selectedQuery,
-                params: JSON.stringify(window.context.params)
-            }));
-        }, context.interval);
-    }, 500);
+    if(context.interval > 0){
+        setTimeout(() => {
+            setInterval(() => {
+                store.dispatch(execQuery({
+                    connection: filter.selectedConnection,
+                    query: filter.selectedQuery,
+                    params: JSON.stringify(window.context.params)
+                }));
+            }, context.interval);
+        }, 500);
+    }
 };
 initAdminLte();
 renderPage(window.context || {});
