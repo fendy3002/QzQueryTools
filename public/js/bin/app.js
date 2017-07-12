@@ -68954,7 +68954,8 @@
 	                ticks: {
 	                    autoSkip: false,
 	                    maxRotation: 60,
-	                    minRotation: 0
+	                    minRotation: 0,
+	                    suggestedMin: 0
 	                }
 	            }]
 	        }
@@ -68973,6 +68974,16 @@
 	                display: true,
 	                labelString: y
 	            }
+	        });
+	    }
+	    if (layout.maxY) {
+	        options.scales.yAxes[0].ticks = _extends({}, options.scales.yAxes[0].ticks, {
+	            max: layout.maxY
+	        });
+	    }
+	    if (layout.maxX) {
+	        options.scales.xAxes[0].ticks = _extends({}, options.scales.xAxes[0].ticks, {
+	            max: layout.maxX
 	        });
 	    }
 
@@ -100258,7 +100269,8 @@
 	                ticks: {
 	                    autoSkip: false,
 	                    maxRotation: 60,
-	                    minRotation: 0
+	                    minRotation: 0,
+	                    suggestedMin: 0
 	                }
 	            }]
 	        }
@@ -100277,6 +100289,16 @@
 	                display: true,
 	                labelString: y
 	            }
+	        });
+	    }
+	    if (layout.maxY) {
+	        options.scales.yAxes[0].ticks = _extends({}, options.scales.yAxes[0].ticks, {
+	            max: layout.maxY
+	        });
+	    }
+	    if (layout.maxX) {
+	        options.scales.xAxes[0].ticks = _extends({}, options.scales.xAxes[0].ticks, {
+	            max: layout.maxX
 	        });
 	    }
 
@@ -100355,7 +100377,8 @@
 	                ticks: {
 	                    autoSkip: false,
 	                    maxRotation: 60,
-	                    minRotation: 0
+	                    minRotation: 0,
+	                    suggestedMin: 0
 	                }
 	            }]
 	        },
@@ -100375,6 +100398,16 @@
 	                display: true,
 	                labelString: y
 	            }
+	        });
+	    }
+	    if (layout.maxY) {
+	        options.scales.yAxes[0].ticks = _extends({}, options.scales.yAxes[0].ticks, {
+	            max: layout.maxY
+	        });
+	    }
+	    if (layout.maxX) {
+	        options.scales.xAxes[0].ticks = _extends({}, options.scales.xAxes[0].ticks, {
+	            max: layout.maxX
 	        });
 	    }
 

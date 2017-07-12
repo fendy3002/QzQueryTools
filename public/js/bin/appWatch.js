@@ -116,13 +116,20 @@
 	        _react2.default.createElement(_StateApp2.default, null)
 	    ), document.getElementById('content'));
 
-	    setInterval(function () {
-	        store.dispatch((0, _index.execQuery)({
-	            connection: filter.selectedConnection,
-	            query: filter.selectedQuery,
-	            params: JSON.stringify(window.context.params)
-	        }));
-	    }, context.interval);
+	    store.dispatch((0, _index.execQuery)({
+	        connection: filter.selectedConnection,
+	        query: filter.selectedQuery,
+	        params: JSON.stringify(window.context.params)
+	    }));
+	    setTimeout(function () {
+	        setInterval(function () {
+	            store.dispatch((0, _index.execQuery)({
+	                connection: filter.selectedConnection,
+	                query: filter.selectedQuery,
+	                params: JSON.stringify(window.context.params)
+	            }));
+	        }, context.interval);
+	    }, 500);
 	};
 	initAdminLte();
 	renderPage(window.context || {});
@@ -46191,7 +46198,8 @@
 	                ticks: {
 	                    autoSkip: false,
 	                    maxRotation: 60,
-	                    minRotation: 0
+	                    minRotation: 0,
+	                    suggestedMin: 0
 	                }
 	            }]
 	        }
@@ -46210,6 +46218,16 @@
 	                display: true,
 	                labelString: y
 	            }
+	        });
+	    }
+	    if (layout.maxY) {
+	        options.scales.yAxes[0].ticks = _extends({}, options.scales.yAxes[0].ticks, {
+	            max: layout.maxY
+	        });
+	    }
+	    if (layout.maxX) {
+	        options.scales.xAxes[0].ticks = _extends({}, options.scales.xAxes[0].ticks, {
+	            max: layout.maxX
 	        });
 	    }
 
@@ -77495,7 +77513,8 @@
 	                ticks: {
 	                    autoSkip: false,
 	                    maxRotation: 60,
-	                    minRotation: 0
+	                    minRotation: 0,
+	                    suggestedMin: 0
 	                }
 	            }]
 	        }
@@ -77514,6 +77533,16 @@
 	                display: true,
 	                labelString: y
 	            }
+	        });
+	    }
+	    if (layout.maxY) {
+	        options.scales.yAxes[0].ticks = _extends({}, options.scales.yAxes[0].ticks, {
+	            max: layout.maxY
+	        });
+	    }
+	    if (layout.maxX) {
+	        options.scales.xAxes[0].ticks = _extends({}, options.scales.xAxes[0].ticks, {
+	            max: layout.maxX
 	        });
 	    }
 
@@ -77592,7 +77621,8 @@
 	                ticks: {
 	                    autoSkip: false,
 	                    maxRotation: 60,
-	                    minRotation: 0
+	                    minRotation: 0,
+	                    suggestedMin: 0
 	                }
 	            }]
 	        },
@@ -77612,6 +77642,16 @@
 	                display: true,
 	                labelString: y
 	            }
+	        });
+	    }
+	    if (layout.maxY) {
+	        options.scales.yAxes[0].ticks = _extends({}, options.scales.yAxes[0].ticks, {
+	            max: layout.maxY
+	        });
+	    }
+	    if (layout.maxX) {
+	        options.scales.xAxes[0].ticks = _extends({}, options.scales.xAxes[0].ticks, {
+	            max: layout.maxX
 	        });
 	    }
 

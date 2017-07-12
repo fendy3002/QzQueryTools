@@ -48,7 +48,8 @@ var Elem = function({data, x, y, layout}){
                 ticks: {
                     autoSkip: false,
                     maxRotation: 60,
-                    minRotation: 0
+                    minRotation: 0,
+                    suggestedMin: 0
                 }
             }]
         }
@@ -69,6 +70,18 @@ var Elem = function({data, x, y, layout}){
                 display: true,
                 labelString: y
             }
+        };
+    }
+    if(layout.maxY){
+        options.scales.yAxes[0].ticks = {
+            ...options.scales.yAxes[0].ticks,
+            max: layout.maxY
+        };
+    }
+    if(layout.maxX){
+        options.scales.xAxes[0].ticks = {
+            ...options.scales.xAxes[0].ticks,
+            max: layout.maxX
         };
     }
 

@@ -1,0 +1,86 @@
+/*<head>{
+	description: "Testing sql query layout",
+	params: {
+	},
+	layout: [{
+		"row": [
+			{"col-8": [
+				{"rowc":
+					{"line": 
+						{
+							"label": "Monitor status",
+							"x": "Time",
+							"y": "Performance",
+							"script": [1, 2],
+							"maxY": 100
+						}
+					}
+				}
+			]},
+			{"col-4": [
+				{"rowc":
+					{"bar": 
+						{
+							"label": "Monitor status",
+							"x": "Time",
+							"y": "Performance",
+							"script": [1, 2],
+							"height": 300,
+							"maxY": 100
+						}
+					}
+				},
+				{"rowc":
+					{"column": 
+						{
+							"label": "Monitor status",
+							"x": "Time",
+							"y": "Performance",
+							"script": [1, 2],
+							"height": 300,
+							"maxX": 100
+						}
+					}
+				}
+			]}
+		]
+	}],
+	availableTo: ["mysql"]
+}</head>*/
+
+-- SET @NOWMIN = DATE_SUB(NOW(), INTERVAL SECOND(NOW()) SECOND);
+SET @NOWMIN = NOW();
+
+-- <1:CPU>
+SELECT DATE_SUB(@NOWMIN, INTERVAL a.`sec` SECOND) as `label`,
+	SECOND(DATE_SUB(@NOWMIN, INTERVAL a.`sec` SECOND)) as `value`
+FROM (
+	SELECT 1 as `sec` UNION ALL
+	SELECT 2 as `sec` UNION ALL
+	SELECT 3 as `sec` UNION ALL
+	SELECT 4 as `sec` UNION ALL
+	SELECT 5 as `sec` UNION ALL
+	SELECT 6 as `sec` UNION ALL
+	SELECT 7 as `sec` UNION ALL
+	SELECT 8 as `sec` UNION ALL
+	SELECT 9 as `sec` UNION ALL
+	SELECT 10 as `sec`
+) a
+order by a.sec desc;
+
+-- <2:RAM>
+SELECT DATE_SUB(@NOWMIN, INTERVAL a.`sec` SECOND) as `label`,
+	(SECOND(DATE_SUB(@NOWMIN, INTERVAL a.`sec` SECOND))) / 2 as `value`
+FROM (
+	SELECT 1 as `sec` UNION ALL
+	SELECT 2 as `sec` UNION ALL
+	SELECT 3 as `sec` UNION ALL
+	SELECT 4 as `sec` UNION ALL
+	SELECT 5 as `sec` UNION ALL
+	SELECT 6 as `sec` UNION ALL
+	SELECT 7 as `sec` UNION ALL
+	SELECT 8 as `sec` UNION ALL
+	SELECT 9 as `sec` UNION ALL
+	SELECT 10 as `sec`
+) a
+order by a.sec desc;

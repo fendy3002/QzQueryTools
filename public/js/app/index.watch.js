@@ -50,13 +50,20 @@ var renderPage = function(context){
         document.getElementById('content')
     );
 
-    setInterval(() => {
-        store.dispatch(execQuery({
-            connection: filter.selectedConnection,
-            query: filter.selectedQuery,
-            params: JSON.stringify(window.context.params)
-        }));
-    }, context.interval);
+    store.dispatch(execQuery({
+        connection: filter.selectedConnection,
+        query: filter.selectedQuery,
+        params: JSON.stringify(window.context.params)
+    }));
+    setTimeout(() => {
+        setInterval(() => {
+            store.dispatch(execQuery({
+                connection: filter.selectedConnection,
+                query: filter.selectedQuery,
+                params: JSON.stringify(window.context.params)
+            }));
+        }, context.interval);
+    }, 500);
 };
 initAdminLte();
 renderPage(window.context || {});
