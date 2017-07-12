@@ -1,11 +1,55 @@
 # QzQueryTools
 
-A mini application to facilitate frequently-used database queries with parameter as web-based UI. Can be used as mini-helpdesk.
+QzQueryTools is a free, open source query and reporting tool. Used to facilitate frequently-used database queries with parameter as web-based UI and lightweight reporting. Can be used as mini-helpdesk or monitoring dashboard.
 
-## Contents
-1. [Installation](#installation)
-2. [Screenshots](#screenshots)
-2. [Configuration](#configuration)
+# Contents
+1. [What this project is capable of](#description)
+2. [Installation](#installation)
+3. [Configuration](#configuration)
+
+<a name="description"></a>
+## What this project is capable of
+
+QzQueryTools is developed to help organizing frequently-used queries to database. Some available use cases are:
+- Getting the status of order, as well as it's components such as delivery and payment
+- Getting row counts of every tables for debugging purpose
+- Monitoring new opened helpdesk tickets in the last 24 h
+- Generating sales report for last month
+
+After configuration, this tools works in three (four) steps:
+- Select the database connection
+- Select the query to perform
+- Fill the parameters if needed and perform query
+
+Primarily designed for support, developer and QA. This tools can also be used by helpdesk to create simple monitoring / diagnosis interface even reports without much effort.
+
+### Screenshots
+
+<p align="center">
+	<img alt="Query as table" width="70%" 
+		src="https://user-images.githubusercontent.com/5449185/28112606-d6925762-6723-11e7-9931-8017b6369e3d.png"/>
+</p>
+<p align="center">
+	<em>Selecting connection, choose query then fill the parameter is enough to invoke query.<em>
+</p>
+
+
+<p align="center">
+	<img alt="Modify result layout" width="70%" 
+		src="https://user-images.githubusercontent.com/5449185/28112603-d31648fa-6723-11e7-93d2-005a2e7d943f.png"/>
+</p>
+<p align="center">
+	<em>The result layout can be modified using bootstrap's grid system, as well as displaying it in charts instead of table.<em>
+</p>
+
+<p align="center">
+	<img alt="Show fullscreen and watch periodically" width="70%" 
+		src="https://user-images.githubusercontent.com/5449185/28112585-bf6c7b26-6723-11e7-80e0-8d99b5b05683.gif"/>
+</p>
+<p align="center">
+	<em>The watch module is useful to keep monitoring data. And it can directly be used fullscreen as monitoring dashboard<em>
+</p>
+
 
 <a name="installation"></a>
 ## Installation
@@ -25,18 +69,6 @@ node exec.js prepare;
 
 npm start;
 ```
-
-<a name="screenshots"></a>
-## Screenshots
-<img alt="Query as table" width="100%" 
-	src="https://user-images.githubusercontent.com/5449185/28112606-d6925762-6723-11e7-9931-8017b6369e3d.png"/>
-
-<img alt="Modify result layout" width="100%" 
-	src="https://user-images.githubusercontent.com/5449185/28112603-d31648fa-6723-11e7-93d2-005a2e7d943f.png"/>
-
-<img alt="Show fullscreen and watch periodically" width="100%" 
-	src="https://user-images.githubusercontent.com/5449185/28112585-bf6c7b26-6723-11e7-80e0-8d99b5b05683.gif"/>
-
 
 <a name="configuration"></a>
 ## Configuration
