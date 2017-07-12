@@ -31,7 +31,9 @@ var Elem = function({request}){
                         <div className="box-body">
                             <div className="text-right">
                                 <select className="form-control" name="interval" style={{"marginRight": "8px"}}>
+                                    <option value="500">0.5 sec</option>
                                     <option value="1000" selected>1 sec</option>
+                                    <option value="3000">3 sec</option>
                                     <option value="5000">5 sec</option>
                                     <option value="10000">10 sec</option>
                                 </select>

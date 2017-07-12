@@ -24,6 +24,7 @@ var Elem = function({data, x, y, layout}){
         })
     };
     var options = {
+        animation:false,
         scales: {
             xAxes: [{
                 ticks: {
@@ -36,8 +37,7 @@ var Elem = function({data, x, y, layout}){
                 ticks: {
                     autoSkip: false,
                     maxRotation: 60,
-                    minRotation: 0,
-                    suggestedMin: 0
+                    minRotation: 0
                 }
             }]
         },
@@ -61,16 +61,16 @@ var Elem = function({data, x, y, layout}){
             }
         };
     }
-    if(layout.maxY){
-        options.scales.yAxes[0].ticks = {
-            ...options.scales.yAxes[0].ticks,
-            max: layout.maxY
-        };
-    }
-    if(layout.maxX){
+    if(layout.max){
         options.scales.xAxes[0].ticks = {
             ...options.scales.xAxes[0].ticks,
-            max: layout.maxX
+            max: layout.max
+        };
+    }
+    if(layout.start){
+        options.scales.xAxes[0].ticks = {
+            ...options.scales.xAxes[0].ticks,
+            suggestedMin: layout.start
         };
     }
 

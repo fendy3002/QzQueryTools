@@ -36,6 +36,7 @@ var Elem = function({data, x, y, layout}){
         })
     };
     var options = {
+        animation:false,
         scales: {
             xAxes: [{
                 ticks: {
@@ -72,16 +73,16 @@ var Elem = function({data, x, y, layout}){
             }
         };
     }
-    if(layout.maxY){
+    if(layout.max){
         options.scales.yAxes[0].ticks = {
             ...options.scales.yAxes[0].ticks,
-            max: layout.maxY
+            max: layout.max
         };
     }
-    if(layout.maxX){
-        options.scales.xAxes[0].ticks = {
-            ...options.scales.xAxes[0].ticks,
-            max: layout.maxX
+    if(layout.start){
+        options.scales.yAxes[0].ticks = {
+            ...options.scales.yAxes[0].ticks,
+            suggestedMin: layout.start
         };
     }
 

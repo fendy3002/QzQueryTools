@@ -12,12 +12,11 @@
 							"x": "Time",
 							"y": "Performance",
 							"script": [1, 2],
-							"maxY": 100
+							"max": 100,
+							"start": 0
 						}
 					}
-				}
-			]},
-			{"col-4": [
+				},
 				{"rowc":
 					{"bar": 
 						{
@@ -25,11 +24,13 @@
 							"x": "Time",
 							"y": "Performance",
 							"script": [1, 2],
-							"height": 300,
-							"maxY": 100
+							"max": 100,
+							"start": 0
 						}
 					}
-				},
+				}
+			]},
+			{"col-4": [
 				{"rowc":
 					{"column": 
 						{
@@ -37,8 +38,9 @@
 							"x": "Time",
 							"y": "Performance",
 							"script": [1, 2],
-							"height": 300,
-							"maxX": 100
+							"height": 400,
+							"max": 100,
+							"start": 0
 						}
 					}
 				}
@@ -53,7 +55,7 @@ SET @NOWMIN = NOW();
 
 -- <1:CPU>
 SELECT DATE_SUB(@NOWMIN, INTERVAL a.`sec` SECOND) as `label`,
-	SECOND(DATE_SUB(@NOWMIN, INTERVAL a.`sec` SECOND)) as `value`
+	ABS(SECOND(DATE_SUB(@NOWMIN, INTERVAL a.`sec` SECOND)) * 2 + b.mod - 100) as `value`
 FROM (
 	SELECT 1 as `sec` UNION ALL
 	SELECT 2 as `sec` UNION ALL
@@ -64,13 +66,29 @@ FROM (
 	SELECT 7 as `sec` UNION ALL
 	SELECT 8 as `sec` UNION ALL
 	SELECT 9 as `sec` UNION ALL
-	SELECT 10 as `sec`
+	SELECT 10 as `sec` UNION ALL
+	SELECT 11 as `sec` UNION ALL
+	SELECT 12 as `sec` UNION ALL
+	SELECT 13 as `sec`
 ) a
+	inner join (
+		SELECT 1 as `sec`, 10 as `mod` UNION ALL
+		SELECT 2 as `sec`, 20 as `mod` UNION ALL
+		SELECT 3 as `sec`, 0 as `mod` UNION ALL
+		SELECT 4 as `sec`, 7 as `mod` UNION ALL
+		SELECT 5 as `sec`, 10 as `mod` UNION ALL
+		SELECT 6 as `sec`, 0 as `mod` UNION ALL
+		SELECT 7 as `sec`, 17 as `mod` UNION ALL
+		SELECT 8 as `sec`, 15 as `mod` UNION ALL
+		SELECT 9 as `sec`, 5 as `mod` UNION ALL
+		SELECT 0 as `sec`, 10 as `mod`
+	) b
+	on (DATE_SUB(@NOWMIN, INTERVAL a.`sec` SECOND)) % 10 = b.sec
 order by a.sec desc;
 
 -- <2:RAM>
 SELECT DATE_SUB(@NOWMIN, INTERVAL a.`sec` SECOND) as `label`,
-	(SECOND(DATE_SUB(@NOWMIN, INTERVAL a.`sec` SECOND))) / 2 as `value`
+	ABS(SECOND(DATE_SUB(@NOWMIN, INTERVAL a.`sec` SECOND)) - 100) / 1.5 as `value`
 FROM (
 	SELECT 1 as `sec` UNION ALL
 	SELECT 2 as `sec` UNION ALL
@@ -81,6 +99,9 @@ FROM (
 	SELECT 7 as `sec` UNION ALL
 	SELECT 8 as `sec` UNION ALL
 	SELECT 9 as `sec` UNION ALL
-	SELECT 10 as `sec`
+	SELECT 10 as `sec` UNION ALL
+	SELECT 11 as `sec` UNION ALL
+	SELECT 12 as `sec` UNION ALL
+	SELECT 13 as `sec`
 ) a
 order by a.sec desc;

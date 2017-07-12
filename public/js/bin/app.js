@@ -68553,8 +68553,18 @@
 	                                    { className: 'form-control', name: 'interval', style: { "marginRight": "8px" } },
 	                                    _react2.default.createElement(
 	                                        'option',
+	                                        { value: '500' },
+	                                        '0.5 sec'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'option',
 	                                        { value: '1000', selected: true },
 	                                        '1 sec'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'option',
+	                                        { value: '3000' },
+	                                        '3 sec'
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        'option',
@@ -68946,6 +68956,7 @@
 	        })
 	    };
 	    var options = {
+	        animation: false,
 	        scales: {
 	            xAxes: [{
 	                ticks: {
@@ -68980,14 +68991,14 @@
 	            }
 	        });
 	    }
-	    if (layout.maxY) {
+	    if (layout.max) {
 	        options.scales.yAxes[0].ticks = _extends({}, options.scales.yAxes[0].ticks, {
-	            max: layout.maxY
+	            max: layout.max
 	        });
 	    }
-	    if (layout.maxX) {
-	        options.scales.xAxes[0].ticks = _extends({}, options.scales.xAxes[0].ticks, {
-	            max: layout.maxX
+	    if (layout.start) {
+	        options.scales.yAxes[0].ticks = _extends({}, options.scales.yAxes[0].ticks, {
+	            suggestedMin: layout.start
 	        });
 	    }
 
@@ -100261,6 +100272,7 @@
 	        })
 	    };
 	    var options = {
+	        animation: false,
 	        scales: {
 	            xAxes: [{
 	                ticks: {
@@ -100295,14 +100307,14 @@
 	            }
 	        });
 	    }
-	    if (layout.maxY) {
+	    if (layout.max) {
 	        options.scales.yAxes[0].ticks = _extends({}, options.scales.yAxes[0].ticks, {
-	            max: layout.maxY
+	            max: layout.max
 	        });
 	    }
-	    if (layout.maxX) {
-	        options.scales.xAxes[0].ticks = _extends({}, options.scales.xAxes[0].ticks, {
-	            max: layout.maxX
+	    if (layout.start) {
+	        options.scales.yAxes[0].ticks = _extends({}, options.scales.yAxes[0].ticks, {
+	            suggestedMin: layout.start
 	        });
 	    }
 
@@ -100369,6 +100381,7 @@
 	        })
 	    };
 	    var options = {
+	        animation: false,
 	        scales: {
 	            xAxes: [{
 	                ticks: {
@@ -100381,8 +100394,7 @@
 	                ticks: {
 	                    autoSkip: false,
 	                    maxRotation: 60,
-	                    minRotation: 0,
-	                    suggestedMin: 0
+	                    minRotation: 0
 	                }
 	            }]
 	        },
@@ -100404,14 +100416,14 @@
 	            }
 	        });
 	    }
-	    if (layout.maxY) {
-	        options.scales.yAxes[0].ticks = _extends({}, options.scales.yAxes[0].ticks, {
-	            max: layout.maxY
+	    if (layout.max) {
+	        options.scales.xAxes[0].ticks = _extends({}, options.scales.xAxes[0].ticks, {
+	            max: layout.max
 	        });
 	    }
-	    if (layout.maxX) {
+	    if (layout.start) {
 	        options.scales.xAxes[0].ticks = _extends({}, options.scales.xAxes[0].ticks, {
-	            max: layout.maxX
+	            suggestedMin: layout.start
 	        });
 	    }
 

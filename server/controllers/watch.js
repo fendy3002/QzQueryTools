@@ -21,7 +21,7 @@ var controller = {
 			params: params,
 			connection: connectionName,
 			query: queryPath,
-			interval: Math.max(req.body.interval, 1000)
+			interval: Math.max(req.body.interval, 500)
 		});
         res.end();
 	}
