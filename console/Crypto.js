@@ -6,7 +6,7 @@ var Promise = require('promise');
 var PasswordHandler = require('../server/src/PasswordHandler/index.js');
 
 var Service = function(root){
-    var folder = path.join(root, "server/storage/config");
+    var folder = path.join(root, "config");
     var configObj = () => {
     	return JSON5.parse(fs.readFileSync(path.join(folder, 'config.js'), 'utf8'));
     };

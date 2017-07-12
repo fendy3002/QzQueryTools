@@ -18,7 +18,7 @@ var Service = function(root){
 	return {
 		canPrepare: function(){
 		    console.log("Checking if can prepare...");
-		    var folder = path.join(root, "server/storage/config");
+		    var folder = path.join(root, "config");
 		    if(fs.existsSync(path.join(folder, "config.js"))){
 		        console.log("Config already exists, use fprepare command instead");
 		        return false;
@@ -27,7 +27,7 @@ var Service = function(root){
 		},
 		prepare: function(){
 		    console.log("Copying query files...");
-		    var folder = path.join(root, "server/storage/config");
+		    var folder = path.join(root, "config");
 
 		    copyFile(path.join(folder, 'queries', '.script.example'),
 	    		path.join(folder, 'queries', 'script.sql'));
