@@ -59,7 +59,9 @@ class Elem extends React.Component {
                     k => {
                         return !k.bound // means folder
                             || (!k.bound.head.error
-                            && k.bound.head.availableTo.indexOf(selectedConnection.driver) >= 0)
+                                && (!k.bound.head.availableTo || k.bound.head.availableTo.length == 0)) // show if empty available to
+                            || (!k.bound.head.error
+                                && k.bound.head.availableTo.indexOf(selectedConnection.driver) >= 0)
                     });
         }
 	    return (
