@@ -4,12 +4,11 @@ const uuid = require('uuid/v1');
 const JSON5 = require('json5');
 var Promise = require('promise');
 var PasswordHandler = require('../server/src/PasswordHandler/index.js');
+var appConfig = require("../config/config.js");
 
 var Service = function(root){
     var folder = path.join(root, "config");
-    var configObj = () => {
-    	return JSON5.parse(fs.readFileSync(path.join(folder, 'config.js'), 'utf8'));
-    };
+
     var template = function(handler){
 	    var connectionPath = path.join(folder, 'connections.js');
 	    var connectionObjs = JSON5.parse(fs.readFileSync(connectionPath, 'utf8'));
@@ -22,7 +21,7 @@ var Service = function(root){
 	};
 	var encrypt = function(){
 	    console.log("Trying to encrypt connection...");
-	    var handler = PasswordHandler(configObj().key).encrypt;
+	    var handler = PasswordHandler(appConfig.key).encrypt;
 	    template(function(password){
 	    	return handler(password);
 	    });
@@ -30,7 +29,7 @@ var Service = function(root){
 	};
 	var decrypt = function(){
 	    console.log("Trying to decrypt connection...");
-	    var handler = PasswordHandler(configObj().key).decrypt;
+	    var handler = PasswordHandler(appConfig.key).decrypt;
 	    template(function(password){
 	    	var decrypted = handler(password);
 	        if(decrypted){
@@ -45,10 +44,10 @@ var Service = function(root){
 	var reencrypt = function(){
 	    decrypt();
 	    console.log("Changing config key...");
-	    var config = configObj();
+	    var config = appConfig;
         config.key = uuid().replace(/-/g, "");
         fs.writeFileSync(path.join(folder, "config.js"), 
-            JSON.stringify(config, null, 4), 
+            "module.exports = " + JSON.stringify(config, null, 4), 
             "utf8");
         console.log("Changing config key done");
         encrypt();
