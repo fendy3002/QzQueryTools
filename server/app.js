@@ -4,7 +4,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const webRoute = require('./routes/web.js').default;
 const apiRoute = require('./routes/api.js').default;
-const appConfig = require('../config/config.js').default;
+const appConfig = require('../config/config.js');
 
 //Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
