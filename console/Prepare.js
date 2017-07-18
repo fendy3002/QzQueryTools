@@ -20,7 +20,8 @@ var Service = function(root){
 		    console.log("Checking if can prepare...");
 		    var folder = path.join(root, "config");
 		    if(fs.existsSync(path.join(folder, "config.js"))){
-		        console.log("Config already exists, use fprepare command instead");
+		        console.log("Config already exists, use fprepare command to force prepare.");
+		        console.log("Ignore this command if executed from npm install.");
 		        return false;
 		    }
 		    return true;
@@ -31,11 +32,6 @@ var Service = function(root){
 
 		    copyFile(path.join(folder, 'queries', '.script.example'),
 	    		path.join(folder, 'queries', 'script.sql'));
-		    copyFile(path.join(folder, 'queries', 'employees', '.script.example'),
-	    		path.join(folder, 'queries', 'employees', 'get_employees_by_name.sql'));
-		    copyFile(path.join(folder, 'queries', 'employees', '.script2.example'),
-	    		path.join(folder, 'queries', 'employees', 'get_employees_in_department.sql'));
-
 		    var saveConfig = (configObj) => {
 		        return new Promise((resolve, reject) => {
 		            configObj.key = uuid().replace(/-/g, "");

@@ -4,7 +4,11 @@ var reader = function(query){
 	var headPattern = /\/\*\s*<head>([^]*)<\/head>\s*\*\//;
 	var labelPattern = /--\s*<(.*?)>/g;
 
-	var headRaw = query.match(headPattern)[1];
+	var regexMatch = query.match(headPattern);
+	if(!regexMatch || regexMatch.length < 2){
+		return null;
+	}
+	var headRaw = regexMatch[1];
 	var head = null;
 	try{
 		head = JSON5.parse(headRaw);

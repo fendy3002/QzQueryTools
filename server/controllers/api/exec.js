@@ -4,6 +4,7 @@ import path from 'path';
 import QueryFolderReader from '../../src/QueryReader/index.js';
 import MySqlQuery from '../../src/MySqlQuery/index.js';
 import PasswordHandler from '../../src/PasswordHandler/index.js';
+import appConfig from '../../../config/config.js';
 import JSON5 from 'json5';
 
 var controller = {
@@ -52,7 +53,6 @@ var send400 = (message, res) => {
 
 var getConfig = (connectionName, queryPath) => {
     var connections = JSON5.parse(fs.readFileSync('config/connections.js', 'utf8'));
-    var appConfig = JSON5.parse(fs.readFileSync('config/config.js', 'utf8'));
 	var queryFolder = path.join(__dirname, "../../../config/queries");
 	var queries = QueryFolderReader(queryFolder);
 	var connection = lo.filter(connections, k => k.name == connectionName)[0] || null;
