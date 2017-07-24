@@ -40,15 +40,21 @@ var getPreloadedRequest = (config, filter) => {
         selectedConnection: null,
         selectedQuery: null
     };
-    if(filter.selectedConnection){
+    if(config.connection.length === 1 && config.connection[0].locked){
+        request.selectedConnection = config.connection[0];
+    }
+    else if(filter.selectedConnection){
         var matchConnections = lo.filter(config.connection, k => 
             k.name == filter.selectedConnection);
         if(matchConnections.length > 0){
             request.selectedConnection = matchConnections[0];
-            var matchQuery = findQuery(config.query, filter.selectedQuery);
-            if(matchQuery){
-                request.selectedQuery = matchQuery;
-            }
+        }
+    }
+    
+    if(request.selectedConnection){
+        var matchQuery = findQuery(config.query, filter.selectedQuery);
+        if(matchQuery){
+            request.selectedQuery = matchQuery;
         }
     }
     return request;

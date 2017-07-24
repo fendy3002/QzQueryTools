@@ -113,16 +113,21 @@
 	        selectedConnection: null,
 	        selectedQuery: null
 	    };
-	    if (filter.selectedConnection) {
+	    if (config.connection.length === 1 && config.connection[0].locked) {
+	        request.selectedConnection = config.connection[0];
+	    } else if (filter.selectedConnection) {
 	        var matchConnections = _lodash2.default.filter(config.connection, function (k) {
 	            return k.name == filter.selectedConnection;
 	        });
 	        if (matchConnections.length > 0) {
 	            request.selectedConnection = matchConnections[0];
-	            var matchQuery = findQuery(config.query, filter.selectedQuery);
-	            if (matchQuery) {
-	                request.selectedQuery = matchQuery;
-	            }
+	        }
+	    }
+
+	    if (request.selectedConnection) {
+	        var matchQuery = findQuery(config.query, filter.selectedQuery);
+	        if (matchQuery) {
+	            request.selectedQuery = matchQuery;
 	        }
 	    }
 	    return request;
