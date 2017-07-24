@@ -5,8 +5,12 @@ import sa from 'superagent';
 var Elem = function({config, filter, request,
     execQuery}){
     var onClick = () => {
+        var connection = 
+            config.connection.length === 1 && config.connection[0].locked ? 
+            config.connection[0].name :
+            filter.selectedConnection;
         execQuery({
-            connection: filter.selectedConnection,
+            connection: connection,
             query: filter.selectedQuery,
             params: JSON.stringify(request.params)
         });

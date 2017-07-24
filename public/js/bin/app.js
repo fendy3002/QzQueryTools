@@ -49079,16 +49079,21 @@
 	        return op.driver.toLowerCase().search(filterValue) > -1 || op.name.toLowerCase().search(filterValue) > -1 || op.host.toLowerCase().search(filterValue) > -1 || (option.driver.toLowerCase() + "-" + option.name.toLowerCase() + "-" + option.host.toLowerCase()).search(filterValue) > -1;
 	    };
 
-	    return _react2.default.createElement(_reactSelect2.default, { options: config.connection,
-	        onChange: setSelectedConnection,
-	        onInputChange: function onInputChange(k) {
-	            return searchKeyword.value = k;
-	        },
-	        valueRenderer: renderValue,
-	        optionRenderer: renderOption,
-	        value: request.selectedConnection,
-	        clearable: false,
-	        filterOption: filterOption });
+	    if (config.connection.length === 1 && config.connection[0].locked) {
+	        var option = config.connection[0];
+	        return _react2.default.createElement('input', { className: 'form-control', readOnly: true, defaultValue: option.driver + "-" + option.name + "-" + option.host });
+	    } else {
+	        return _react2.default.createElement(_reactSelect2.default, { options: config.connection,
+	            onChange: setSelectedConnection,
+	            onInputChange: function onInputChange(k) {
+	                return searchKeyword.value = k;
+	            },
+	            valueRenderer: renderValue,
+	            optionRenderer: renderOption,
+	            value: request.selectedConnection,
+	            clearable: false,
+	            filterOption: filterOption });
+	    }
 	};
 
 	exports.default = Elem;
@@ -68420,8 +68425,9 @@
 	        execQuery = _ref.execQuery;
 
 	    var onClick = function onClick() {
+	        var connection = config.connection.length === 1 && config.connection[0].locked ? config.connection[0].name : filter.selectedConnection;
 	        execQuery({
-	            connection: filter.selectedConnection,
+	            connection: connection,
 	            query: filter.selectedQuery,
 	            params: JSON.stringify(request.params)
 	        });

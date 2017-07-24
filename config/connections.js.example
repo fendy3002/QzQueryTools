@@ -1,6 +1,6 @@
 [
 	{
-		"name" : "local dev",
+		"name" : "default",
 		"driver" : "mysql",
 		"port" : "3306",
 		"host" : "localhost",

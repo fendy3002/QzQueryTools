@@ -22,14 +22,20 @@ var Elem = function({config, filter, request,
             	option.host.toLowerCase()).search(filterValue) > -1;
     };
 
-    return <RSelect options={config.connection}
-        onChange={setSelectedConnection}
-        onInputChange={k=> searchKeyword.value = k}
-        valueRenderer={renderValue}
-        optionRenderer={renderOption}
-        value={request.selectedConnection}
-        clearable={false}
-        filterOption={filterOption}></RSelect>
+    if(config.connection.length === 1 && config.connection[0].locked){
+        var option = config.connection[0];
+        return <input className="form-control" readOnly={true} defaultValue={option.driver + "-" + option.name+"-"+option.host} />;
+    }
+    else{
+        return <RSelect options={config.connection}
+            onChange={setSelectedConnection}
+            onInputChange={k=> searchKeyword.value = k}
+            valueRenderer={renderValue}
+            optionRenderer={renderOption}
+            value={request.selectedConnection}
+            clearable={false}
+            filterOption={filterOption}></RSelect>
+    }
 };
 
 export default Elem;
