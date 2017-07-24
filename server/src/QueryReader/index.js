@@ -15,6 +15,7 @@ var getFile = function(folder, prefix){
 		if(file.startsWith('.')){ continue; }
 		if(file.endsWith(".link")) { 
 			var destinationFolder = fs.readFileSync(path.join(folder, file), "utf8");
+			destinationFolder = destinationFolder.replace(/(\n|\r)+$/, '');
 			var children = getFile(destinationFolder, file + "/");
 			if(children.length > 0){
 				result.push({
