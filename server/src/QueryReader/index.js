@@ -16,7 +16,6 @@ var getFile = function(folder, prefix){
 		if(file.endsWith(".link")) { 
 			var destinationFolder = fs.readFileSync(path.join(folder, file), "utf8");
 			var children = getFile(destinationFolder, file + "/");
-			console.log("children", children);
 			if(children.length > 0){
 				result.push({
 					fileName: file,
