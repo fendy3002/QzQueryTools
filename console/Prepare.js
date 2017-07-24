@@ -32,6 +32,14 @@ var Service = function(root){
 
 		    copyFile(path.join(folder, 'queries', '.script.example'),
 	    		path.join(folder, 'queries', 'script.sql'));
+
+			copyFile(path.join(folder, 'queries', 'employees', '.get_employees_by_name.sql'),
+	    		path.join(folder, 'queries', 'employees', 'get_employees_by_name.sql'));
+			copyFile(path.join(folder, 'queries', 'employees', '.get_employees_in_department.sql'),
+	    		path.join(folder, 'queries', 'employees', 'get_employees_in_department.sql'));
+			copyFile(path.join(folder, 'queries', 'employees', '.get_employees_info.sql'),
+	    		path.join(folder, 'queries', 'employees', 'get_employees_info.sql'));
+
 		    var saveConfig = (configObj) => {
 		        return new Promise((resolve, reject) => {
 		            configObj.key = uuid().replace(/-/g, "");
