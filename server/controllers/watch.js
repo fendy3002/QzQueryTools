@@ -2,6 +2,7 @@ import fs from 'fs';
 import lo from 'lodash';
 import path from 'path';
 import JSON5 from 'json5';
+import appConfig from '../../config/config.js';
 import QueryFolderReader from '../src/QueryReader/index.js';
 
 var controller = {
@@ -30,8 +31,8 @@ var controller = {
 };
 
 var getConfig = (connectionName, queryPath) => {
-    var connections = JSON5.parse(fs.readFileSync('config/connections.js', 'utf8'));
-    var appConfig = JSON5.parse(fs.readFileSync('config/config.js', 'utf8'));
+	var connectionPath = path.join(__dirname, '../../config/connections.js');
+    var connections = JSON5.parse(fs.readFileSync(connectionPath, 'utf8'));
 	var queryFolder = path.join(__dirname, "../../config/queries");
 	var queries = QueryFolderReader(queryFolder);
 	var connection = lo.filter(connections, k => k.name == connectionName)[0] || null;

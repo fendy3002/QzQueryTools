@@ -23,6 +23,24 @@ var Elem = function({request}){
         var url = "./watch/" +
             encodeURIComponent(request.selectedConnection.name) + "/" +
             encodeURIComponent(request.selectedQuery.filePath);
+        var watchValue = "0";
+        var watchOpt = [
+            { value: "0", label: "Do not refresh"}
+            ];
+        if(request.selectedQuery.head.canWatch){
+            watchOpt = watchOpt.concat([
+                { value: "500", label: "0.5 sec"},
+                { value: "1000", label: "1 sec"},
+                { value: "3000", label: "3 sec"},
+                { value: "5000", label: "5 sec"},
+                { value: "10000", label: "10 sec"}
+            ]);
+            watchValue = "1000";
+        }
+
+        var watchOptDom = lo.map(watchOpt, opt => {
+            return <option value={opt.value}>{opt.label}</option>
+        });
         return <div>
             {tableDoms}
             <form action={url} method="post" target="_blank" className="form form-inline">
@@ -30,13 +48,8 @@ var Elem = function({request}){
                     <div className="box box-solid">
                         <div className="box-body">
                             <div className="text-right">
-                                <select className="form-control" name="interval" style={{"marginRight": "8px"}}>
-                                    <option value="0">Do not refresh</option>
-                                    <option value="500">0.5 sec</option>
-                                    <option value="1000" selected>1 sec</option>
-                                    <option value="3000">3 sec</option>
-                                    <option value="5000">5 sec</option>
-                                    <option value="10000">10 sec</option>
+                                <select className="form-control" name="interval" style={{"marginRight": "8px"}} defaultValue={watchValue}>
+                                    { watchOptDom }
                                 </select>
                                 <button className="btn btn-flat btn-primary" 
                                     type="submit"><i className="fa fa-external-link"></i> Watch</button>
