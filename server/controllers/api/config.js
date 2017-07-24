@@ -6,7 +6,8 @@ import JSON5 from 'json5';
 
 var controller = {
 	getConnection : function(req, res){
-	    fs.readFile('config/connections.js',function (err, data){
+		var connectionPath = path.join(__dirname, '../../../config/connections.js');
+	    fs.readFile(connectionPath,function (err, data){
 	        if (err) {
 	            throw err;
 	        }

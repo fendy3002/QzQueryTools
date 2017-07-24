@@ -1,8 +1,8 @@
 import fs from 'fs';
-
+import path from 'path';
 var controller = {
 	get : function(req, res){
-			fs.readFile(__dirname + '/../../README.md', function (err, data){
+			fs.readFile(path.join(__dirname, '/../../README.md'), function (err, data){
 	        if (err) {
 	            throw err;
 	        }

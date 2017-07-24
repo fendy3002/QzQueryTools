@@ -1,8 +1,10 @@
 import fs from 'fs';
+import path from 'path';
 
 var controller = {
 	get : function(req, res){
-	    fs.readFile('server/views/index.html',function (err, data){
+		var viewPath = path.join(__dirname, '../views/index.html');
+	    fs.readFile(viewPath,function (err, data){
 	        if (err) {
 	            throw err;
 	        }

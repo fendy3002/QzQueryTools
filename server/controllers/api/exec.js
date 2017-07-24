@@ -52,7 +52,8 @@ var send400 = (message, res) => {
 }
 
 var getConfig = (connectionName, queryPath) => {
-    var connections = JSON5.parse(fs.readFileSync('config/connections.js', 'utf8'));
+	var connectionPath = path.join(__dirname, '../../../config/connections.js');
+    var connections = JSON5.parse(fs.readFileSync(connectionPath, 'utf8'));
 	var queryFolder = path.join(__dirname, "../../../config/queries");
 	var queries = QueryFolderReader(queryFolder);
 	var connection = lo.filter(connections, k => k.name == connectionName)[0] || null;
