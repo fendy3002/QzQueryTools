@@ -1,5 +1,8 @@
 # QzQueryTools
 
+[![MIT license][license-img]][license-url]
+[![Git Issues][issues-img]][issues-url]
+
 QzQueryTools is a free, open source query and reporting tool. Used to facilitate frequently-used database queries with parameter as web-based UI and lightweight reporting. Can be used as mini-helpdesk or monitoring dashboard.
 
 # Contents
@@ -116,3 +119,15 @@ The parameter `name` defined in head will be used in query as `@name`. The line 
 This app includes two query scripts that can be used as example. Both script are `get_employees_by_name.sql` and `get_employees_in_department.sql`, located inside `storage/config/queries/employees` folder.
 
 The example use `employees` example database from MySql [https://github.com/datacharmer/test_db](https://github.com/datacharmer/test_db).
+
+
+
+
+
+
+
+[license-url]: https://github.com/fendy3002/QzQueryTools/blob/master/LICENSE
+[license-img]: https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square
+
+[issues-img]: https://img.shields.io/github/issues/fendy3002/QzQueryTools.svg?style=flat-square
+[issues-url]: https://github.com/fendy3002/QzQueryTools/issues
