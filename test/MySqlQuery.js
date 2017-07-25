@@ -33,15 +33,15 @@ describe('MySqlQuery', function() {
 				"driver" : "mysql",
 				"port" : "3306",
 				"host" : "localhost",
-				"db" : "test",
+				"db" : "testdb",
 				"username" : "root",
 				"password" : "password"
 			};
 			
 			MySqlQuery(connection, query, {id: "hello"}, (result) => {
-				assert.equal(3, result.length);
-				assert.equal(2, result[0].data.length);
-				assert.equal(1, result[1].data.length);
+				assert.equal(3, Object.keys(result.data).length);
+				assert.equal(2, result.data[0].data.length);
+				assert.equal(1, result.data[1].data.length);
 				done();
 			});
 		});
