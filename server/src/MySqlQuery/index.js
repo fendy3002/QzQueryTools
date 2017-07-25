@@ -1,6 +1,8 @@
 import mysql from 'mysql';
 import lo from 'lodash';
+import appConfig from '../../../config/config.js';
 var service = function(connection, query, params, next){
+	var queryTimeout = query.head.timeout || connection.timeout || appConfig.defaultTimeout;
 	var db = mysql.createConnection({
 		host     : connection.host,
 		user     : connection.username,
@@ -25,7 +27,12 @@ var service = function(connection, query, params, next){
 			handleSqlErr(err, next);
 		}
 		else{
-			db.query(getScript(query, params), getParam(query, params), function(err, results) {
+			var queryModel = {
+				sql: getScript(query, params),
+				timeout: queryTimeout,
+				values: getParam(query, params)
+			};
+			db.query(queryModel, function(err, results) {
 				if (err) {
 					handleSqlErr(err, next);
 				}
@@ -39,6 +46,12 @@ var service = function(connection, query, params, next){
 			});
 		}
 	});
+	db.on('error', function(err) {
+		if (!err.fatal) {
+			return;
+		}
+		handleSqlErr(err, next);
+	});
 };
 
 var handleSqlErr = function(err, next){
@@ -46,7 +59,9 @@ var handleSqlErr = function(err, next){
 		err.code == "ER_ACCESS_DENIED_ERROR" ? "Username or password error" : 
 		err.code == "ER_PARSE_ERROR" ? err.toString() : // sql syntax is incorrect
 		err.code == "ER_SP_DOES_NOT_EXIST" ? err.toString() : // function is incorrect
-		err.code == "ENOTFOUND" ? "Database host is either incorrect or cannot be accessed" : err.toString();
+		err.code == "PROTOCOL_SEQUENCE_TIMEOUT" ? "[Timeout] " + err.toString() :
+		err.code == "ENOTFOUND" ? "Database host is either incorrect or cannot be accessed" : 
+		err.code + ":" + err.toString();
 
 	next({
 		"message": message,

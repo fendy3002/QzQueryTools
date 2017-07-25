@@ -6,7 +6,8 @@
 		"host" : "localhost",
 		"db" : "test",
 		"username" : "root",
-		"password" : "password"
+		"password" : "password",
+        "timeout": 15000 // 15 seconds
 	},
 	{
 		"name" : "local dev 2",
@@ -15,6 +16,7 @@
 		"host" : "localhost",
 		"db" : "test",
 		"username" : "root",
-		"password" : "password"
+		"password" : "password",
+        "timeout": 15000 // 15 seconds
 	}
 ]
