@@ -31,7 +31,7 @@ describe('MySqlQuery', function() {
 			var connection = {
 				"name" : "local dev",
 				"driver" : "mysql",
-				"port" : "3306",
+				"port" : "3307",
 				"host" : "127.0.0.1",
 				"db" : "testdb",
 				"username" : "root",

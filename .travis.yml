@@ -10,7 +10,7 @@ services:
 before_install:
   - docker --version
   - docker pull mariadb:latest
-  - docker run -d --name db -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=testdb mariadb:latest
+  - docker run -d --name db -p 3307:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=testdb mariadb:latest
   - npm install
 
 script:
