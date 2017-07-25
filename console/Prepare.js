@@ -72,10 +72,8 @@ var Service = function(root){
 		    console.log("Copying config files...");
 		    var getConfigObj = new Promise((resolve, reject) => {
 		        var configPath = path.join(folder, "config.js.example");
-		        fs.readFile(configPath, "utf8", (err, data) => {
-		            var configObj = JSON5.parse(data);
-		            resolve(configObj);
-		        });
+				var configObj = require(configPath);
+				resolve(configObj);
 		    });
 		    var saveConfigObj = getConfigObj.then((configObj) => {
 		        return saveConfig(configObj);
