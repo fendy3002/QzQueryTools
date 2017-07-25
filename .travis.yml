@@ -1,0 +1,16 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker --version
+  - docker pull node:6.11
+  - docker run -d --name app
+  - docker cp ${TRAVIS_BUILD_DIR} app:/app
+  - docker exec app npm install --prefix /app
+  - docker pull mariadb:latest
+  - docker run -d --name db -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=testdb mariadb:latest
+
+script:
+  - docker exec app npm test --prefix /app
