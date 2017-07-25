@@ -35,7 +35,7 @@ Primarily designed for support, developer and QA. This tools can also be used by
 		src="https://user-images.githubusercontent.com/5449185/28112606-d6925762-6723-11e7-9931-8017b6369e3d.png"/>
 </p>
 <p align="center">
-	<em>Selecting connection, choose query then fill the parameter is enough to invoke query.<em>
+	<em>Selecting connection, choose query then fill the parameter is enough to invoke query.</em>
 </p>
 
 
@@ -44,7 +44,7 @@ Primarily designed for support, developer and QA. This tools can also be used by
 		src="https://user-images.githubusercontent.com/5449185/28112603-d31648fa-6723-11e7-93d2-005a2e7d943f.png"/>
 </p>
 <p align="center">
-	<em>The result layout can be modified using bootstrap's grid system, as well as displaying it in charts instead of table.<em>
+	<em>The result layout can be modified using bootstrap's grid system, as well as displaying it in charts instead of table.</em>
 </p>
 
 <p align="center">
@@ -52,7 +52,7 @@ Primarily designed for support, developer and QA. This tools can also be used by
 		src="https://user-images.githubusercontent.com/5449185/28112585-bf6c7b26-6723-11e7-80e0-8d99b5b05683.gif"/>
 </p>
 <p align="center">
-	<em>The watch module is useful to keep monitoring data. And it can directly be used fullscreen as monitoring dashboard<em>
+	<em>The watch module is useful to keep monitoring data. And it can directly be used fullscreen as monitoring dashboard</em>
 </p>
 
 
