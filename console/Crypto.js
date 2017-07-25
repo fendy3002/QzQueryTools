@@ -4,7 +4,6 @@ const uuid = require('uuid/v1');
 const JSON5 = require('json5');
 var Promise = require('promise');
 var PasswordHandler = require('../server/src/PasswordHandler/index.js');
-var appConfig = require("../config/config.js");
 
 var Service = function(root){
     var folder = path.join(root, "config");
@@ -21,6 +20,7 @@ var Service = function(root){
 	};
 	var encrypt = function(){
 	    console.log("Trying to encrypt connection...");
+		var appConfig = require("../config/config.js");
 	    var handler = PasswordHandler(appConfig.key).encrypt;
 	    template(function(password){
 	    	return handler(password);
@@ -29,6 +29,7 @@ var Service = function(root){
 	};
 	var decrypt = function(){
 	    console.log("Trying to decrypt connection...");
+		var appConfig = require("../config/config.js");
 	    var handler = PasswordHandler(appConfig.key).decrypt;
 	    template(function(password){
 	    	var decrypted = handler(password);
@@ -44,6 +45,7 @@ var Service = function(root){
 	var reencrypt = function(){
 	    decrypt();
 	    console.log("Changing config key...");
+		var appConfig = require("../config/config.js");
 	    var config = appConfig;
         config.key = uuid().replace(/-/g, "");
         fs.writeFileSync(path.join(folder, "config.js"), 
