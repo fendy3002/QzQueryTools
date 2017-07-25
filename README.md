@@ -1,7 +1,9 @@
 # QzQueryTools
 
-[![MIT license][license-img]][license-url]
 [![Git Issues][issues-img]][issues-url]
+[![Build][travis-img]][travis-url]
+
+[![MIT license][license-img]][license-url]
 
 QzQueryTools is a free, open source query and reporting tool. Used to facilitate frequently-used database queries with parameter as web-based UI and lightweight reporting. Can be used as mini-helpdesk or monitoring dashboard.
 
@@ -131,3 +133,6 @@ The example use `employees` example database from MySql [https://github.com/data
 
 [issues-img]: https://img.shields.io/github/issues/fendy3002/QzQueryTools.svg?style=flat-square
 [issues-url]: https://github.com/fendy3002/QzQueryTools/issues
+
+[travis-img]: https://travis-ci.org/fendy3002/QzQueryTools.svg?branch=master
+[travis-url]: https://travis-ci.org/fendy3002/QzQueryTools
