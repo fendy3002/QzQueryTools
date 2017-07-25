@@ -8,6 +8,7 @@ var service = function(connection, query, params, next){
 		user     : connection.username,
 		password : connection.password,
 		database : connection.db,
+		port     : connection.port || 3306,
 		dateStrings: 'date',
 		multipleStatements: true
 	});
