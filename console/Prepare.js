@@ -44,7 +44,7 @@ var Service = function(root){
 		        return new Promise((resolve, reject) => {
 		            configObj.key = uuid().replace(/-/g, "");
 		            fs.writeFile(path.join(folder, "config.js"), 
-		                JSON.stringify(configObj, null, 4), 
+		                "module.exports = " + JSON.stringify(configObj, null, 4), 
 		                "utf8",
 		                (err) => {
 		                    if(err){ reject(err); }
