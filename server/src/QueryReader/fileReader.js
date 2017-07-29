@@ -1,10 +1,10 @@
 var JSON5 = require('json5');
 
 var reader = function(query){
-	var headPattern = /\/\*\s*<head>([^]*)<\/head>\s*\*\//;
-	var labelPattern = /--\s*<(.*?)>/g;
-
-	var regexMatch = query.match(headPattern);
+	var headPattern = /\s*<head>([^]*)<\/head>\s*/;
+	var queryPattern = /<Q i=[0-9]*>([^]*)<\/Q>/g;
+/*
+	var regexMatch = headPattern.exec(query);
 	if(!regexMatch || regexMatch.length < 2){
 		return null;
 	}
@@ -18,24 +18,15 @@ var reader = function(query){
 			"error": "Unable to parse JSON"
 		};
 	}
-	var labelsRegex = labelPattern.exec(query);
+	*/
+	var queryRegex = queryPattern.exec(query);
 	var labels = [];
 	var ord = 1;
-	while (labelsRegex != null) {
-		if(labelsRegex[1].indexOf(":") > 0){
-			labels.push({
-				label: labelsRegex[1].split(':')[1],
-				index: Number(labelsRegex[1].split(':')[0])
-			});
-		}
-		else{
-			labels.push({
-				label: labelsRegex[1],
-				index: ord
-			});
-		}
+	
+	while (queryRegex != null) {
+		console.log("queryRegex" + ord, queryRegex);
 		
-		labelsRegex = labelPattern.exec(query);
+		queryRegex = queryPattern.exec(query);
 		ord++;
 	}
 	return {

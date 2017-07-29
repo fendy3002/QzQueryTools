@@ -1,4 +1,4 @@
-/*<head>{
+<head>{
 	description: "Testing sql query",
 	params: {
 		"name" : "varchar",
@@ -6,14 +6,17 @@
 		"list" : "%"
 	},
 	availableTo: ["mysql"]
-}</head>*/
+}</head>
 
--- <1:SELECT 1>
+<Q i=1>
 SELECT 1 as `col1` UNION ALL
 SELECT 2 as `col1`;
+</Q>
 
--- <2:SELECT 2>
+<Q i=2>
 SELECT @id as `col2`;
+</Q>
 
--- <SELECT 3>
+<Q i=3>
 SELECT @name as `col3`;
+</Q>

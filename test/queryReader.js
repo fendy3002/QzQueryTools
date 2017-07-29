@@ -27,7 +27,7 @@ describe('QueryReader', function() {
 				done();
 		    });
 		});
-	});
+	});/*
 	describe('Read query folders', function() {
 		it('should output queries from folder', function(done) {
 			var folder = path.join(__dirname, "../config/queries");
@@ -41,5 +41,5 @@ describe('QueryReader', function() {
 				done();
 			});
 		});
-	});
+	});*/
 });
