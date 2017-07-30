@@ -1,39 +1,43 @@
 var JSON5 = require('json5');
+var xml2js = require('xml2js').parseString;
+var lo = require("lodash");
 
-var reader = function(query){
-	var headPattern = /\s*<head>([^]*)<\/head>\s*/;
-	var queryPattern = /<Q i=[0-9]*>([^]*)<\/Q>/g;
-/*
-	var regexMatch = headPattern.exec(query);
-	if(!regexMatch || regexMatch.length < 2){
-		return null;
-	}
-	var headRaw = regexMatch[1];
-	var head = null;
-	try{
-		head = JSON5.parse(headRaw);
-	}
-	catch(ex){
-		head = {
-			"error": "Unable to parse JSON"
-		};
-	}
-	*/
-	var queryRegex = queryPattern.exec(query);
-	var labels = [];
-	var ord = 1;
-	
-	while (queryRegex != null) {
-		console.log("queryRegex" + ord, queryRegex);
+
+var reader = function(query, callback){
+	xml2js("<root>" + query + "</root>",  (err, result) => {
+		var root = result.root;
+		var head = {};
+		try{
+			head = JSON5.parse(root.head[0]);
+		}
+		catch(ex){
+			head = {
+				"error": "Unable to parse JSON"
+			};
+		}
 		
-		queryRegex = queryPattern.exec(query);
-		ord++;
-	}
-	return {
-		head: head,
-		script: query,
-		labels: labels
-	};
+		var script = "";
+		var labels = [];
+		var queries = [];
+		lo.forEach(root.Q, q => {
+			labels.push({
+				label: q.$.label,
+				index: q.$.i
+			});
+			queries.push({
+				index: q.$.i,
+				script: q._
+			});
+			script += q._ + "\n";
+		});
+
+		callback({
+			head: head,
+			labels: lo.sortBy(labels, k=> k.index),
+			queries: lo.sortBy(queries, k=> k.index),
+			script: script
+		});
+	});
 };
 
 export default reader;

@@ -2,51 +2,106 @@ import fileReader from './fileReader.js';
 import fs from 'fs';
 import path from 'path';
 
-var reader = function(folder){
-	var result = getFile(folder, '');
-	return result;
+var reader = function(folder, callback){	
+	getFile(folder, '').then(result => {
+		callback(result);
+	}).catch(function (err) {
+		console.log(err);
+	});
 };
 
-var getFile = function(folder, prefix){
-	var files = fs.readdirSync(folder);
+var resolveLink = (filePath) => {
+	return new Promise(resolve => {
+		fs.readFile(filePath, "utf8", (err, data) => {
+			var destinationFolder = data.replace(/(\n|\r)+$/, '');
+			getFile(destinationFolder, file + "/").then(children => {
+				if(children.length > 0){
+					resolve({
+						fileName: attr.file,
+						filePath: attr.file,
+						fullPath: destinationFolder,
+						children: children
+					});
+				}
+				else{
+					resolve(null);
+				}
+			});
+		});
+	});
+};
+
+var resolveFileOrFolder = (filepath, attr) => {
+	return new Promise(resolve => {
+		fs.lstat(filepath, (err, stats) => {
+			if(stats.isDirectory()){
+				var childPrefix = attr.prefix + attr.file + "/";
+				getFile(filepath, childPrefix).then(children => {
+					if(children.length > 0){
+						resolve({
+							children: children,
+							...attr
+						});
+					}
+					else{
+						resolve(null);
+					}
+				});
+			}
+			else{
+				resolveFile(filepath, attr).then(fileModel => {
+					resolve(fileModel);
+				});
+			}
+		});
+	});
+};
+
+var resolveFile = (filepath, attr) => {
+	return new Promise(resolve => {
+		fs.readFile(filepath, "utf8", (err, data) => {
+			fileReader(data, (config) => {
+				resolve({
+					...attr,
+					...config
+				});
+			});
+		});
+	});
+};
+
+var readDir = function(folder){
+	return new Promise(resolve => {
+		fs.readdir(folder, function (err, files) {
+			resolve(files);
+		});
+	});
+};
+
+var getFile = async function(folder, prefix){
 	var result = [];
+	var files = await readDir(folder);
 	for(var i = 0; i < files.length; i++){
 		var file = files[i];
-		if(file.startsWith('.')){ continue; }
-		if(file.endsWith(".link")) { 
-			var destinationFolder = fs.readFileSync(path.join(folder, file), "utf8");
-			destinationFolder = destinationFolder.replace(/(\n|\r)+$/, '');
-			var children = getFile(destinationFolder, file + "/");
-			if(children.length > 0){
-				result.push({
-					fileName: file,
-					filePath: file,
-					fullPath: destinationFolder,
-					children: children
-				});
-			}
-			continue;
-		}
 
-		var fullpath = path.join(folder, file);
-		if(fs.lstatSync(fullpath).isDirectory()){
-			var children = getFile(path.join(folder, file), prefix + file + "/");
-			if(children.length > 0){
-				result.push({
-					fileName: file,
-					filePath: prefix + file,
-					fullPath: path.join(folder, file),
-					children: children
-				});
-			}
-		}
-		else{
-			result.push({
+		if(file.startsWith('.')){ continue; }
+		
+		var attr = {
 			fileName: file,
 			filePath: prefix + file,
-			fullPath: path.join(folder, file),
-				...fileReader(fs.readFileSync(fullpath, "utf8"))
-			});
+			fullPath: path.join(folder, file)
+		};
+
+		if(file.endsWith(".link")) {
+			var linkModel = await resolveLink(attr.fullPath, attr);
+			if(linkModel){
+				result.push(linkModel);
+			}
+		}
+
+		var fileOrFolderModel = await resolveFileOrFolder(attr.fullPath, attr);
+		if(fileOrFolderModel){
+			result.push(fileOrFolderModel);
 		}
 	}
 	return result;

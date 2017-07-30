@@ -1,4 +1,4 @@
-/*<head>{
+<head>{
 	description: "Testing sql query layout",
 	params: {
 	},
@@ -51,9 +51,9 @@
 		]
 	}],
 	availableTo: ["mysql"]
-}</head>*/
+}</head>
 
--- <1:Summary>
+<Q i="1" label="Summary">
 SELECT 'No. of employees' as `label`, CAST(count(*) AS CHAR(20)) as `value`
 FROM employees.employees UNION ALL
 SELECT 'Oldest employee', min(birth_date) as `value`
@@ -68,22 +68,26 @@ WHERE gender = 'M' UNION ALL
 SELECT 'No. of Female employee', count(*) as `value`
 FROM employees.employees
 WHERE gender = 'F';
+</Q>
 
--- <2:By Departments>
+<Q i="2" label="By Departments">
 SELECT a.dept_name as `label`, count(*) as `value`
 FROM employees.departments a
 	INNER JOIN employees.dept_emp b
 		ON a.dept_no = b.dept_no
 WHERE b.to_date = '9999-01-01'
 GROUP BY a.dept_no;
+</Q>
 
--- <3:By Age>
+<Q i="3" label="By Age">
 SELECT TIMESTAMPDIFF(YEAR,  a.birth_date, NOW()) as `label`, count(*) as `value`
 FROM employees.employees a
 GROUP BY TIMESTAMPDIFF(YEAR,  a.birth_date, NOW());
+</Q>
 
--- <4:By Title>
+<Q i="4" label="By Title">
 SELECT a.title as `label`, count(*) as `value`
 FROM employees.titles a
 WHERE a.to_date = '9999-01-01'
 GROUP BY a.title;
+</Q>
