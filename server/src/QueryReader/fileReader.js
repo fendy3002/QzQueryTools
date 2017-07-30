@@ -26,6 +26,7 @@ var reader = function(query, callback){
 			});
 			queries.push({
 				index: q.$.i,
+				label: q.$.label,
 				script: q._
 			});
 			script += q._ + "\n";

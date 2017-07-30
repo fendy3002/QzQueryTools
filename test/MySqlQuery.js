@@ -20,7 +20,28 @@ describe('MySqlQuery', function() {
 			         	"mysql"
 			      	]
 			   	},
-			   	"script": "/*<head>{\n\tname: \"test.txt\",\n\tdescription: \"testing sql query\",\n\tparams: {\n\t\t\"name\" : \"varchar\",\n\t\t\"id\" : \"int\",\n\t\t\"list\" : \"%\"\n\t},\n\tavailableTo: [\"mysql\"]\n}<\/head>*/\n\n-- <1:SELECT 1>\nSELECT 1 as `col1`  UNION ALL SELECT 2 as `col1`;\n\n-- <2:SELECT 2>\nSELECT @id as `col2`;\n\n-- <SELECT 3>\nSELECT @name as `col3`;",
+			   	"script": `<head>{
+						description: "Testing sql query",
+						params: {
+							"name" : "varchar",
+							"id" : "int",
+							"list" : "%"
+						},
+						availableTo: ["mysql"]
+					}</head>
+
+					<Q i="1" label="SELECT 1">
+					SELECT 1 as col1 UNION ALL
+					SELECT 2 as col1;
+					</Q>
+
+					<Q i="2" label="SELECT 2">
+					SELECT @id as col2;
+					</Q>
+
+					<Q i="3" label="SELECT 3">
+					SELECT @name as col3;
+					</Q>`,
 			   	"labels": [
 			    	{ label: 'SELECT 1', index: 1 },
 				  	{ label: 'SELECT 2', index: 2 },

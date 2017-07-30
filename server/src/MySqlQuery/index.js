@@ -1,8 +1,59 @@
 import mysql from 'mysql';
 import lo from 'lodash';
 import appConfig from '../../../config/config.js';
-var service = function(connection, query, params, next){
+var execQueryRaw = (db, params, queryTimeout) => function(query){
+	return new Promise(resolve => {
+		var queryModel = {
+			sql: getScript(query, params),
+			timeout: queryTimeout,
+			values: getParam(query, params)
+		};
+		db.query(queryModel, function(err, results) {
+			if (err) {
+				handleSqlErr(err, next);
+			}
+			else{
+				resolve(results);
+			}
+			db.end();
+		});
+	});
+};
+
+var getResult = (connection, query, params) => async function(db){
 	var queryTimeout = query.head.timeout || connection.timeout || appConfig.defaultTimeout;
+	var result = {data: {}, query: query, params: params};
+	var execQuery = execQueryRaw(db, params, queryTimeout);
+
+	var dataResult = [];
+	for(var i = 0; i < query.queries.length; i++){
+		var sqlQuery = query.queries[i];
+		var sqlQueryResult = await execQuery(sqlQuery);
+
+		dataResult.push({
+			label: query.label,
+			...parseResult(sqlQueryResult)
+		});
+	}
+	return {
+		...result,
+		data: dataResult
+	};
+};
+
+var parseResult = function(sqlData){
+	var result = [];
+
+	if(Array.isArray(sqlData[0])){
+		// if has multistatement such as setting variable, get the latest result
+		return parseTable(sqlData[sqlData.length - 1]);
+	}
+	else{
+		return parseTable(sqlData);
+	}
+};
+
+var service = function(connection, query, params, next){
 	var db = mysql.createConnection({
 		host     : connection.host,
 		user     : connection.username,
@@ -28,22 +79,8 @@ var service = function(connection, query, params, next){
 			handleSqlErr(err, next);
 		}
 		else{
-			var queryModel = {
-				sql: getScript(query, params),
-				timeout: queryTimeout,
-				values: getParam(query, params)
-			};
-			db.query(queryModel, function(err, results) {
-				if (err) {
-					handleSqlErr(err, next);
-				}
-				else{
-					next({
-						...result,
-						data: {...parseResult(results, query)}
-					});
-				}
-				db.end();
+			getResult(connection, query, params)(db).then(result => {
+				next(result);
 			});
 		}
 	});
@@ -76,50 +113,6 @@ var getScript = function(query, params){
 
 var getParam = function(query, params){
 	return params;
-};
-
-var parseResult = function(sqlData, query){
-	var result = [];
-	var tableNo = 0;
-	var index = 0;
-	for(index = 0; index < sqlData.length; index++){
-		var labels = lo.filter(query.labels, 
-			k=> k.index == tableNo + 1 // +1 because 1 based, as opposed to 0 based
-		);
-		var label = '';
-		if(labels.length > 0){ label = labels[0].label; }
-		else{ label = index + 1; }
-		var currentTable = sqlData[index];
-		if(currentTable.constructor && currentTable.constructor.name == "OkPacket"){
-			continue;
-		}
-		else{
-			if(Array.isArray(currentTable)){
-				result.push(parseTable(currentTable, label));
-				tableNo++;
-			}
-			else{
-				result.push(parseTable(sqlData, label));
-				tableNo++;
-				return result;
-			}
-		}
-	}
-	return result;
-};
-
-var parseTable = function(table, label){
-	var fields = [];
-	if(table.length > 0){
-		var firstData = table[0];
-		fields = Object.keys(firstData);
-	}
-	var data = lo.map(table, k=> { return { ...k }; });
-	return {
-		label: label,
-		data: data,
-		fields: fields
-	};
 };
 
 export default service;
