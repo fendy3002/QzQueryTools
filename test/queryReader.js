@@ -51,34 +51,28 @@ describe('QueryReader', function() {
 		it('should read queries folder including link', function(done) {
 			var folder = path.join(__dirname, "../config/queries");
 			var employeeFolder = path.join(folder, "employees");
-			var oldFile2 = fs.createReadStream(path.join(folder, 'employees', '.get_employees_info.sql'));
-			var newFile2 = fs.createWriteStream(path.join(folder, 'employees','get_employees_info.sql'));
 
 			var expectedFilePaths = [
 				"employee.link",
 				"employees",
 				"script.example"
 			];
-			oldFile2.pipe(newFile2);
-			oldFile2.on("end", () => {
-				fs.writeFile(path.join(folder, "/employee.link"), employeeFolder, (err) => {
-					queryFolderReader(folder, (result) => {
-						// only 3 query must be present
-						assert.equal(3, result.length);
-						result.forEach(query => {
-							// the topmost queries must between the excpected file paths
-							assert.equal(true, 
-								expectedFilePaths.indexOf(query.filePath) !== false);
-							if(query.filePath == 'employee.link'){
-								// employee.link must have 1 children
-								assert.equal(1, query.children.length);
-							}
-						});
-
-						fs.unlink(path.join(folder, 'employees', 'get_employees_info.sql'));
-						fs.unlink(path.join(folder, 'employee.link'));
-						done();
+			fs.writeFile(path.join(folder, "/employee.link"), employeeFolder, (err) => {
+				queryFolderReader(folder, (result) => {
+					// only 3 query must be present
+					assert.equal(3, result.length);
+					result.forEach(query => {
+						// the topmost queries must between the excpected file paths
+						assert.equal(true, 
+							expectedFilePaths.indexOf(query.filePath) !== false);
+						if(query.filePath == 'employee.link'){
+							// employee.link must have 3 children
+							assert.equal(3, query.children.length);
+						}
 					});
+
+					fs.unlink(path.join(folder, 'employee.link'));
+					done();
 				});
 			});
 		});
