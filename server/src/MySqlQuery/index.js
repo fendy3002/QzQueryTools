@@ -45,8 +45,8 @@ var getResult = (connection, query, params, next) => async function(db){
 
 var parseResult = function(sqlData){
 	var result = [];
-
-	if(Array.isArray(sqlData[0])){
+	if(Array.isArray(sqlData[0]) || 
+		(sqlData[0].constructor && sqlData[0].constructor.name == "OkPacket")){
 		// if has multistatement such as setting variable, get the latest result
 		return parseTable(sqlData[sqlData.length - 1]);
 	}

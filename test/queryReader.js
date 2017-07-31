@@ -35,7 +35,7 @@ describe('QueryReader', function() {
 							{
 								"index": "3",
 								"label": "SELECT 3",
-								"script": "\nSELECT @name as `col3`;\n"
+								"script": "\nSET @newName = CONCAT(@name, ' Skywalker');\nSELECT @name as `col3`, @newName as `newName`;\n"
 							}
 						]
 					};

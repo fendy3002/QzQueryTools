@@ -40,7 +40,8 @@ describe('MySqlQuery', function() {
 					</Q>
 
 					<Q i="3" label="SELECT 3">
-					SELECT @name as col3;
+					SET @newName = CONCAT(@name, ' Skywalker');
+					SELECT @name as col3, @newName as newName;
 					</Q>`,
 				"queries": [
 					{
@@ -56,7 +57,7 @@ describe('MySqlQuery', function() {
 					{
 						"index": "3",
 						"label": "SELECT 3",
-						"script": "\nSELECT @name as `col3`;\n"
+						"script": "\nSET @newName = CONCAT(@name, ' Skywalker');\nSELECT @name as col3, @newName as newName;\n"
 					}
 				],
 			   	"labels": [
@@ -76,10 +77,11 @@ describe('MySqlQuery', function() {
 				"password" : "password"
 			};
 			
-			MySqlQuery(connection, query, {id: "hello"}, (result) => {
+			MySqlQuery(connection, query, {id: "hello", name: "Luke"}, (result) => {
 				assert.equal(3, Object.keys(result.data).length);
 				assert.equal(2, result.data[0].data.length);
 				assert.equal(1, result.data[1].data.length);
+				assert.equal("Luke Skywalker", result.data[2].data[0].newName);
 				done();
 			});
 		});

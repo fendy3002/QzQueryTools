@@ -18,5 +18,6 @@ SELECT @id as `col2`;
 </Q>
 
 <Q i="3" label="SELECT 3">
-SELECT @name as `col3`;
+SET @newName = CONCAT(@name, ' Skywalker');
+SELECT @name as `col3`, @newName as `newName`;
 </Q>
