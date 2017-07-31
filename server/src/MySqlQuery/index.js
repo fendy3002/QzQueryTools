@@ -1,7 +1,7 @@
 import mysql from 'mysql';
 import lo from 'lodash';
 import appConfig from '../../../config/config.js';
-var execQueryRaw = (db, params, queryTimeout) => function(query){
+var execQueryRaw = (db, params, queryTimeout, next) => function(query){
 	return new Promise(resolve => {
 		var queryModel = {
 			sql: getScript(query, params),
@@ -15,15 +15,14 @@ var execQueryRaw = (db, params, queryTimeout) => function(query){
 			else{
 				resolve(results);
 			}
-			db.end();
 		});
 	});
 };
 
-var getResult = (connection, query, params) => async function(db){
+var getResult = (connection, query, params, next) => async function(db){
 	var queryTimeout = query.head.timeout || connection.timeout || appConfig.defaultTimeout;
 	var result = {data: {}, query: query, params: params};
-	var execQuery = execQueryRaw(db, params, queryTimeout);
+	var execQuery = execQueryRaw(db, params, queryTimeout, next);
 
 	var dataResult = [];
 	for(var i = 0; i < query.queries.length; i++){
@@ -35,6 +34,9 @@ var getResult = (connection, query, params) => async function(db){
 			...parseResult(sqlQueryResult)
 		});
 	}
+	
+	db.end();
+
 	return {
 		...result,
 		data: dataResult
@@ -51,6 +53,19 @@ var parseResult = function(sqlData){
 	else{
 		return parseTable(sqlData);
 	}
+};
+
+var parseTable = function(table){
+	var fields = [];
+	if(table.length > 0){
+		var firstData = table[0];
+		fields = Object.keys(firstData);
+	}
+	var data = lo.map(table, k=> { return { ...k }; });
+	return {
+		data: data,
+		fields: fields
+	};
 };
 
 var service = function(connection, query, params, next){
@@ -79,8 +94,10 @@ var service = function(connection, query, params, next){
 			handleSqlErr(err, next);
 		}
 		else{
-			getResult(connection, query, params)(db).then(result => {
+			getResult(connection, query, params, next)(db).then(result => {
 				next(result);
+			}).catch(err => {
+				console.log("err", err);
 			});
 		}
 	});

@@ -20,9 +20,27 @@ describe('QueryReader', function() {
 							{ label: 'SELECT 1', index: '1' },
 							{ label: 'SELECT 2', index: '2' },
 							{ label: 'SELECT 3', index: '3' }
+						],
+						queries: [
+							{
+								"index": "1",
+								"label": "SELECT 1",
+								"script": "\nSELECT 1 as `col1` UNION ALL\nSELECT 2 as `col1`;\n"
+							},
+							{
+								"index": "2",
+								"label": "SELECT 2",
+								"script": "\nSELECT @id as `col2`;\n"
+							},
+							{
+								"index": "3",
+								"label": "SELECT 3",
+								"script": "\nSELECT @name as `col3`;\n"
+							}
 						]
 					};
 					assert.deepEqual(expected.head, config.head);
+					assert.deepEqual(expected.queries, config.queries);
 					assert.deepEqual(expected.labels, config.labels);
 					done();
 				});
