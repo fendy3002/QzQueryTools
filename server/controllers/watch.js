@@ -10,38 +10,39 @@ var controller = {
 		var params = JSON.parse(req.body.params || "{}");
 		var connectionName = req.params.connection;
 		var queryPath = req.params.query;
-		var config = getConfig(connectionName, queryPath);
-
-		if(!config.connection || !config.query){
-			send400("connection and query is required", res);
-			return;
-		}
-	    res.set('Content-Type', 'text/html');
-		res.render("index.watch.html", {
-			title: config.query.head.description,
-			params: params,
-			connection: connectionName,
-			query: queryPath,
-			interval: req.body.interval > 0 ? 
-				Math.max(req.body.interval, 500) :
-				0
+		getConfig(connectionName, queryPath, (config) => {
+			if(!config.connection || !config.query){
+				send400("connection and query is required", res);
+				return;
+			}
+			res.set('Content-Type', 'text/html');
+			res.render("index.watch.html", {
+				title: config.query.head.description,
+				params: params,
+				connection: connectionName,
+				query: queryPath,
+				interval: req.body.interval > 0 ? 
+					Math.max(req.body.interval, 500) :
+					0
+			});
+			res.end();
 		});
-        res.end();
 	}
 };
 
-var getConfig = (connectionName, queryPath) => {
+var getConfig = (connectionName, queryPath, callback) => {
 	var connectionPath = path.join(__dirname, '../../config/connections.js');
     var connections = JSON5.parse(fs.readFileSync(connectionPath, 'utf8'));
 	var queryFolder = path.join(__dirname, "../../config/queries");
-	var queries = QueryFolderReader(queryFolder);
-	var connection = lo.filter(connections, k => k.name == connectionName)[0] || null;
-	var query = getQuery(queries, queryPath) || null;
-	return {
-		connection: connection,
-		query: query,
-		app: appConfig
-	}
+	var queries = QueryFolderReader(queryFolder, queries => {
+		var connection = lo.filter(connections, k => k.name == connectionName)[0] || null;
+		var query = getQuery(queries, queryPath) || null;
+		callback({
+			connection: connection,
+			query: query,
+			app: appConfig
+		});
+	});
 };
 
 var getQuery = function(queries, queryPath){

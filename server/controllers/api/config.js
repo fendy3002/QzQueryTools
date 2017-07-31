@@ -31,11 +31,12 @@ var controller = {
 	getQuery : function(req, res){
 		var folder = path.join(__dirname, "../../../config/queries");
 
-		var data = queryFolderReader(folder);
-		var toSendStr = JSON.stringify(data);
-		res.writeHead(200, {'Content-Type': 'application/json','Content-Length':toSendStr.length});
-        res.write(toSendStr);
-        res.end();
+		queryFolderReader(folder, (data) => {
+			var toSendStr = JSON.stringify(data);
+			res.writeHead(200, {'Content-Type': 'application/json','Content-Length':toSendStr.length});
+			res.write(toSendStr);
+			res.end();
+		});
 	}
 };
 

@@ -13,30 +13,31 @@ var controller = {
 		var queryPath = req.body.query;
 		var params = JSON.parse(req.body.params || "{}");
 
-		var config = getConfig(connectionName, queryPath);
-		if(!config.connection || !config.query){
-			send400("connection and query is required", res);
-			return;
-		}
-		var connection = {...config.connection};
-		connection.password = PasswordHandler(config.app.key).decrypt(connection.password);
-		MySqlQuery(connection, config.query, params, (data) => {
-			if(data.success === false){
-				toSendStr = JSON.stringify(data);
-				res.set({'Content-Type': 'application/json','Content-Length':toSendStr.length});
-				res.status(400);
-				res.send(toSendStr);
-				res.end();
+		getConfig(connectionName, queryPath, (config) => {
+			if(!config.connection || !config.query){
+				send400("connection and query is required", res);
 				return;
 			}
-			else{
-				var toSendStr = JSON.stringify(data);
-				res.set({'Content-Type': 'application/json','Content-Length':toSendStr.length});
-				res.status(200);
-				res.send(toSendStr);
-				res.end();
-				return;
-			}
+			var connection = {...config.connection};
+			connection.password = PasswordHandler(config.app.key).decrypt(connection.password);
+			MySqlQuery(connection, config.query, params, (data) => {
+				if(data.success === false){
+					toSendStr = JSON.stringify(data);
+					res.set({'Content-Type': 'application/json','Content-Length':toSendStr.length});
+					res.status(400);
+					res.send(toSendStr);
+					res.end();
+					return;
+				}
+				else{
+					var toSendStr = JSON.stringify(data);
+					res.set({'Content-Type': 'application/json','Content-Length':toSendStr.length});
+					res.status(200);
+					res.send(toSendStr);
+					res.end();
+					return;
+				}
+			});
 		});
 	}
 };
@@ -51,18 +52,21 @@ var send400 = (message, res) => {
     res.end();
 }
 
-var getConfig = (connectionName, queryPath) => {
+var getConfig = (connectionName, queryPath, callback) => {
 	var connectionPath = path.join(__dirname, '../../../config/connections.js');
     var connections = JSON5.parse(fs.readFileSync(connectionPath, 'utf8'));
 	var queryFolder = path.join(__dirname, "../../../config/queries");
-	var queries = QueryFolderReader(queryFolder);
-	var connection = lo.filter(connections, k => k.name == connectionName)[0] || null;
-	var query = getQuery(queries, queryPath) || null;
-	return {
-		connection: connection,
-		query: query,
-		app: appConfig
-	}
+	var queries = QueryFolderReader(queryFolder, queries => {
+
+		var connection = lo.filter(connections, k => k.name == connectionName)[0] || null;
+		var query = getQuery(queries, queryPath) || null;
+
+		callback({
+			connection: connection,
+			query: query,
+			app: appConfig
+		});
+	});
 };
 
 var getQuery = function(queries, queryPath){
