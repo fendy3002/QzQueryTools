@@ -14,11 +14,11 @@ var resolveLink = (filePath, attr) => {
 	return new Promise(resolve => {
 		fs.readFile(filePath, "utf8", (err, data) => {
 			var destinationFolder = data.replace(/(\n|\r)+$/, '');
-			getFile(destinationFolder, attr.file + "/").then(children => {
+			getFile(destinationFolder, attr.fileName + "/").then(children => {
 				if(children.length > 0){
 					resolve({
-						fileName: attr.file,
-						filePath: attr.file,
+						fileName: attr.fileName,
+						filePath: attr.fileName,
 						fullPath: destinationFolder,
 						children: children
 					});
