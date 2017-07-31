@@ -10,11 +10,11 @@ var reader = function(folder, callback){
 	});
 };
 
-var resolveLink = (filePath) => {
+var resolveLink = (filePath, attr) => {
 	return new Promise(resolve => {
 		fs.readFile(filePath, "utf8", (err, data) => {
 			var destinationFolder = data.replace(/(\n|\r)+$/, '');
-			getFile(destinationFolder, file + "/").then(children => {
+			getFile(destinationFolder, attr.file + "/").then(children => {
 				if(children.length > 0){
 					resolve({
 						fileName: attr.file,
