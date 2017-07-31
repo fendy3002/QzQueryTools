@@ -5,6 +5,15 @@ var lo = require("lodash");
 
 var reader = function(query, callback){
 	xml2js("<root>" + query + "</root>",  (err, result) => {
+		if(err){
+			callback({
+				head: {
+					"error": "Unable to parse JSON"
+				}
+			});
+			return;
+		}
+
 		var root = result.root;
 		var head = {};
 		try{
