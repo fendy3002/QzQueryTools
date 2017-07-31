@@ -98,10 +98,11 @@ var getFile = async function(folder, prefix){
 				result.push(linkModel);
 			}
 		}
-
-		var fileOrFolderModel = await resolveFileOrFolder(attr.fullPath, attr);
-		if(fileOrFolderModel){
-			result.push(fileOrFolderModel);
+		else{
+			var fileOrFolderModel = await resolveFileOrFolder(attr.fullPath, attr);
+			if(fileOrFolderModel){
+				result.push(fileOrFolderModel);
+			}
 		}
 	}
 	return result;
