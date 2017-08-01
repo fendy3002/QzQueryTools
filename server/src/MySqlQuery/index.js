@@ -30,7 +30,7 @@ var getResult = (connection, query, params, next) => async function(db){
 		var sqlQueryResult = await execQuery(sqlQuery);
 
 		dataResult.push({
-			label: query.label,
+			label: sqlQuery.label,
 			...parseResult(sqlQueryResult)
 		});
 	}
