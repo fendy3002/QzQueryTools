@@ -54,7 +54,8 @@ describe('QueryReader', function() {
 			var newFile2 = fs.createWriteStream(path.join(folder, 'employees','get_employees_info.sql'));
 			oldFile2.pipe(newFile2);
 			oldFile2.on("end", () => {
-				var result = queryFolderReader(folder, (result) => {	
+				var result = queryFolderReader(folder, (result) => {
+					console.log("result", result);
 					assert.equal(2, result.length);
 					fs.unlink(path.join(folder, 'employees', 'get_employees_info.sql'));
 					done();

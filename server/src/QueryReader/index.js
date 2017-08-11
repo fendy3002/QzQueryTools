@@ -79,6 +79,7 @@ var readDir = function(folder){
 };
 
 var getFile = async function(folder, prefix){
+	var promises = [];
 	var result = [];
 	var files = await readDir(folder);
 	for(var i = 0; i < files.length; i++){
@@ -93,17 +94,17 @@ var getFile = async function(folder, prefix){
 		};
 
 		if(file.endsWith(".link")) {
-			var linkModel = await resolveLink(attr.fullPath, attr);
-			if(linkModel){
-				result.push(linkModel);
-			}
+			promises.push(resolveLink(attr.fullPath, attr));
 		}
 
-		var fileOrFolderModel = await resolveFileOrFolder(attr.fullPath, attr);
-		if(fileOrFolderModel){
-			result.push(fileOrFolderModel);
-		}
+		promises.push(resolveFileOrFolder(attr.fullPath, attr));
 	}
+	var res = await Promise.all(promises);
+	res.forEach(function(each){
+		if(each){
+			result.push(each);
+		}
+	});
 	return result;
 }
 
