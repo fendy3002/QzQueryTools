@@ -50,7 +50,6 @@
     "browserify": "^13.1.0",
     "change-case": "^3.0.0",
     "chart.js": "^2.6.0",
-    "crypto": "0.0.3",
     "ejs": "^2.5.6",
     "express": "^4.15.3",
     "fixed-data-table": "^0.6.3",
