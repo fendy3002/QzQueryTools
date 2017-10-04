@@ -26,12 +26,22 @@ var controller = {
 				results: results
 			};
 			fs.writeFile(snapshotFile, JSON5.stringify(snapshotModel), (err) => {
-				res.set({'Content-Type': 'application/json','Content-Length':uuid.length});
-				res.status(200);
-				res.send({
-					uuid: uuid
-				});
-				res.end();
+				if(err){
+					res.set({'Content-Type': 'application/json','Content-Length':err.length});
+					res.status(500);
+					res.send({
+						message: err
+					});
+					res.end();
+				}
+				else{
+					res.set({'Content-Type': 'application/json','Content-Length':uuid.length});
+					res.status(200);
+					res.send({
+						uuid: uuid
+					});
+					res.end();
+				}
 			});
 		});
 	}

@@ -50,8 +50,8 @@ var snapshot = exports.snapshot = function(){
 
         sa.post('/api/snapshot')
             .send({
-                params: JSON.stringify(request.execParams),
-                results: JSON.stringify(request.execResult),
+                params: JSON.stringify(request.execParams || {}),
+                results: JSON.stringify(request.execResult || {}),
                 connection: filter.selectedConnection,
                 query: filter.selectedQuery
             })

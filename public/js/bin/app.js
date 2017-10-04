@@ -46666,8 +46666,8 @@
 	            filter = _getState.filter;
 
 	        _superagent2.default.post('/api/snapshot').send({
-	            params: JSON.stringify(request.execParams),
-	            results: JSON.stringify(request.execResult),
+	            params: JSON.stringify(request.execParams || {}),
+	            results: JSON.stringify(request.execResult || {}),
 	            connection: filter.selectedConnection,
 	            query: filter.selectedQuery
 	        }).end(function (err, res) {
