@@ -1,6 +1,7 @@
 import React from 'react'
 import lo from 'lodash'
 import sa from 'superagent';
+import StateSnapshotButton from '../containers/StateSnapshotButton.js';
 import LayoutResult from './LayoutResult.js';
 import TableResult from './TableResult.js';
 
@@ -41,24 +42,32 @@ var Elem = function({request}){
         var watchOptDom = lo.map(watchOpt, opt => {
             return <option value={opt.value}>{opt.label}</option>
         });
+
         return <div>
             {tableDoms}
-            <form action={url} method="post" target="_blank" className="form form-inline">
-                <div className="row">
-                    <div className="box box-solid">
-                        <div className="box-body">
-                            <div className="text-right">
-                                <select className="form-control" name="interval" style={{"marginRight": "8px"}} defaultValue={watchValue}>
-                                    { watchOptDom }
-                                </select>
-                                <button className="btn btn-flat btn-primary" 
-                                    type="submit"><i className="fa fa-external-link"></i> Watch</button>
+            <div className="row">
+                <div className="box box-solid">
+                    <div className="box-body">
+                        <div className="row">
+                            <div className="col-sm-12 text-right">
+                                <form action={url} method="post" target="_blank" className="form form-inline">
+                                    <select className="form-control" name="interval" style={{"marginRight": "8px"}} defaultValue={watchValue}>
+                                        { watchOptDom }
+                                    </select>
+                                    <button className="btn btn-flat btn-primary" 
+                                        type="submit"><i className="fa fa-external-link"></i> Watch</button>
+                                    <input type="hidden" name="params" defaultValue={JSON.stringify(request.execParams)} />
+                                </form>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-sm-12 text-right">
+                                <StateSnapshotButton />
                             </div>
                         </div>
                     </div>
                 </div>
-                <input type="hidden" name="params" defaultValue={JSON.stringify(request.execParams)} />
-            </form>
+            </div>
         </div>;
     }
 };

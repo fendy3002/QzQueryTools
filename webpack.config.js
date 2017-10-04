@@ -2,7 +2,8 @@ var path = require('path');
 module.exports = {
     entry: {
         app: './public/js/app/index.js',
-        appWatch: './public/js/app/index.watch.js'
+        appWatch: './public/js/app/index.watch.js',
+        appSnapshot: './public/js/app/index.snapshot.js'
     },
     output: {
         path: './public/js/bin/',

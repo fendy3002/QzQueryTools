@@ -91,10 +91,7 @@
 
 	var renderPage = function renderPage(context) {
 	    window.context = window.context || {};
-	    var filter = {
-	        selectedConnection: context.connection,
-	        selectedQuery: context.query
-	    };
+	    var filter = {};
 	    var state = {
 	        config: {
 	            connection: [],
@@ -104,6 +101,9 @@
 	        request: {
 	            selectedConnection: null,
 	            selectedQuery: null,
+	            execResult: context.results,
+	            execQuery: context.query,
+	            execParams: context.params,
 	            title: context.title
 	        }
 	    };
@@ -115,23 +115,6 @@
 	        { store: store },
 	        _react2.default.createElement(_StateApp2.default, null)
 	    ), document.getElementById('content'));
-
-	    store.dispatch((0, _index.execQuery)({
-	        connection: filter.selectedConnection,
-	        query: filter.selectedQuery,
-	        params: JSON.stringify(window.context.params)
-	    }));
-	    if (context.interval > 0) {
-	        setTimeout(function () {
-	            setInterval(function () {
-	                store.dispatch((0, _index.execQuery)({
-	                    connection: filter.selectedConnection,
-	                    query: filter.selectedQuery,
-	                    params: JSON.stringify(window.context.params)
-	                }));
-	            }, context.interval);
-	        }, 500);
-	    }
 	};
 	initAdminLte();
 	renderPage(window.context || {});
