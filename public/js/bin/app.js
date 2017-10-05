@@ -46653,10 +46653,21 @@
 	    };
 	};
 
-	var execQuery = exports.execQuery = function (params) {
+	var execQuery = exports.execQuery = function () {
 	    return function (dispatch, getState) {
+	        var _getState = getState(),
+	            config = _getState.config,
+	            filter = _getState.filter,
+	            request = _getState.request;
+
+	        var connection = config.connection.length === 1 && config.connection[0].locked ? config.connection[0].name : filter.selectedConnection;
+	        var postParams = {
+	            connection: connection,
+	            query: filter.selectedQuery,
+	            params: JSON.stringify(request.params)
+	        };
 	        loading(dispatch, function (done) {
-	            _superagent2.default.post('/api/exec').send(params).end(function (err, res) {
+	            _superagent2.default.post('/api/exec').send(postParams).end(function (err, res) {
 	                if (err) {
 	                    _reactReduxToastr.toastr.error(res.body.message);
 	                }
@@ -46674,10 +46685,10 @@
 
 	var snapshot = exports.snapshot = function () {
 	    return function (dispatch, getState) {
-	        var _getState = getState(),
-	            server = _getState.server,
-	            request = _getState.request,
-	            filter = _getState.filter;
+	        var _getState2 = getState(),
+	            server = _getState2.server,
+	            request = _getState2.request,
+	            filter = _getState2.filter;
 
 	        _superagent2.default.post('/api/snapshot').send({
 	            params: JSON.stringify(request.execParams || {}),
@@ -69943,12 +69954,7 @@
 	        execQuery = _ref.execQuery;
 
 	    var onClick = function onClick() {
-	        var connection = config.connection.length === 1 && config.connection[0].locked ? config.connection[0].name : filter.selectedConnection;
-	        execQuery({
-	            connection: connection,
-	            query: filter.selectedQuery,
-	            params: JSON.stringify(request.params)
-	        });
+	        execQuery();
 	    };
 	    return _react2.default.createElement(
 	        'div',
@@ -121246,6 +121252,22 @@
 	    value: true
 	});
 
+	var _classCallCheck2 = __webpack_require__(304);
+
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+	var _createClass2 = __webpack_require__(305);
+
+	var _createClass3 = _interopRequireDefault(_createClass2);
+
+	var _possibleConstructorReturn2 = __webpack_require__(324);
+
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+	var _inherits2 = __webpack_require__(378);
+
+	var _inherits3 = _interopRequireDefault(_inherits2);
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -121270,6 +121292,50 @@
 	var tempParam = {};
 	var paramHandler = {};
 
+	var DateField = function (_React$Component) {
+	    (0, _inherits3.default)(DateField, _React$Component);
+
+	    function DateField(props) {
+	        (0, _classCallCheck3.default)(this, DateField);
+
+	        var _this = (0, _possibleConstructorReturn3.default)(this, (DateField.__proto__ || Object.getPrototypeOf(DateField)).call(this, props));
+
+	        _this.state = {
+	            startDate: props.defaultValue ? (0, _moment2.default)(props.defaultValue) : null
+	        };
+	        _this.handleChange = _this.handleChange.bind(_this);
+	        return _this;
+	    }
+
+	    (0, _createClass3.default)(DateField, [{
+	        key: 'handleChange',
+	        value: function handleChange(date) {
+	            this.setState({
+	                startDate: date
+	            });
+
+	            onDateChange(this.props.paramKey)(date);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { style: { "fontSize": "16px" } },
+	                _react2.default.createElement(_reactDatepicker2.default, {
+	                    dateFormat: 'YYYY/MM/DD',
+	                    calendarClassName: 'datepicker-calendar',
+	                    isClearable: true,
+	                    key: this.props.elemKey,
+	                    selected: this.state.startDate,
+	                    onChange: this.handleChange
+	                })
+	            );
+	        }
+	    }]);
+	    return DateField;
+	}(_react2.default.Component);
+
 	var renderParam = function renderParam(_ref) {
 	    var type = _ref.type,
 	        elemKey = _ref.elemKey,
@@ -121288,24 +121354,7 @@
 	                { className: 'control-label' },
 	                paramKey
 	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'input-group date' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'input-group-addon' },
-	                    _react2.default.createElement('i', { className: 'fa fa-calendar' })
-	                ),
-	                _react2.default.createElement(_reactDatepicker2.default, {
-	                    dateFormat: 'YYYY/MM/DD',
-	                    isClearable: true,
-	                    selected: paramHandler[elemKey],
-	                    onChange: function onChange(date) {
-	                        paramHandler[elemKey] = date;
-	                        onDateChange(paramKey)(date);
-	                    },
-	                    key: elemKey })
-	            )
+	            _react2.default.createElement(DateField, { paramKey: paramKey, elemKey: elemKey, defaultValue: defaultValue })
 	        );
 	    } else {
 	        return _react2.default.createElement(

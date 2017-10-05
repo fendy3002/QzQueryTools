@@ -8,6 +8,37 @@ var timeoutHandler = null;
 var tempParam = {};
 var paramHandler = {};
 
+class DateField extends React.Component {
+    constructor (props) {
+        super(props);
+        this.state = {
+            startDate: props.defaultValue ? moment(props.defaultValue) : null
+        };
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(date) {
+        this.setState({
+            startDate: date
+        });
+
+        onDateChange(this.props.paramKey)(date);
+    }
+
+    render() {
+        return <div style={{"fontSize": "16px"}}>
+            <DatePicker
+                dateFormat="YYYY/MM/DD" 
+                calendarClassName="datepicker-calendar"
+                isClearable={true}
+                key={this.props.elemKey}
+                selected={this.state.startDate}
+                onChange={this.handleChange}
+            />
+        </div>;
+    }
+}
+
 var renderParam = function({type, elemKey, paramKey, defaultValue,
     onInputChange, onDateChange
 }){
@@ -15,20 +46,7 @@ var renderParam = function({type, elemKey, paramKey, defaultValue,
         paramHandler[elemKey] = paramHandler[elemKey] || moment(defaultValue);
         return <div className="col-md-6 form-group">
             <label className="control-label">{ paramKey }</label>
-            <div className="input-group date">
-                <div className="input-group-addon">
-                    <i className="fa fa-calendar"></i>
-                </div>
-                <DatePicker 
-                    dateFormat="YYYY/MM/DD" 
-                    isClearable={true}
-                    selected={ paramHandler[elemKey] }
-                    onChange={ (date) => {
-                        paramHandler[elemKey] = date;
-                        onDateChange(paramKey)(date);
-                    } }
-                    key={elemKey}/>
-            </div>
+            <DateField paramKey={paramKey} elemKey={elemKey} defaultValue={defaultValue} />
         </div>;
     }
     else{

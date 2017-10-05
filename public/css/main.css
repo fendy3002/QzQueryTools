@@ -10,3 +10,7 @@
 .table-bordered>tfoot>tr>td{
     border: 1px solid #e5e5e5;
 }
+
+div.datepicker-calendar {
+    font-size: 12;
+}

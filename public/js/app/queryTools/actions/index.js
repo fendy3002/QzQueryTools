@@ -25,11 +25,21 @@ var appendParams = exports.appendParams = function(key, value){
     };
 };
 
-var execQuery = exports.execQuery = function(params){
+var execQuery = exports.execQuery = function(){
     return (dispatch, getState) => {
+        var { config, filter, request } = getState();
+        var connection = 
+            config.connection.length === 1 && config.connection[0].locked ? 
+            config.connection[0].name:
+            filter.selectedConnection;
+        var postParams = {
+            connection: connection,
+            query: filter.selectedQuery,
+            params: JSON.stringify(request.params)
+        };
         loading(dispatch, done => {
             sa.post('/api/exec')
-                .send(params)
+                .send(postParams)
                 .end(function(err, res){
                     if(err){
                         toastr.error(res.body.message);
