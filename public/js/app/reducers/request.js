@@ -11,7 +11,7 @@ var obj = function(state = [], action){
             return {
                 ...state,
                 selectedQuery: action.query,
-                params: null
+                params: action.params
             };
         case "SET_EXEC_RESULT":
             return {

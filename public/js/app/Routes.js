@@ -9,11 +9,14 @@ import HomeApp from './queryTools/containers/StateApp.js';
 //import ConfigApp from './configList/components/App.js';
 import AboutApp from './about/components/App.js';
 
-var Routes = function(){
+var Routes = function({ store }){
     var host = location.protocol + "//" + window.location.host;
+    var loadView = function(){
+        
+    };
     return <Router>
         <div>
-            <Route exact path="/" component={HomeApp}/>
+            <Route exact path="/" component={HomeApp} onEnter={loadView()}/>
             <Route path="/about" component={AboutApp}/>
         </div>
     </Router>;

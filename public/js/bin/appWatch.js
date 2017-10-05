@@ -88873,7 +88873,7 @@
 	        case "SET_SELECTED_QUERY":
 	            return (0, _extends3.default)({}, state, {
 	                selectedQuery: action.query,
-	                params: null
+	                params: action.params
 	            });
 	        case "SET_EXEC_RESULT":
 	            return (0, _extends3.default)({}, state, {

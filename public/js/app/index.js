@@ -9,6 +9,7 @@ import sa from 'superagent';
 import lo from 'lodash';
 import Routes from './Routes.js';
 import reducer from './reducers';
+import QueryParamDefaultValueGenerator from './queryTools/actions/QueryParamDefaultValueGenerator.js';
 
 var initAdminLte = () => {
     setTimeout(() => {
@@ -55,6 +56,7 @@ var getPreloadedRequest = (config, filter) => {
         var matchQuery = findQuery(config.query, filter.selectedQuery);
         if(matchQuery){
             request.selectedQuery = matchQuery;
+            request.params = QueryParamDefaultValueGenerator(matchQuery);
         }
     }
     return request;
@@ -81,7 +83,8 @@ var renderPage = function(){
                 filter: filter,
                 request: Object.assign({
                     selectedConnection: null,
-                    selectedQuery: null
+                    selectedQuery: null,
+                    params: {}
                 }, preloadRequest)
             };
             
@@ -93,7 +96,7 @@ var renderPage = function(){
                 ]));
             render(
                 <Provider store={store}>
-                    <Routes />
+                    <Routes store={store} />
                 </Provider>,
                 document.getElementById('content')
             );

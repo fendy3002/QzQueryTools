@@ -1,29 +1,18 @@
-import React from 'react'
-import lo from 'lodash'
-var timeoutHandler = null;
+import React from 'react';
+import lo from 'lodash';
+
+import ParamField from './ParamField.js';
+import QueryParamDefaultValueGenerator from '../actions/QueryParamDefaultValueGenerator.js';
+
 var Elem = function({config, filter, request,
 	appendParams}){
     var paramDom = [];
-    var tempParam = {};
     if(request.selectedQuery){
-        var onChange = key => event => {
-            var input = event.target;
-            tempParam[key] = input.value;
-            if(timeoutHandler){ clearTimeout(timeoutHandler); }
-            timeoutHandler = setTimeout(() => {
-                lo.forOwn(tempParam, (value, key) => {
-                    appendParams(key, value);
-                });
-                tempParam = {};
-            }, 150);
-        };
+        var queryParams = request.params;
         lo.forOwn(request.selectedQuery.head.params,
             (value, key) => {
-                paramDom.push(<div className="col-md-6 form-group">
-                    <label className="control-label">{key}</label>
-                    <input className="form-control" onChange={onChange(key)}
-                        key={request.selectedQuery.filePath + key}/>
-                </div>);
+                paramDom.push(<ParamField request={request} paramOpt={value} paramKey={key} defaultValue={queryParams[key]}
+                    appendParams={appendParams}/>);
             });
     };
 	return <div>

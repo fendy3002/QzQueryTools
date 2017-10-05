@@ -1,6 +1,7 @@
 import sa from 'superagent';
 import lo from 'lodash';
-import {toastr} from 'react-redux-toastr'
+import {toastr} from 'react-redux-toastr';
+import QueryParamDefaultValueGenerator from './QueryParamDefaultValueGenerator.js';
 
 var setSelectedConnection = exports.setSelectedConnection = function(connection){
     return {
@@ -11,7 +12,8 @@ var setSelectedConnection = exports.setSelectedConnection = function(connection)
 var setSelectedQuery = exports.setSelectedQuery = function(query){
     return {
         type: 'SET_SELECTED_QUERY',
-        query: query
+        query: query,
+        params: QueryParamDefaultValueGenerator(query)
     };
 };
 var appendParams = exports.appendParams = function(key, value){
