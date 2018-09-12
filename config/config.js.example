@@ -1,6 +1,0 @@
-module.exports = {
-	"port" : 3000,
-	"key" : "",
-	"lockConnection": "",
-	"defaultTimeout": 15000 // 15 seconds
-};
