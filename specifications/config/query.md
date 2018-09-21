@@ -3,7 +3,7 @@
 ## Format
 
 Single xml file can hold many sql queries. Each sql query are being wrapped by `<Q></Q>` tag. Use `<![CDATA[  ]]>` tag in body to avoid `>` or `<` symbol being interpreted as markup character. Example:
-
+```xml
     <Q i="1" label="Employees">
     <![CDATA[
         select *
@@ -15,6 +15,7 @@ Single xml file can hold many sql queries. Each sql query are being wrapped by `
         limit 20;
     ]]>
     </Q>
+```
 
 Each query enclosed by `<Q></Q>` tag need to return 1 result set. If multiple result set returned, the one which will be used will be the last one, or which index being mentioned at `set` attribute (see below).
 
