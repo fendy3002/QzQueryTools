@@ -1,0 +1,17 @@
+<Queries>
+    <Q i="1" label="User">
+    <![CDATA[
+        select a.username, a.email, a.name
+        from user a;
+    ]]>
+    </Q>
+</Queries>
+<Render>
+    <Web>
+        <div class="card">
+            <div class="card-block">
+                <Table q="1" />
+            </div>
+        </div>
+    </Web>
+</Render>

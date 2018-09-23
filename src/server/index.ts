@@ -9,14 +9,14 @@ let sequelize = require('sequelize');
  * @param {string} queryConfiguration content of query configuration
  * @param {string} renderConfiguration content of render / template configuration
  */
-let index = (db, queryConfiguration, renderConfiguration) => {
+let index = (db: any, queryConfiguration: string, renderConfiguration: string) => {
     
     /**
      * Execute query based on configuration, using param provided
      * 
      * @param {Object} param key value object
      */
-    let serverExecutor = (param) => (resolve, reject) => {
+    let serverExecutor = (param: any) => (resolve, reject) => {
         db.query(queryConfiguration, 
             param, 
             {type: sequelize.QueryTypes.SELECT})
