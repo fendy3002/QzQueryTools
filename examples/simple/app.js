@@ -12,7 +12,13 @@ app.get('/', (req, res) => {
     });
     db.query(`select a.username, a.email, a.name
     from user a;`, {type: Sequelize.QueryTypes.SELECT}).then((data) => {
-        res.json(data);
+        res.write(`<div class="card">
+            <div class="card-block">
+                Table
+            </div>
+        </div>`);
+        res.end();
+        //res.json(data);
     });
 });
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
